@@ -1,12 +1,12 @@
 <div class="collapse navbar-collapse  w-auto h-auto" id="sidenav-collapse-main">
   <ul class="navbar-nav">
     <li class="nav-item">
-      <a class="nav-link text-white" href="{{ route('profile') }}">
+      <a class="nav-link text-white" href="{{ route('admin.profile') }}">
         
-        @if (Auth::user()->profile == null)
+        @if (Auth::user()->photo == null)
         <i class="fas fa-user-circle fa-2x"></i>
         @else
-        <img src="{{ Auth::user()->profile }}" class="rounded-circle" width="100px">
+        <img src="{{ Auth::user()->photo }}" class="rounded-circle" width="100px">
         @endif
         
         <span class="nav-link-text ms-2 ps-1">{{ Auth::user()->name }}</span>

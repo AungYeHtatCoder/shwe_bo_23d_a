@@ -22,7 +22,7 @@
                 <div class="card  top-1 mb-3">
                     <div class="card-header mx-4 p-3 text-center">
                         <div class="avatar avatar-xl position-relative">
-                            <img src="{{ Auth::user()->profile }}" alt="bruce" class="w-100 h-100 shadow-sm" style="border-radius: 50%">
+                            <img src="{{ Auth::user()->profile }}" alt="bruce" class="w-100 rounded-circle shadow-sm">
                         </div>
                     </div>
                     <form action="{{ route('admin.profiles.update', Auth::user()->id) }}" method="POST"
@@ -50,24 +50,11 @@
                             <i class="material-icons opacity-10">account_balance_wallet</i>
                         </div>
                     </div>
-                    <div class="card-header mx-4 p-3 text-center">
-                         <h6 class="text-center mb-0">Total Balance</h6>
+                    <div class="card-body pt-0 p-3 text-center">
+                        <h6 class="text-center mb-0">Total Balance</h6>
                         <!-- <span class="text-xs">Freelance Payment</span> -->
                         <hr class="horizontal dark my-3">
                         <h5 class="mb-0"> {{ Auth::user()->balance }} MMK</h5>
-                    </div>
-                    <div class="card-body pt-0 p-3 text-center">
-                    <form action="{{ route('admin.admin-update-balance', Auth::user()->id) }}" method="POST">
-                        @csrf
-                        @method('PUT')
-                        <div class="input-group input-group-outline is-valid my-3">
-                        <label class="form-label">Enter  Balance Amount</label>
-                        <input type="text" class="form-control" name="balance">
-                    </div>
-                    <div class="input-group input-group-outline is-valid my-3">
-                        <button type="submit" class="btn btn-primary">UpdateAdminBalance</button>
-                    </div>
-                       </form>
                     </div>
                 </div>
 
@@ -129,7 +116,7 @@
                         <div class="col-sm-auto col-4">
                             <div class="avatar avatar-xl position-relative">
                                 <img src="{{ Auth::user()->profile }}" alt="bruce"
-                                    class="w-100 h-100 shadow-sm" style="border-radius: 50%">
+                                    class="w-100 rounded-circle shadow-sm">
                             </div>
                         </div>
                         <div class="col-sm-auto col-8 my-auto">
@@ -201,7 +188,7 @@
                         </div>
                     </div>
                     <div class="col-lg-6">
-                        <div class="card mt-4 pb-5" id="password">
+                        <div class="card mt-4" id="password">
                             <div class="card-header">
                                 <h5>Change Password</h5>
                             </div>

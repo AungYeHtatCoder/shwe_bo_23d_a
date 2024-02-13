@@ -38,6 +38,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'App\Http\Co
   Route::resource('users', UsersController::class);
   Route::put('users/{id}/ban', [UsersController::class, 'banUser'])->name('users.ban');
   Route::resource('role-limits', TwodRoleLimitController::class);
+  // admin profile
+  Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+  Route::resource('profiles', ProfileController::class);
+  Route::put('/change-password', [ProfileController::class, 'newPassword'])->name('changePassword');
+    // PhoneAddressChange route with auth id route with put method
+    Route::put('/change-phone-address', [ProfileController::class, 'PhoneAddressChange'])->name('changePhoneAddress');
+    Route::put('/change-kpay-no', [ProfileController::class, 'KpayNoChange'])->name('changeKpayNo');
+    Route::put('/change-join-date', [ProfileController::class, 'JoinDate'])->name('addJoinDate');
   // head digit close 
   Route::resource('head-digit-close', HeadDigitCloseController::class);
 });
