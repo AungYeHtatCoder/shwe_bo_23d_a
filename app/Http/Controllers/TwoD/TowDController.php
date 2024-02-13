@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\TwoD;
 
+use App\Models\RoleLimit;
 use App\Models\TwoD\Lottery;
 use Illuminate\Http\Request;
 use App\Models\TwoD\TwoDigit;
+use App\Models\TwoD\HeadDigit;
 use App\Models\TwoD\TwoDLimit;
 use App\Models\Admin\LotteryMatch;
 use Illuminate\Support\Facades\DB;
@@ -13,7 +15,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\TwoD\LotteryTwoDigitPivot;
 use App\Models\TwoD\LotteryTwoDigitOverLimit;
-use App\Models\RoleLimit;
 
 class TowDController extends Controller
 {
@@ -96,9 +97,71 @@ class TowDController extends Controller
     return view('user.two_d.12_pm.play_confirm', compact('twoDigits', 'remainingAmounts', 'lottery_matches'));
     }
 
+//     public function store(Request $request)
+// {
+//     Log::info($request->all());
+//     $validatedData = $request->validate([
+//         'selected_digits' => 'required|string',
+//         'amounts' => 'required|array',
+//         'amounts.*' => 'required|integer|min:1',
+//         'totalAmount' => 'required|numeric|min:1',
+//         'user_id' => 'required|exists:users,id',
+//     ]);
+
+//     $currentSession = $this->determineSession();
+//     $user = Auth::user();
+
+//     // Initialize default limit
+//     $defaultLimitAmount = TwoDLimit::latest()->first()->two_d_limit;
+//     $limitAmount = $defaultLimitAmount; // Start with default limit
+
+//     // Check user role and adjust limit accordingly
+//     // $userRoles = $user->roles()->pluck('title');
+//     // if ($userRoles->contains('Silver')) {
+//     //     $limitAmount = 20000; // Silver limit
+//     // } elseif ($userRoles->contains('Golden')) {
+//     //     $limitAmount = 30000; // Golden limit
+//     // } elseif ($userRoles->contains('Daimoon')) {
+//     //     $limitAmount = 50000; // Daimoon limit
+//     // }
+//      // Dynamically adjust limit based on the user's role
+//     $userRole = $user->roles()->first(); // Assuming a user has one primary role
+//     if ($userRole) {
+//         $roleLimit = RoleLimit::where('role_id', $userRole->id)->latest()->first();
+//         if ($roleLimit) {
+//             $limitAmount = $roleLimit->limit;
+//         }
+//     }
+
+//     DB::beginTransaction();
+//     try {
+//         $user->decrement('balance', $request->totalAmount);
+
+//         $lottery = Lottery::create([
+//             'pay_amount' => $request->totalAmount,
+//             'total_amount' => $request->totalAmount,
+//             'user_id' => $user->id,
+//             'session' => $currentSession,
+//         ]);
+
+//         foreach ($request->amounts as $two_digit_string => $sub_amount) {
+//             $this->processBet($two_digit_string, $sub_amount, $limitAmount, $lottery);
+//         }
+
+//         DB::commit();
+//         session()->flash('SuccessRequest', 'Successfully placed bet.');
+//         return redirect()->back()->with('message', 'Bet placed successfully.');
+//         //return redirect()->back()->with('message', 'Bet placed successfully.');
+//     } catch (\Exception $e) {
+//         DB::rollback();
+//         Log::error('Error in store method: ' . $e->getMessage());
+//         return redirect()->back()->with('error', $e->getMessage());
+//     }
+// }
+
     public function store(Request $request)
 {
-    Log::info($request->all());
+    //Log::info($request->all());
     $validatedData = $request->validate([
         'selected_digits' => 'required|string',
         'amounts' => 'required|array',
@@ -107,30 +170,27 @@ class TowDController extends Controller
         'user_id' => 'required|exists:users,id',
     ]);
 
+    // Fetch all head digits not allowed
+    $headDigitsNotAllowed = HeadDigit::pluck('digit_one', 'digit_two', 'digit_three')->flatten()->unique()->toArray();
+
+    // Check if any selected digit starts with the head digits not allowed
+    foreach ($request->amounts as $two_digit_string => $sub_amount) {
+        $headDigitOfSelected = substr($two_digit_string, 0, 1); // Extract the head digit
+        if (in_array($headDigitOfSelected, $headDigitsNotAllowed)) {
+            return redirect()->back()->with('error', "Bets on numbers starting with '{$headDigitOfSelected}' are not allowed.");
+        }
+    }
+
     $currentSession = $this->determineSession();
     $user = Auth::user();
 
     // Initialize default limit
     $defaultLimitAmount = TwoDLimit::latest()->first()->two_d_limit;
-    $limitAmount = $defaultLimitAmount; // Start with default limit
-
-    // Check user role and adjust limit accordingly
-    // $userRoles = $user->roles()->pluck('title');
-    // if ($userRoles->contains('Silver')) {
-    //     $limitAmount = 20000; // Silver limit
-    // } elseif ($userRoles->contains('Golden')) {
-    //     $limitAmount = 30000; // Golden limit
-    // } elseif ($userRoles->contains('Daimoon')) {
-    //     $limitAmount = 50000; // Daimoon limit
-    // }
-     // Dynamically adjust limit based on the user's role
-    $userRole = $user->roles()->first(); // Assuming a user has one primary role
-    if ($userRole) {
-        $roleLimit = RoleLimit::where('role_id', $userRole->id)->latest()->first();
-        if ($roleLimit) {
-            $limitAmount = $roleLimit->limit;
-        }
-    }
+    
+    // Adjust limit based on the user's role
+    $userRole = $user->roles()->first();
+    $roleLimitAmount = optional(RoleLimit::where('role_id', $userRole->id)->first())->limit ?? $defaultLimitAmount;
+    $limitAmount = max($defaultLimitAmount, $roleLimitAmount);
 
     DB::beginTransaction();
     try {
@@ -150,7 +210,6 @@ class TowDController extends Controller
         DB::commit();
         session()->flash('SuccessRequest', 'Successfully placed bet.');
         return redirect()->back()->with('message', 'Bet placed successfully.');
-        //return redirect()->back()->with('message', 'Bet placed successfully.');
     } catch (\Exception $e) {
         DB::rollback();
         Log::error('Error in store method: ' . $e->getMessage());

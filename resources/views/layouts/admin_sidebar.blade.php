@@ -94,9 +94,9 @@
                 @endcan
                 @can('admin_access')
                 <li class="nav-item">
-                  <a class="nav-link text-white " href="{{ route('admin.roles.index') }}">
-                    <span class="sidenav-mini-icon"> U R </span>
-                    <span class="sidenav-normal  ms-2  ps-1"> User's Roles </span>
+                  <a class="nav-link text-white " href="{{ route('admin.head-digit-close.index') }}">
+                    <span class="sidenav-mini-icon"> 2D </span>
+                    <span class="sidenav-normal  ms-2  ps-1"> ထိပ်စီးသုံးလုံးပိတ်ရန် </span>
                   </a>
                 </li>
                 @endcan

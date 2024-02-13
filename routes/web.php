@@ -12,6 +12,7 @@ use App\Http\Controllers\User\WelcomeController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\TwoD\TwodRoleLimitController;
+use App\Http\Controllers\Admin\TwoD\HeadDigitCloseController;
 
 
 
@@ -37,6 +38,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'App\Http\Co
   Route::resource('users', UsersController::class);
   Route::put('users/{id}/ban', [UsersController::class, 'banUser'])->name('users.ban');
   Route::resource('role-limits', TwodRoleLimitController::class);
+  // head digit close 
+  Route::resource('head-digit-close', HeadDigitCloseController::class);
 });
 
 
