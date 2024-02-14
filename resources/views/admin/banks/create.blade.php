@@ -102,7 +102,7 @@
                     <span class="text-danger">*{{ $message }}</span>
                   @enderror
                 </div>
-                <div class="mb-3 d-flex">
+                {{-- <div class="mb-3 d-flex">
                   <div class="me-3">
                     <label for="kyat" class="form-label">
                       <input type="radio" name="currency"  id="kyat" value="kyat">
@@ -115,7 +115,7 @@
                       ဘတ်
                     </label>
                   </div>
-                </div>
+                </div> --}}
                 <div class="custom-form-group">
                   <button class="btn btn-primary" type="submit">Create</button>
                 </div>
