@@ -110,26 +110,19 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'App\Http\Co
     Route::get('/two-digit-data-morning', [TwoDigitDataController::class, 'morningData'])->name('two-digit-data.morning');
     Route::get('/two-digit-data-afternoon', [TwoDigitDataController::class, 'afternoonData'])->name('two-digit-data.afternoon');
 
-    Route::get('/two-digit-data-morning-history', [TwoDOneMonthHistoryController::class, 'morningDataHistory'])->name('two-digit-data-history.morning');
-    Route::get('/two-digit-data-afternoon-history', [TwoDOneMonthHistoryController::class, 'afternoonDataHistory'])->name('two-digit-data-history.afternoon');
+  //wallet system
+  Route::resource('banks', BankController::class);
+  Route::get('/cashIn', [CashInRequestController::class, 'index'])->name('cashIn');
+  Route::get('/cashIn/{id}', [CashInRequestController::class, 'show'])->name('cashIn.show');
+  Route::get('/cashOut', [CashOutRequestController::class, 'index'])->name('cashOut');
+  Route::get('/cashOut/{id}', [CashOutRequestController::class, 'show'])->name('cashOut.show');
+  Route::post('/deposit/reject/{id}', [CashInRequestController::class, "reject"])->name('deposite-reject');
+  Route::post('/deposit/accept/{id}', [CashInRequestController::class, "accept"])->name('deposite-accept');
+  Route::post('/withdraw/accept/{id}', [CashOutRequestController::class, "accept"])->name('withdraw-accept');
+  Route::post('/withdraw/reject/{id}', [CashOutRequestController::class, "reject"])->name('withdraw-reject');
 
-    // session reset
-    Route::post('/two-d-session-reset', [App\Http\Controllers\Admin\TwoD\SessionResetControlller::class, 'SessionReset'])->name('SessionReset');
-    // 2d open close
-    Route::put('/update-open-close-two-d', [App\Http\Controllers\Admin\TwoD\CloseTwodController::class, 'update'])->name('OpenCloseTwoD');
-     // three d reset
-    Route::post('/three-d-reset', [App\Http\Controllers\Admin\ThreeD\ThreeDResetController::class, 'ThreeDReset'])->name('ThreeDReset');
-    // 2d commission
-    Route::get('/two-d-commission-index', [TwoDCommissionController::class, 'showTotalAmountByUser'])->name('two-d-commission-index');
-    // show details
-    Route::get('/two-d-commission-show/{id}', [TwoDCommissionController::class, 'show'])->name('two-d-commission-show');
-    Route::put('/two-d-commission-update/{id}', [TwoDCommissionController::class, 'update'])->name('two-d-commission-update');
-    // commission update
-   Route::post('two-d-transfer-commission/{id}', [TwoDCommissionController::class, 'TwoDtransferCommission'])->name('two-d-transfer-commission');
-     // Two Digit Limit
-    Route::resource('/two-digit-limit', TwoDLimitController::class);
-    // three Ditgit Limit
-    Route::resource('/three-digit-limit', ThreeDLimitController::class);
+  Route::get('/transferlogs', [TransferLogController::class, 'index'])->name('transferLog');
+  //wallet system
 });
 
 
