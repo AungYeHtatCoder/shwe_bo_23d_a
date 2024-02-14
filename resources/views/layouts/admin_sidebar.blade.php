@@ -20,6 +20,7 @@
       </a>
     </li>
 
+    {{-- user management --}}
     @can('admin_access')
     <li class="nav-item mt-3">
       <h6 class="ps-4  ms-2 text-uppercase text-xs font-weight-bolder text-white">UserManagement</h6>
@@ -67,6 +68,70 @@
       </div>
     </li>
     @endcan
+    {{-- user management --}}
+
+    {{-- wallet management --}}
+    @can('admin_access')
+    <li class="nav-item mt-3">
+      <h6 class="ps-4  ms-2 text-uppercase text-xs font-weight-bolder text-white">WALLET MANAGEMENT</h6>
+    </li>
+    @endcan
+    @can('admin_access')
+    <li class="nav-item">
+      <a data-bs-toggle="collapse" href="#extra_profile" class="nav-link text-white" aria-controls="extra" role="button" aria-expanded="false">
+        <i class="fas fa-wallet material-icons-round"></i>
+        <span class="nav-link-text ms-2 ps-1">Wallet Control</span>
+      </a>
+      <div class="collapse show" id="extra">
+        <ul class="nav">
+          <li class="nav-item ">
+            <div class="collapse " id="extra_profile">
+              <ul class="nav nav-sm flex-column">
+                @php
+                  $cashIn = App\Models\Admin\CashInRequest::all()->count();
+                  $cashOut = App\Models\Admin\CashOutRequest::all()->count();
+                @endphp
+                @can('admin_access')
+                <li class="nav-item">
+                  <a class="nav-link text-white " href="{{ route('admin.banks.index')}}">
+                    <span class="sidenav-mini-icon"> <i class="fas fa-wallet"></i> </span>
+                    <span class="sidenav-normal ms-2 ps-1"> Banks </span>
+                  </a>
+                </li>
+                @endcan
+                @can('admin_access')
+                <li class="nav-item">
+                  <a class="nav-link text-white " href="{{ route('admin.cashIn')}}">
+                    <span class="sidenav-mini-icon"> <i class="fas fa-wallet"></i> </span>
+                    <span class="sidenav-normal  ms-2  ps-1"> Cash In Request <span class="badge text-bg-primary">{{ $cashIn }}</span> </span>
+                  </a>
+                </li>
+                @endcan
+                @can('admin_access')
+                <li class="nav-item">
+                  <a class="nav-link text-white " href="{{ route('admin.cashOut') }}">
+                    <span class="sidenav-mini-icon"> <i class="fas fa-wallet"></i> </span>
+                    <span class="sidenav-normal  ms-2  ps-1"> Cash Out Request <span class="badge text-bg-primary">{{ $cashOut }}</span>  </span>
+                  </a>
+                </li>
+                @endcan
+                @can('admin_access')
+                <li class="nav-item">
+                  <a class="nav-link text-white " href="{{ route('admin.users.index')}}">
+                    <span class="sidenav-mini-icon"> <i class="fas fa-wallet"></i> </span>
+                    <span class="sidenav-normal  ms-2  ps-1"> Transfer Logs </span>
+                  </a>
+                </li>
+                @endcan
+              </ul>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </li>
+    @endcan
+    {{-- wallet management --}}
+
     {{-- 2d management --}}
     @can('admin_access')
     <li class="nav-item mt-3">
@@ -207,55 +272,7 @@
     @endcan
     {{-- 3d management end --}}
 
-    {{-- extral --}}
-    @can('admin_access')
-    <li class="nav-item mt-3">
-      <h6 class="ps-4  ms-2 text-uppercase text-xs font-weight-bolder text-white">Extral</h6>
-    </li>
-    @endcan
-    @can('admin_access')
-    <li class="nav-item">
-      <a data-bs-toggle="collapse" href="#extra_profile" class="nav-link text-white" aria-controls="extra" role="button" aria-expanded="false">
-        <i class="material-icons-round {% if page.brand == 'RTL' %}ms-2{% else %} me-2{% endif %}">manage_accounts</i>
-        <span class="nav-link-text ms-2 ps-1">Extra Control</span>
-      </a>
-      <div class="collapse show" id="extra">
-        <ul class="nav">
-          <li class="nav-item ">
-            <div class="collapse " id="extra_profile">
-              <ul class="nav nav-sm flex-column">
-                @can('admin_access')
-                <li class="nav-item">
-                  <a class="nav-link text-white " href="{{ route('admin.permissions.index')}}">
-                    <span class="sidenav-mini-icon"> P </span>
-                    <span class="sidenav-normal  ms-2  ps-1"> Permissions </span>
-                  </a>
-                </li>
-                @endcan
-                @can('admin_access')
-                <li class="nav-item">
-                  <a class="nav-link text-white " href="{{ route('admin.roles.index') }}">
-                    <span class="sidenav-mini-icon"> U R </span>
-                    <span class="sidenav-normal  ms-2  ps-1"> User's Roles </span>
-                  </a>
-                </li>
-                @endcan
-                @can('admin_access')
-                <li class="nav-item">
-                  <a class="nav-link text-white " href="{{ route('admin.users.index')}}">
-                    <span class="sidenav-mini-icon"> U </span>
-                    <span class="sidenav-normal  ms-2  ps-1"> Users </span>
-                  </a>
-                </li>
-                @endcan
-              </ul>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </li>
-    @endcan
-    {{-- extral --}}
+
 
     <li class="nav-item">
         <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();" class="nav-link text-white">
