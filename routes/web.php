@@ -25,12 +25,7 @@ use App\Http\Controllers\User\WalletController;
 use App\Http\Controllers\User\WelcomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\TwoD\TwoDLimitController;
-use App\Http\Controllers\TwoD\TwoDigitUserDataController;
-use App\Http\Controllers\Admin\TwoD\TwoDigitDataController;
-use App\Http\Controllers\Admin\ThreeD\ThreeDLimitController;
-use App\Http\Controllers\Admin\TwoD\TwoDCommissionController;
-use App\Http\Controllers\Admin\TwoD\TwoDOneMonthHistoryController;
+
 
 Auth::routes();
 
