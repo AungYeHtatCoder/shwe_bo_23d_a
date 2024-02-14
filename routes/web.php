@@ -11,8 +11,14 @@ use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\User\WelcomeController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\PermissionController;
+use App\Http\Controllers\Admin\TwoD\TwoDLimitController;
+use App\Http\Controllers\TwoD\TwoDigitUserDataController;
+use App\Http\Controllers\Admin\TwoD\TwoDigitDataController;
+use App\Http\Controllers\Admin\ThreeD\ThreeDLimitController;
 use App\Http\Controllers\Admin\TwoD\TwodRoleLimitController;
 use App\Http\Controllers\Admin\TwoD\HeadDigitCloseController;
+use App\Http\Controllers\Admin\TwoD\TwoDCommissionController;
+use App\Http\Controllers\Admin\TwoD\TwoDOneMonthHistoryController;
 
 
 
@@ -20,7 +26,7 @@ Auth::routes();
 
 require __DIR__ . '/auth.php';
 
-Route::get('/home', [AdminController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/profile', [App\Http\Controllers\HomeController::class, 'profile'])->name('profile');
 Route::get('/', [App\Http\Controllers\User\WelcomeController::class, 'index'])->name('welcome');
 
@@ -46,8 +52,32 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'App\Http\Co
     Route::put('/change-phone-address', [ProfileController::class, 'PhoneAddressChange'])->name('changePhoneAddress');
     Route::put('/change-kpay-no', [ProfileController::class, 'KpayNoChange'])->name('changeKpayNo');
     Route::put('/change-join-date', [ProfileController::class, 'JoinDate'])->name('addJoinDate');
-  // head digit close 
-  Route::resource('head-digit-close', HeadDigitCloseController::class);
+    // head digit close 
+    Route::resource('head-digit-close', HeadDigitCloseController::class);
+    // get all two digit data 
+    Route::get('/two-digit-data-morning', [TwoDigitDataController::class, 'morningData'])->name('two-digit-data.morning');
+    Route::get('/two-digit-data-afternoon', [TwoDigitDataController::class, 'afternoonData'])->name('two-digit-data.afternoon');
+
+    Route::get('/two-digit-data-morning-history', [TwoDOneMonthHistoryController::class, 'morningDataHistory'])->name('two-digit-data-history.morning');
+    Route::get('/two-digit-data-afternoon-history', [TwoDOneMonthHistoryController::class, 'afternoonDataHistory'])->name('two-digit-data-history.afternoon');
+
+    // session reset
+    Route::post('/two-d-session-reset', [App\Http\Controllers\Admin\TwoD\SessionResetControlller::class, 'SessionReset'])->name('SessionReset');
+    // 2d open close
+    Route::put('/update-open-close-two-d', [App\Http\Controllers\Admin\TwoD\CloseTwodController::class, 'update'])->name('OpenCloseTwoD');
+     // three d reset
+    Route::post('/three-d-reset', [App\Http\Controllers\Admin\ThreeD\ThreeDResetController::class, 'ThreeDReset'])->name('ThreeDReset');
+    // 2d commission
+    Route::get('/two-d-commission-index', [TwoDCommissionController::class, 'showTotalAmountByUser'])->name('two-d-commission-index');
+    // show details
+    Route::get('/two-d-commission-show/{id}', [TwoDCommissionController::class, 'show'])->name('two-d-commission-show');
+    Route::put('/two-d-commission-update/{id}', [TwoDCommissionController::class, 'update'])->name('two-d-commission-update');
+    // commission update
+   Route::post('two-d-transfer-commission/{id}', [TwoDCommissionController::class, 'TwoDtransferCommission'])->name('two-d-transfer-commission');
+     // Two Digit Limit
+    Route::resource('/two-digit-limit', TwoDLimitController::class);
+    // three Ditgit Limit
+    Route::resource('/three-digit-limit', ThreeDLimitController::class);
 });
 
 
@@ -72,12 +102,17 @@ Route::group(['prefix' => 'user', 'as' => 'user.', 'namespace' => 'App\Http\Cont
     // 2:00 pm confirm page
     Route::get('/two-d-play-4-30-evening-confirm', [TowDController::class, 'play_confirm4pm'])->name('twod-play-confirm-4pm');
     // store
-    Route::post('/two-d-play-index-4pm', [TowDController::class, 'store'])->name('twod-play-index-4pm.store');
+    Route::post('/two-d-play-index-4pm', [TowDController::class, 'store4pm'])->name('twod-play-index-4pm.store');
     // quick play 
     Route::get('/two-d-quick-play-index', [App\Http\Controllers\TwoD\TwoDQicklyPlayController::class, 'quick_play_index'])->name('twod-quick-play-index');
     Route::get('/two-d-play-quick-confirm', [App\Http\Controllers\TwoD\TwoDQicklyPlayController::class, 'quick_play_confirm'])->name('twod-play-confirm-quick');
     // store
     Route::post('/twod-play-quick-confirm', [App\Http\Controllers\TwoD\TwoDQicklyPlayController::class, 'store'])->name('twod-play-quickly-confirm.store');
+    // 12 pm daily history
+    // get all two digit data 
+    Route::get('/two-digit-data-12-pm-morning', [TwoDigitUserDataController::class, 'index'])->name('two-digit-user-data.morning');
+    // 4 pm daily history
+    Route::get('/two-digit-data-4-30-pm-afternoon', [TwoDigitUserDataController::class, 'EveningDataHistory'])->name('two-digit-user-data.afternoon');
 });
 
 // welcome page for user route

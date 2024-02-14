@@ -27,7 +27,7 @@ class AuthController extends Controller
             'phone' => 'required',
             'password' => ['required', 'string', 'min:6'],
         ]);        
-
+        //dd($request->all());
         $banUserCheck = User::where('phone', $request->phone)->first(); 
         if(!$banUserCheck){
             return redirect()->back()->with('error', "Your phone does not exist.");

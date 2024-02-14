@@ -68,7 +68,10 @@
             @endif
             <div class="ms-4 mt-3">
                 <h4>{{ Auth::user()->name }}</h4>
-                <p><i class="fas fa-money-bills me-2"></i>{{ number_format(Auth::user()->balance) }} MMK</p>
+                <p><i class="fas fa-money-bills me-2"></i>{{ number_format(Auth::user()->balance) }} MMK</p> 
+                <span>
+                        <p class="text-white">2D Commission Balance : {{ number_format(Auth::user()->cor) }}</p>
+                    </span>
                 @if (Auth::user()->phone)
                 <p><i class="fas fa-phone-volume me-2 mb-0"></i>{{ Auth::user()->phone }}</p>
                 @endif

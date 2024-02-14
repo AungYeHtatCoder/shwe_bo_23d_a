@@ -69,18 +69,19 @@
     <div class="container-fluid py-3 rounded-4 shadow">
         <!-- after login view -->
         <div class="d-flex justify-content-between">
-            @if (Auth::user()->profile)
-            <img src="{{ Auth::user()->profile }}" alt="">
+            @if (Auth::user()->photo)
+            <img src="{{ Auth::user()->photo }}" alt="">
             @else
             <i class="fa-regular fa-user-circle text-purple fa-2x"></i>
             @endif
 
             <div>
-                <a href="{{ route('profile') }}" class="login-btn">
+                <a href="{{ route('home') }}" class="login-btn">
                     {{ Auth::user()->name }}
                 </a>
                 <small class="text-purple">
                     <i class="fas fa-wallet text-purple"></i> : {{ Auth::user()->balance }} MMK
+                    
                 </small>
             </div>
         </div>
@@ -96,26 +97,38 @@
                     <p class="py-0">Admin Dashboard</p>
                 </div>
             </a>
-            @elseif($role->title == 'Master')
+            @else
             <a href="{{ route('home') }}" class="link shadow">
                 <div class="d-flex">
                     <i class="fas fa-dashboard d-block me-2"></i>
-                    <p class="py-0">Master Dashboard</p>
+                    <p class="py-0">Profile</p>
                 </div>
             </a>
-            @elseif ($role->title == 'Agent')
+            {{-- @elseif ($role->title == 'Agent')
             <a href="{{ route('home') }}" class="link shadow">
                 <div class="d-flex">
                     <i class="fas fa-dashboard d-block me-2"></i>
                     <p class="py-0">Agent Dashboard</p>
                 </div>
-            </a>
+            </a> --}}
             @endif
         @endforeach
         <a href="{{ url('/user/two-d-winners-history') }}" class="link shadow">
             <div class="d-flex">
                 <i class="fas fa-award d-block me-2"></i>
                 <p class="py-0">ကံထူးရှင်များ</p>
+            </div>
+        </a>
+         <a href="{{ url('/user/two-digit-data-12-pm-morning') }}"class="link shadow">
+            <div class="d-flex">
+                <i class="fas fa-list d-block me-2"></i>
+                <p class="py-0">မနက်ပိုင်းမှတ်တမ်း</p>
+            </div>
+        </a>
+        <a href="{{ url('/user/two-digit-data-4-30-pm-afternoon') }}"class="link shadow">
+            <div class="d-flex">
+                <i class="fas fa-list d-block me-2"></i>
+                <p class="py-0">ညနေပိုင်းမှတ်တမ်း</p>
             </div>
         </a>
         <a href" class="link shadow">

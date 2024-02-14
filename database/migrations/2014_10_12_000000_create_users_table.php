@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('token')->nullable();
             $table->string('device_id')->nullable();
             $table->string('fcm_token')->nullable();
-            $table->integer('status')->nullable();
+            $table->integer('status')->default(0);
             //$table->string('role')->nullable();
             $table->integer('gem')->default('0');
             $table->integer('bonus')->default('0');

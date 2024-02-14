@@ -14,7 +14,7 @@
                 </div>
                 <div class="mt-4">
                     <small class="d-block mb-2">2D (12:00PM)</small>
-                    <a href="{{ route('user.twod-play-index-12pm') }}" class="btn btn-sm btn-purple text-white">ပုံမှန်ရွေး</a>
+                    <a href="{{ route('user.twod-play-index') }}" class="btn btn-sm btn-purple text-white">ပုံမှန်ရွေး</a>
                 </div>
             </div>
 
@@ -61,7 +61,7 @@
         </div>
         <div class="d-flex justify-content-end my-2" >
             <button class="btn btn-sm btn-danger me-2" type="reset"><small>ဖျက်မည်</small></button>
-            <a href="{{ route('user.twoDQuickPlay12PMConfirm') }}" onclick="storeSelectionsInLocalStorage()" class="btn btn-sm btn-purple text-white"><small>ထိုးမည်</small></a>
+            <a href="{{ route('user.twod-play-confirm-quick') }}" onclick="storeSelectionsInLocalStorage()" class="btn btn-sm btn-purple text-white"><small>ထိုးမည်</small></a>
         </div>
 
         <!-- User ID Hidden Input -->

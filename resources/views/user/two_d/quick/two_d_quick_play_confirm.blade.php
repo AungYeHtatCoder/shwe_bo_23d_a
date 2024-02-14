@@ -39,7 +39,7 @@
             </div>
             <div class="" >
                 {{-- <button class="btn btn-sm btn-danger me-2" style="font-size: 14px;" onclick="confirmPlay()">ဖျက်မည်</button> --}}
-                 <a onclick="confirmPlay()" href="{{ route('user.twod-play-index-9am') }}" class="btn btn-sm btn-danger me-2" style="font-size: 14px;">ဖျက်မည်</a>
+                 <a onclick="confirmPlay()" href="{{ route('user.twod-quick-play-index') }}" class="btn btn-sm btn-danger me-2" style="font-size: 14px;">ဖျက်မည်</a>
                 <button type="submit" class="btn btn-sm btn-purple text-white me-1" style="font-size: 14px;">ထိုးမည်</button>
               </div>
         </div>

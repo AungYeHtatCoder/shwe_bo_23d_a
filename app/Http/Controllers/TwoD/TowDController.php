@@ -158,9 +158,9 @@ class TowDController extends Controller
 //         return redirect()->back()->with('error', $e->getMessage());
 //     }
 // }
-
+    // 12 pm two d play 
     public function store(Request $request)
-{
+    {
     //Log::info($request->all());
     $validatedData = $request->validate([
         'selected_digits' => 'required|string',
@@ -209,13 +209,76 @@ class TowDController extends Controller
 
         DB::commit();
         session()->flash('SuccessRequest', 'Successfully placed bet.');
-        return redirect()->back()->with('message', 'Bet placed successfully.');
+        return redirect()->route('user.two-digit-user-data.morning')->with('message', 'Bet placed successfully.');
+        //return redirect()->back()->with('message', 'Bet placed successfully.');
     } catch (\Exception $e) {
         DB::rollback();
         Log::error('Error in store method: ' . $e->getMessage());
         return redirect()->back()->with('error', $e->getMessage());
     }
-}
+    }
+
+    // 4:30 pm two d play
+    public function store4pm(Request $request)
+    {
+        //Log::info($request->all());
+        $validatedData = $request->validate([
+            'selected_digits' => 'required|string',
+            'amounts' => 'required|array',
+            'amounts.*' => 'required|integer|min:1',
+            'totalAmount' => 'required|numeric|min:1',
+            'user_id' => 'required|exists:users,id',
+        ]);
+
+        // Fetch all head digits not allowed
+        $headDigitsNotAllowed = HeadDigit::pluck('digit_one', 'digit_two', 'digit_three')->flatten()->unique()->toArray();
+
+        // Check if any selected digit starts with the head digits not allowed
+        foreach ($request->amounts as $two_digit_string => $sub_amount) {
+            $headDigitOfSelected = substr($two_digit_string, 0, 1); // Extract the head digit
+            if (in_array($headDigitOfSelected, $headDigitsNotAllowed)) {
+                return redirect()->back()->with('error', "Bets on numbers starting with '{$headDigitOfSelected}' are not allowed.");
+            }
+        }
+
+        $currentSession = $this->determineSession();
+        $user = Auth::user();
+
+        // Initialize default limit
+        $defaultLimitAmount = TwoDLimit::latest()->first()->two_d_limit;
+        
+        // Adjust limit based on the user's role
+        $userRole = $user->roles()->first();
+        $roleLimitAmount = optional(RoleLimit::where('role_id', $userRole->id)->first())->limit ?? $defaultLimitAmount;
+        $limitAmount = max($defaultLimitAmount, $roleLimitAmount);
+
+        DB::beginTransaction();
+        try {
+            $user->decrement('balance', $request->totalAmount);
+
+            $lottery = Lottery::create([
+                'pay_amount' => $request->totalAmount,
+                'total_amount' => $request->totalAmount,
+                'user_id' => $user->id,
+                'session' => $currentSession,
+            ]);
+
+            foreach ($request->amounts as $two_digit_string => $sub_amount) {
+                $this->processBet($two_digit_string, $sub_amount, $limitAmount, $lottery);
+            }
+
+            DB::commit();
+            session()->flash('SuccessRequest', 'Successfully placed bet.');
+            return redirect()->route('user.two-digit-user-data.afternoon')->with('message', 'Bet placed successfully.');
+            //return redirect()->back()->with('message', 'Bet placed successfully.');
+        } catch (\Exception $e) {
+            DB::rollback();
+            Log::error('Error in store method: ' . $e->getMessage());
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+    }
+
+    
 
     private function determineSession()
     {
