@@ -29,10 +29,10 @@
 
     <!-- 2D 3D -->
     <div class="d-flex justify-content-around my-2">
-        <a href="{{ route('user.twod-play-index') }}" class="btn btn-purple text-white d-block w-100 m-3 py-3 d-frame-box rounded-5">
+        <a href="{{ route('user.twod-play-index') }}" class="btn btn-purple text-white d-block w-100 m-3 py-3 rounded-5">
             <h5 class="p-0 m-0">2D</h5>
         </a>
-        <a href="{{ url('/user/three-d-play-index') }}" class="btn btn-purple text-white d-block w-100 m-3 py-3 d-frame-box rounded-5">
+        <a href="{{ url('/user/three-d-play-index') }}" class="btn btn-purple text-white d-block w-100 m-3 py-3 rounded-5">
             <h5 class="p-0 m-0">3D</h5>
         </a>
     </div>

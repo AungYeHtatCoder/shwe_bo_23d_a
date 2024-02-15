@@ -30,11 +30,12 @@
 
 #top-nav {
   border-radius: 0 0 25px 25px;
-  background: linear-gradient(170deg, rgba(242,105,154,1) 0%, rgba(206,0,74,1) 100%, rgba(255,207,224,1) 100%);
+  background: #FF3353;
 }
 
 #allBgColor,
 .allBgColor {
+  /* background-color: #fff; */
   background: linear-gradient(170deg, rgba(242,105,154,1) 0%, rgba(206,0,74,1) 100%, rgba(255,207,224,1) 100%);
 }
 
@@ -48,13 +49,13 @@
 }
 
 .text-purple {
-  color: #df2568;
+  color: #FF3353;
 }
 
 .ease-left-in .login-btn,
 .ease-left-in .login-btn:hover {
   text-decoration: none;
-  color: #df2568;
+  color: #FF3353;
   font-size: 16px;
   padding: 0;
 }
@@ -169,12 +170,12 @@
   text-decoration: none;
   padding: 10px 20px 0 20px;
   margin: 10px 0;
-  color: #df2568;
+  color: #FF3353;
 }
 
 .nav-links .link:hover {
   text-decoration: none;
-  color: #df2568;
+  color: #FF3353;
   padding-left: 7px;
   transition-duration: 0.6s;
 }
@@ -186,7 +187,7 @@
 /* sidebar */
 #sideLink i,
 #sideLink p {
-  color: #df2568;
+  color: #FF3353;
 }
 
 .footer-border {
@@ -218,7 +219,7 @@
 
 .active {
   /* background-color: #fff;
-    color: #df2568; */
+    color: #FF3353; */
   text-shadow: 2px 3px 4px #ffffff;
 }
 
@@ -228,7 +229,7 @@
     height: 50px; */
   /* border-radius: 10%; */
   /* border: 1px solid #fff; */
-  color: #df2568;
+  color: #FF3353;
   /* box-shadow: 2px 3px 4px #000; */
   transform: scale(1.2);
   transition-duration: 0.6s;
@@ -243,42 +244,45 @@
 } */
 
 .nav-border-purple {
-  border-right: 1px solid #df2568;
-  border-left: 1px solid #df2568;
-  border-bottom: 1px solid #df2568;
-  box-shadow: 1px 2px 3px #df2568;
+  border-right: 1px solid #FF3353;
+  border-left: 1px solid #FF3353;
+  border-bottom: 1px solid #FF3353;
+  box-shadow: 1px 2px 3px #FF3353;
 }
 
 .border-purple {
-  border: 1px solid #d188fb;
-  box-shadow: 1px 2px 3px #b93fff;
+  border: 1px solid #fefbff;
+  box-shadow: 1px 2px 3px #FF3353;
 }
 
 .footer-border-purple {
-  border-right: 1px solid #df2568;
-  border-left: 1px solid #df2568;
-  border-top: 1px solid #df2568;
-  box-shadow: 1px 2px 3px #b93fff;
-  background: linear-gradient(170deg, rgba(242,105,154,1) 0%, rgba(206,0,74,1) 100%, rgba(255,207,224,1) 100%);
+  border-right: 1px solid #FF3353;
+  border-left: 1px solid #FF3353;
+  border-top: 1px solid #FF3353;
+  box-shadow: 1px 2px 3px #000000;
+  background: #FF3353;
 }
 
 .btn-purple {
-  border: 1px solid #df2568;
-  box-shadow: 1px 2px 3px #df2568;
+  border: 1px solid #ff758a;
+  box-shadow: 1px 2px 3px #FF3353;
+  margin-bottom: 10px;
+  background: #FF3353 !important;
+}
+.btn-purple:hover{
+  border: 1px solid #ff758a;
+  box-shadow: 1px 2px 3px #FF3353;
 }
 
 .bg-purple {
-  background: linear-gradient(
-    90deg,
-    rgba(166, 0, 255, 1) 0%,
-    rgba(110, 3, 162, 1) 50%,
-    rgba(157, 2, 218, 1) 100%
-  );
+  background: #FF3353;
+  border: 1px solid #ff758a;
+  box-shadow: 1px 2px 3px #FF3353;
 }
 
 marquee {
   background-color: #000;
-  border: 1px solid #df2568;
+  border: 1px solid #FF3353;
   color: #fff;
   margin-top: 10px;
   line-height: 40px;
@@ -351,17 +355,17 @@ footer {
 .wallet_amount_card {
   border-radius: 20px;
   height: 20vh;
-  border-right: 1px solid #df2568;
-  border-left: 1px solid #df2568;
-  border-top: 1px solid #df2568;
-  box-shadow: 1px 2px 3px #b93fff;
+  border-right: 1px solid #FF3353;
+  border-left: 1px solid #FF3353;
+  border-top: 1px solid #FF3353;
+  box-shadow: 1px 2px 3px #FF3353;
 }
 
 .balance_action_box {
   border-radius: 20px;
   height: auto;
-  border-right: 1px solid #df2568;
-  border-left: 1px solid #df2568;
+  border-right: 1px solid #FF3353;
+  border-left: 1px solid #FF3353;
 }
 
 @media only screen and(max-width: 744px) {
@@ -373,7 +377,7 @@ footer {
 /* wallet amount card end  */
 
 .threed_list {
-  border: 1px solid #df2568;
+  border: 1px solid #FF3353;
 }
 
 .card_color {
@@ -400,7 +404,7 @@ footer {
   height: 40px;
   padding: 10px 0;
   margin: 0;
-  border: 1px solid #df2568;
+  border: 1px solid #FF3353;
 }
 
 .dream-img {
@@ -419,10 +423,10 @@ footer {
   border: none;
   padding: 10px;
   color: #fff;
-  border: 1px solid #df2568;
+  border: 1px solid #FF3353;
 }
 
 .dream-btn.selected {
-  background-color: #df2568;
+  background-color: #FF3353;
   color: #fff;
 }
