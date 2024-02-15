@@ -7,11 +7,11 @@
       class=" mt-4 pt-5 headers"
       style="padding-bottom:200px;"
     >
-    <h6 class="text-center mt-2 pb-2" style="color: #fff">ငွေထုတ်မည်</h6>
+    <h6 class="text-center mt-2 pb-2 text-purple">ငွေထုတ်မည်</h6>
     <div class="text-center mt-3">
-      <p style="color: #fff; font-weight:bold;">လက်ကျန်ငွေ: {{ number_format(Auth::user()->balance) }} ကျပ်</p>
+      <p class=" text-purple" style="font-weight:bold;">လက်ကျန်ငွေ: {{ number_format(Auth::user()->balance) }} ကျပ်</p>
     </div>
-    <p style="color: #fff" class="mb-4">{{ $bank->bank }} မှ ငွေထုတ်ပါ။ </p>
+    <p style="" class="mb-4 text-purple">{{ $bank->bank }} မှ ငွေထုတ်ပါ။ </p>
     <hr style="color:#fff;"/>
     <div class="row">
         <div class="col-4">
@@ -22,19 +22,19 @@
                 @csrf
                 <input type="hidden" name="payment_method" value="{{ $bank->bank }}">
                 <div class="mb-3">
-                    <label for="" class="form-label mb-2">ဖုန်း(သို့)ဘဏ်နံပါတ်</label>
+                    <label for="" class="form-label text-purple mb-2">ဖုန်း(သို့)ဘဏ်နံပါတ်</label>
                     <input type="number" placeholder="Enter Phone or Bank No" name="phone" class="form-control">
                 </div>
                 <div class="mb-3">
-                    <label for="" class="form-label mb-2">ဖုန်း(သို့)ဘဏ် ပိုင်ရှင်အမည်</label>
+                    <label for="" class="form-label text-purple mb-2">ဖုန်း(သို့)ဘဏ် ပိုင်ရှင်အမည်</label>
                     <input type="text" placeholder="Enter Phone or Bank Owner" name="name" class="form-control">
                 </div>
                 <div class="mb-3">
-                    <label for="" class="form-label mb-2">ပမာဏဖြည့်ရန်</label>
+                    <label for="" class="form-label text-purple mb-2">ပမာဏဖြည့်ရန်</label>
                     <input type="number" placeholder="Enter Amount" name="amount" class="form-control">
                 </div>
                 <div class="text-end">
-                    <button class="btn btn-outline-light" type="submit">ဖောင်ပို့မည်။</button>
+                    <button class="btn btn-purple text-white" type="submit">ဖောင်ပို့မည်။</button>
                 </div>
             </form>
         </div>

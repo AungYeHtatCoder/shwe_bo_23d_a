@@ -18,29 +18,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Specify the canonical URL for SEO -->
-    <link rel="canonical" href="https://www.aladdin2d3dmyanmar.online/">
+    <link rel="canonical" href="">
 
     <!-- Open Graph Meta Tags (for social media sharing) -->
     <meta property="og:title" content="ShweBo 2D|3D">
     <meta property="og:description" content="The world plays on ShweBo 2D|3D. Join Aladdin Team for an immersive betting experience.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://www.aladdin2d3dmyanmar.online/">
-    <meta property="og:image" content="https://www.aladdin2d3dmyanmar.online/assets/img/title_logo.jpg">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="assets/img/title_logo.jpg">
     <meta property="og:image:alt" content="ShweBo 2D|3D Logo">
 
     <!-- Twitter Card Meta Tags (for Twitter sharing) -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="ShweBo 2D|3D - Gambling Website">
     <meta name="twitter:description" content="The world plays on ShweBo 2D|3D. Join Aladdin Team for an immersive betting experience.">
-    <meta name="twitter:image" content="https://www.aladdin2d3dmyanmar.online/assets/img/title_logo.jpg">
+    <meta name="twitter:image" content="assets/img/logo.png">
 
     <!-- Robots Meta Tags (for controlling search engine indexing) -->
     <meta name="robots" content="index, follow">
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-E9F15MS6BV"></script>
 
 
+    <link rel="icon" href="{{ asset('assets/img/logo.png') }}">
     {{-- <link rel="icon" href="{{ asset('assets/img/logo.png') }}"> --}}
-    <link rel="icon" href="{{ asset('assets/img/title_logo.jpg') }}">
 
     <link rel="stylesheet" href="{{ asset('user_app/assets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('user_app/assets/css/style.css') }}">

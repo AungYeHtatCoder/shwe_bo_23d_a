@@ -3,14 +3,16 @@
     <div class="row">
         <div class="col-lg-6 col-md-6 offset-lg-3 offset-md-3 col-12 py-2 nav-border-purple" id="top-nav">
             <div class="row">
-                <div class="col-4"></div>
                 <div class="col-4">
-                    <div class="d-flex justify-content-center">
+                    <img src="{{ asset('assets/img/logo.png') }}" width="50px" alt="">
+                </div>
+                <div class="col-4">
+                    <div class="d-flex justify-content-center d-none d-lg-block">
                         <a href="{{ url('/') }}" class="text-decoration-none">
                             <div class="d-flex">
-                                <img src="{{ asset('assets/img/logo-v.png') }}" width="150px" alt="">
-                                {{-- <img src="{{ asset('assets/img/logo.png') }}" width="40px" height="40px" alt="" class="rounded-circle d-block">
-                                <h5 class="text-white ms-2" style="margin-top: 10px;">Aladdin 2D | 3D</h5> --}}
+                               
+                                {{-- <img src="{{ asset('assets/img/logo.png') }}" width="40px" height="40px" alt="" class="rounded-circle d-block"> --}}
+                                <h5 class="text-white ms-2" style="margin-top: 10px;">ShweBo 2D | 3D</h5>
                             </div>
                         </a>
                     </div>
