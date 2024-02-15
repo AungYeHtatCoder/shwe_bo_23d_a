@@ -18,7 +18,9 @@ use App\Http\Controllers\Admin\ThreeD\ThreeDLimitController;
 use App\Http\Controllers\Admin\TwoD\TwodRoleLimitController;
 use App\Http\Controllers\Admin\TwoD\HeadDigitCloseController;
 use App\Http\Controllers\Admin\TwoD\TwoDCommissionController;
+use App\Http\Controllers\TwoD\TwoDCommissionTransferController;
 use App\Http\Controllers\Admin\TwoD\TwoDOneMonthHistoryController;
+use App\Http\Controllers\ThreeD\ThreeCommissionTransferController;
 
 
 
@@ -113,6 +115,9 @@ Route::group(['prefix' => 'user', 'as' => 'user.', 'namespace' => 'App\Http\Cont
     Route::get('/two-digit-data-12-pm-morning', [TwoDigitUserDataController::class, 'index'])->name('two-digit-user-data.morning');
     // 4 pm daily history
     Route::get('/two-digit-data-4-30-pm-afternoon', [TwoDigitUserDataController::class, 'EveningDataHistory'])->name('two-digit-user-data.afternoon');
+    Route::post('/two-d-comission-transfer-to-main', [TwoDCommissionTransferController::class, 'TwodCommissiontransferToMain'])->name('twod-transfer.to.main');
+    Route::post('/three-d-comission-transfer-to-main', [ThreeCommissionTransferController::class, 'ThreedCommissiontransferToMain'])->name('three-d-transfer.to.main');
+
 });
 
 // welcome page for user route

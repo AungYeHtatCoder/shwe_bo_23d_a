@@ -70,8 +70,31 @@
                 <h4>{{ Auth::user()->name }}</h4>
                 <p><i class="fas fa-money-bills me-2"></i>{{ number_format(Auth::user()->balance) }} MMK</p> 
                 <span>
-                        <p class="text-white">2D Commission Balance : {{ number_format(Auth::user()->cor) }}</p>
+                        <p class="text-white">2D Commission Balance : {{ number_format(Auth::user()->cor) }}
+                        <span>
+                        <form action="{{ route('user.twod-transfer.to.main') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="cor" value="{{ Auth::user()->cor }}">
+                            <button type="submit" class="btn btn-sm btn-outline-light">TransferToMain</button>
+                        </form>
+
+                        </span>
+                        </p>
                     </span>
+
+                     <span>
+                        <p class="text-white">3D Commission Balance : {{ number_format(Auth::user()->cor3) }}
+                        <span>
+                        <form action="{{ route('user.three-d-transfer.to.main') }}" method="POST">
+                            @csrf
+                            <input type="hidden" name="cor" value="{{ Auth::user()->cor3 }}">
+                            <button type="submit" class="btn btn-sm btn-outline-light">TransferToMain</button>
+                        </form>
+
+                        </span>
+                        </p>
+                    </span>
+
                 @if (Auth::user()->phone)
                 <p><i class="fas fa-phone-volume me-2 mb-0"></i>{{ Auth::user()->phone }}</p>
                 @endif
