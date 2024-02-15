@@ -8,20 +8,25 @@ use App\Http\Controllers\TwoD\TwoDController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\RolesController;
 use App\Http\Controllers\Admin\UsersController;
+use App\Http\Controllers\User\WalletController;
 use App\Http\Controllers\User\WelcomeController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\PermissionController;
+use App\Http\Controllers\Admin\Wallet\BankController;
+use App\Http\Controllers\TwoD\TwoDQicklyPlayController;
 use App\Http\Controllers\Admin\TwoD\TwoDLimitController;
 use App\Http\Controllers\TwoD\TwoDigitUserDataController;
 use App\Http\Controllers\Admin\TwoD\TwoDigitDataController;
 use App\Http\Controllers\Admin\ThreeD\ThreeDLimitController;
 use App\Http\Controllers\Admin\TwoD\TwodRoleLimitController;
+use App\Http\Controllers\Admin\Wallet\TransferLogController;
 use App\Http\Controllers\Admin\TwoD\HeadDigitCloseController;
 use App\Http\Controllers\Admin\TwoD\TwoDCommissionController;
+use App\Http\Controllers\Admin\Wallet\CashInRequestController;
+use App\Http\Controllers\Admin\Wallet\CashOutRequestController;
 use App\Http\Controllers\TwoD\TwoDCommissionTransferController;
 use App\Http\Controllers\Admin\TwoD\TwoDOneMonthHistoryController;
 use App\Http\Controllers\ThreeD\ThreeCommissionTransferController;
-
 
 
 Auth::routes();
@@ -80,6 +85,41 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'App\Http\Co
     Route::resource('/two-digit-limit', TwoDLimitController::class);
     // three Ditgit Limit
     Route::resource('/three-digit-limit', ThreeDLimitController::class);
+  // head digit close 
+  Route::resource('head-digit-close', HeadDigitCloseController::class);
+
+  //wallet system
+  Route::resource('banks', BankController::class);
+  Route::get('/cashIn', [CashInRequestController::class, 'index'])->name('cashIn');
+  Route::get('/cashIn/{id}', [CashInRequestController::class, 'show'])->name('cashIn.show');
+  Route::get('/cashOut', [CashOutRequestController::class, 'index'])->name('cashOut');
+  Route::get('/cashOut/{id}', [CashOutRequestController::class, 'show'])->name('cashOut.show');
+  Route::post('/deposit/reject/{id}', [CashInRequestController::class, "reject"])->name('deposite-reject');
+  Route::post('/deposit/accept/{id}', [CashInRequestController::class, "accept"])->name('deposite-accept');
+  Route::post('/withdraw/accept/{id}', [CashOutRequestController::class, "accept"])->name('withdraw-accept');
+  Route::post('/withdraw/reject/{id}', [CashOutRequestController::class, "reject"])->name('withdraw-reject');
+
+  Route::get('/transferlogs', [TransferLogController::class, 'index'])->name('transferLog');
+  //wallet system
+    // head digit close 
+    Route::resource('head-digit-close', HeadDigitCloseController::class);
+    // get all two digit data 
+    Route::get('/two-digit-data-morning', [TwoDigitDataController::class, 'morningData'])->name('two-digit-data.morning');
+    Route::get('/two-digit-data-afternoon', [TwoDigitDataController::class, 'afternoonData'])->name('two-digit-data.afternoon');
+
+  //wallet system
+  Route::resource('banks', BankController::class);
+  Route::get('/cashIn', [CashInRequestController::class, 'index'])->name('cashIn');
+  Route::get('/cashIn/{id}', [CashInRequestController::class, 'show'])->name('cashIn.show');
+  Route::get('/cashOut', [CashOutRequestController::class, 'index'])->name('cashOut');
+  Route::get('/cashOut/{id}', [CashOutRequestController::class, 'show'])->name('cashOut.show');
+  Route::post('/deposit/reject/{id}', [CashInRequestController::class, "reject"])->name('deposite-reject');
+  Route::post('/deposit/accept/{id}', [CashInRequestController::class, "accept"])->name('deposite-accept');
+  Route::post('/withdraw/accept/{id}', [CashOutRequestController::class, "accept"])->name('withdraw-accept');
+  Route::post('/withdraw/reject/{id}', [CashOutRequestController::class, "reject"])->name('withdraw-reject');
+
+  Route::get('/transferlogs', [TransferLogController::class, 'index'])->name('transferLog');
+  //wallet system
 });
 
 
@@ -90,6 +130,25 @@ Route::group(['prefix' => 'user', 'as' => 'user.', 'namespace' => 'App\Http\Cont
     Route::post('editInfo', [ProfileController::class, 'editInfo'])->name('editInfo');
     Route::post('changePassword', [ProfileController::class, 'changePassword'])->name('changePassword');
     //profile management
+
+  //home routes
+    Route::get('/promotion', [WelcomeController::class, 'promo'])->name('promotion');
+    Route::get('/promotion-detail/{id}', [WelcomeController::class, 'promotionDetail'])->name('promotionDetail');
+
+    //wallet system
+    Route::get('/wallet', [WalletController::class, 'wallet'])->name('wallet');
+    Route::get('/deposit', [WalletController::class, 'deposit'])->name('deposit');
+    Route::get('/deposit/{id}', [WalletController::class, 'depositBank'])->name('depositBank');
+    Route::post('/deposit', [WalletController::class, 'depositStore'])->name('deposit');
+
+    Route::get('/withdraw', [WalletController::class, 'withdraw'])->name('withdraw');
+    Route::get('/withdraw/{id}', [WalletController::class, 'withdrawBank'])->name('withdrawBank');
+    Route::post('/withdraw', [WalletController::class, 'withdrawStore'])->name('withdraw');
+
+    Route::get('/logs', [WalletController::class, 'logs'])->name('logs');
+  //home routes
+
+
     Route::get('/dashboard', [App\Http\Controllers\User\WelcomeController::class, 'dashboard'])->name('dashboard');
     // 12 pm two d play index
     Route::get('/two-d-play-index', [TowDController::class, 'index'])->name('twod-play-index');
