@@ -35,8 +35,9 @@
 
 #allBgColor,
 .allBgColor {
-  /* background-color: #fff; */
-  background: linear-gradient(170deg, rgba(242,105,154,1) 0%, rgba(206,0,74,1) 100%, rgba(255,207,224,1) 100%);
+  background-color: #fff;
+  color: #FF3353;
+  /* background: linear-gradient(170deg, rgba(242,105,154,1) 0%, rgba(206,0,74,1) 100%, rgba(255,207,224,1) 100%); */
 }
 
 /* sidebar */

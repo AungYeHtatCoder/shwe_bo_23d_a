@@ -7,19 +7,19 @@
       class=" mt-4 pt-5 headers"
       style="padding-bottom:200px;"
     >
-    <h6 class="text-center mt-2 pb-2" style="color: #fff">ငွေဖြည့်မည်</h6>
+    <h6 class="text-center mt-2 pb-2 text-purple" >ငွေဖြည့်မည်</h6>
     <div class="text-center mt-3">
-      <p style="color: #fff; font-weight:bold;">လက်ကျန်ငွေ: {{ number_format(Auth::user()->balance) }} ကျပ်</p>
+      <p style="font-weight:bold;" class=" text-purple">လက်ကျန်ငွေ: {{ number_format(Auth::user()->balance) }} ကျပ်</p>
     </div>
-    <div class="border border-1 rounded-3 mb-5">
+    <div class="border border-1 border-purple rounded-3 mb-5">
       <div class="row pt-3 text-center">
         <div class="col">
           <a
             href="{{ route('user.deposit') }}"
             style="color: black; text-decoration: none"
           >
-            <i  style="font-size: 25px" class="fa-solid fa-money-bill-1"></i>
-            <p style="font-size: 14px; margin-top: 10px;">ငွေဖြည့်</p>
+            <i  style="font-size: 25px" class="fa-solid fa-money-bill-1 text-purple"></i>
+            <p style="font-size: 14px; margin-top: 10px;" class=" text-purple">ငွေဖြည့်</p>
           </a>
         </div>
         <div class="col">
@@ -27,8 +27,8 @@
             href="{{ route('user.withdraw') }}"
             style="color: black; text-decoration: none"
           >
-            <i  style="font-size: 25px" class="fa-solid fa-money-bill-transfer"></i>
-            <p style="font-size: 14px; margin-top: 10px;">ငွေထုတ်</p>
+            <i  style="font-size: 25px" class="fa-solid fa-money-bill-transfer text-purple"></i>
+            <p class=" text-purple" style="font-size: 14px; margin-top: 10px;">ငွေထုတ်</p>
           </a>
         </div>
         <div class="col">
@@ -36,13 +36,13 @@
             href="{{ route('user.logs') }}"
             style="color: black; text-decoration: none"
           >
-            <i  style="font-size: 25px" class="fa-solid fa-pen-to-square"></i>
-            <p style="font-size: 14px; margin-top: 10px;">မှတ်တမ်း</p>
+            <i  style="font-size: 25px" class="fa-solid fa-pen-to-square text-purple"></i>
+            <p class=" text-purple" style="font-size: 14px; margin-top: 10px;">မှတ်တမ်း</p>
           </a>
         </div>
       </div>
     </div>
-    <p style="color: #fff" class="mb-4">မိမိ ငွေဖြည့်မည့်ဘဏ်တစ်ခုရွေးပါ</p>
+    <p  class="mb-4 text-purple">မိမိ ငွေဖြည့်မည့်ဘဏ်တစ်ခုရွေးပါ</p>
     <div class="top-up-card row">
       @foreach ($banks as $bank)
         <div class="col-md-2 col-6 mb-4">
