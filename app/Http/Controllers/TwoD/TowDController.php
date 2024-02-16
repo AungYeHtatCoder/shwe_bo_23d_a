@@ -209,7 +209,7 @@ class TowDController extends Controller
 
         DB::commit();
         session()->flash('SuccessRequest', 'Successfully placed bet.');
-        return redirect()->route('user.two-digit-user-data.morning')->with('success', 'Bet placed successfully.');
+        return redirect()->route('user.two-digit-user-data.morning')->with('success', 'အောင်မြင်ပါသည်။');
         //return redirect()->back()->with('message', 'Bet placed successfully.');
     } catch (\Exception $e) {
         DB::rollback();
@@ -269,7 +269,7 @@ class TowDController extends Controller
 
             DB::commit();
             session()->flash('SuccessRequest', 'Successfully placed bet.');
-            return redirect()->route('user.two-digit-user-data.afternoon')->with('message', 'Bet placed successfully.');
+            return redirect()->route('user.two-digit-user-data.afternoon')->with('success', 'အောင်မြင်ပါသည်။');
             //return redirect()->back()->with('message', 'Bet placed successfully.');
         } catch (\Exception $e) {
             DB::rollback();
