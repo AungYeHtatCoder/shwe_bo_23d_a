@@ -182,3 +182,4 @@ Route::group(['prefix' => 'user', 'as' => 'user.', 'namespace' => 'App\Http\Cont
 // welcome page for user route
 Route::get('/promotion', [App\Http\Controllers\User\WelcomeController::class, 'promo'])->name('promotion');
 Route::get('/promotion-detail/{id}', [App\Http\Controllers\User\WelcomeController::class, 'promotionDetail'])->name('promotionDetail');
+// all ok
