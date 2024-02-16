@@ -29,27 +29,27 @@
         <div class="d-flex justify-content-between">
             <div>
                 <div>
-                    <i class="fas fa-wallet me-2"></i><span>Balance</span>
-                    <span class="d-block" id="userBalance" data-balance="{{ Auth::user()->balance }}">{{ number_format(Auth::user()->balance) }} MMK</span>
+                    <i class="fas fa-wallet me-2 text-purple"></i><span class="text-purple">Balance</span>
+                    <span class="d-block text-purple" id="userBalance" data-balance="{{ Auth::user()->balance }}">{{ number_format(Auth::user()->balance) }} MMK</span>
                 </div>
                 <div class="mt-4">
-                    <small class="d-block mb-2">2D (12:00PM)</small>
+                    <small class="d-block mb-2 text-purple">2D (12:00PM)</small>
                     <a href="{{ route('user.twod-quick-play-index') }}" class="btn btn-sm btn-purple text-white">အမြန်ရွေး</a>
                 </div>
             </div>
             <div>
-                <small class="d-block mb-2 text-end">
-                    <i class="fas fa-clock text-white me-1"></i>
+                <small class="d-block mb-2 text-end text-purple">
+                    <i class="fas fa-clock text-purple me-1"></i>
                     ပိတ်ရန်ကျန်ချိန်
                 </small>
-                <small class="d-block text-end" id="todayDate"></small>
-                <small class="d-block text-end" id="currentTime"></small>
-                <small class="d-block text-end" id="sessionInfo"></small>
+                <small class="d-block text-end text-purple" id="todayDate"></small>
+                <small class="d-block text-end text-purple" id="currentTime"></small>
+                <small class="d-block text-end text-purple" id="sessionInfo"></small>
             </div>
         </div>
         <div class="d-flex justify-content-end mt-3">
             <div class="mb-3 text-end">
-                <label for="" class="form-label"><small><i class="fas fa-coins me-2 text-white"></i>ထိုးကြေး</small></label>
+                <label for="" class="form-label"><small class="text-purple"><i class="fas fa-coins me-2 text-purple"></i>ထိုးကြေး</small></label>
                 <div class="input-group">
                     <input type="text" name="amount" id="all_amount" class="form-control form-control-sm text-center" placeholder="ပမာဏ">
                     <button class="btn btn-sm btn-purple text-white" type="button"  id="permuteButton" onclick="permuteDigits()"><small>ပတ်လည်</small></button>
@@ -63,21 +63,22 @@
                @csrf
                <div class="row">
                  <div class="col-md-12">
-                   <label for="selected_digits" style="font-size: 14px;">ရွှေးချယ်ထားသောဂဏန်းများ</label>
+                   <label class="text-purple" for="selected_digits" style="font-size: 14px;">ရွှေးချယ်ထားသောဂဏန်းများ</label>
                    <input type="text" name="selected_digits" id="selected_digits" class="form-control form-control-sm mt-1" placeholder="Enter Digits" >
+                   
                  </div>
                 <div class="col-md-12 mt-2">
-                   <label for="totalAmount" style="font-size: 14px;">ပတ်လည်ဂဏန်းများ</label>
+                   <label class="text-purple" for="totalAmount" style="font-size: 14px;">ပတ်လည်ဂဏန်းများ</label>
                    <input type="text" id="permulated_digit" class="form-control form-control-sm" readonly>
                 </div>
                 <div id="amountInputs" class="col-md-12 mb-3 d-none"></div>
                 <div class="col-md-12 mt-2">
-                   <label for="totalAmount" style="font-size: 14px;"><i class="fas fa-coins me-2 text-white"></i>စုစုပေါင်းထိုးကြေး</label>
+                   <label class="text-purple" for="totalAmount" style="font-size: 14px;"><i class="fas fa-coins me-2 text-purple"></i>စုစုပေါင်းထိုးကြေး</label>
                    <input type="text" id="totalAmount" name="totalAmount" class="form-control form-control-sm mt-1" readonly>
                 </div>
                 <div class="d-flex justify-content-end mt-4">
-                    <button class="btn btn-sm btn-danger me-3" type="reset">ဖျက်မည်</button>
-                    <a href="{{ route('user.twod-play-confirm-12pm') }}" onclick="storeSelectionsInLocalStorage()" class="btn btn-sm btn-purple text-white" style="font-size: 14px;">ထိုးမည်</a>
+                    <button class="btn btn-sm btn-outline-purple me-2" type="reset" style="font-size: 14px;">ဖျက်မည်</button>
+                    <a href="{{ route('user.twod-play-confirm-12pm') }}" onclick="storeSelectionsInLocalStorage()" class="btn btn-sm btn-purple text-white me-2" style="font-size: 14px;">ထိုးမည်</a>
                 </div>
                 <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
                </div>
@@ -94,29 +95,30 @@
 
     <!-- Heading -->
     <!-- 2D Numbers start -->
-    <div class="container mb-5 mt-3" id="twoD">
+    <div class="mb-5 mt-3" id="twoD">
       <div class="twoDCard">
         @foreach ($twoDigits as $digit)
         @php
         $totalBetAmountForTwoDigit = DB::table('lottery_two_digit_copy')
         ->where('two_digit_id', $digit->id)
         ->sum('sub_amount');
+        $break = App\Models\TwoD\TwoDLimit::latest()->first()->two_d_limit;
+        $betAmount = $totalBetAmountForTwoDigit;
+        $remainAmount = $break - $betAmount; 
+        $percentage = ($betAmount / $break) * 100;
+        $remainPercent = 100 - $percentage;
         @endphp
 
-        <button type="button" class="number_card rounded-3"  onclick="selectDigit('{{ $digit->two_digit }}', this)">
+        <button type="button" class="number_card rounded-3 border border-0 py-2"  onclick="selectDigit('{{ $digit->two_digit }}', '{{ $digit->two_digit }}', this)">
           <h5>{{ $digit->two_digit }}</h5>
           <div class="progress">
 
             @php
-            $totalAmount = 900000;
-            $betAmount = $totalBetAmountForTwoDigit; // the amount already bet
-            $remainAmount = $totalAmount - $betAmount; // the amount remaining that can be bet
-            $percentage = ($betAmount / $totalAmount) * 100;
-            $remainPercent = 100 - $percentage;
+
             @endphp
 
             <div class="progress-bar bg-{{ $remainPercent >= 50 ? 'success' : 'warning' }}" role="progressbar" style="width: {{ $remainPercent }}%;">
-                <small class="text-{{ $remainPercent >= 50 ? 'white' : 'dark' }}">{{ $remainingAmounts[$digit->id] }}</small>
+                <small class="text-{{ $remainPercent >= 50 ? 'white' : 'dark' }}">{{ $remainAmount }}</small>
             </div>
 
           </div>
@@ -185,7 +187,7 @@
     });
   }
 
-function selectDigit(num, element) {
+function selectDigit(num, remain, element) {
     const selectedInput = document.getElementById('selected_digits');
     const amountInputsDiv = document.getElementById('amountInputs');
 
@@ -207,8 +209,6 @@ function selectDigit(num, element) {
         selectedDigits.push(num);
         selectedInput.value = selectedDigits.join(',');
         element.classList.add('selected');
-        // const amountLabel = document.createElement('label');
-        // amountLabel.textContent = 'ထိုးကြေးသတ်မှတ်ပါ ' + num;
         const amountInput = document.createElement('input');
         amountInput.setAttribute('type', 'number');
         amountInput.setAttribute('name', 'amounts[' + num + ']');
@@ -217,8 +217,8 @@ function selectDigit(num, element) {
         amountInput.setAttribute('min', '100');
         amountInput.setAttribute('max', '1000000');
         amountInput.setAttribute('class', 'form-control mt-2');
-        // amountInputsDiv.appendChild(amountLabel);
         amountInputsDiv.appendChild(amountInput);
+        
     }
 
     // Store the current selections to local storage
