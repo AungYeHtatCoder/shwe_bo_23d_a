@@ -275,6 +275,18 @@
   box-shadow: 1px 2px 3px #FF3353;
 }
 
+.btn-outline-purple {
+  border: 1px solid #ff758a;
+  box-shadow: 1px 2px 3px #FF3353;
+  margin-bottom: 10px;
+  background: #fff !important;
+  color: #FF3353;
+}
+.btn-outline-purple:hover{
+  background: #FF3353 !important;
+  color: #fff;
+}
+
 .bg-purple {
   background: #FF3353;
   border: 1px solid #ff758a;
@@ -307,7 +319,7 @@ marquee {
 /* 2d 3d */
 .digit-card {
   width: 100%;
-  background-color: #8f00e1 !important;
+  background-color: #FF3353 !important;
   color: white;
   text-align: center;
   padding: 10px;
@@ -345,8 +357,8 @@ footer {
 
 /* 2D number card start */
 .number_card {
-  background: linear-gradient(6deg, rgba(102, 0, 149, 1) 0%, rgba(52, 0, 87, 1) 56%);
-  box-shadow: 2px 3px 4px rgb(208, 0, 255);
+  background: #FF3353;
+  box-shadow: 2px 3px 4px #ff8080;
   cursor: pointer;
 }
 
