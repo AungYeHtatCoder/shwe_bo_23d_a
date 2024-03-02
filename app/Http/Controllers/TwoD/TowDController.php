@@ -9,6 +9,7 @@ use App\Models\TwoD\TwoDigit;
 use App\Models\TwoD\HeadDigit;
 use App\Models\TwoD\TwoDLimit;
 use App\Models\Admin\LotteryMatch;
+use App\Models\TwoD\CloseTwoDigit;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
@@ -76,7 +77,7 @@ class TowDController extends Controller
     }
     $lottery_matches = LotteryMatch::where('id', 1)->whereNotNull('is_active')->first();
 
-    return view('user.two_d.12_pm.index', compact('twoDigits', 'remainingAmounts', 'lottery_matches'));
+    return view('user.two_d.4_pm.index', compact('twoDigits', 'remainingAmounts', 'lottery_matches'));
     }
 
     public function play_confirm4pm()
@@ -94,7 +95,7 @@ class TowDController extends Controller
     }
     $lottery_matches = LotteryMatch::where('id', 1)->whereNotNull('is_active')->first();
 
-    return view('user.two_d.12_pm.play_confirm', compact('twoDigits', 'remainingAmounts', 'lottery_matches'));
+    return view('user.two_d.4_pm.play_confirm', compact('twoDigits', 'remainingAmounts', 'lottery_matches'));
     }
 
 //     public function store(Request $request)
@@ -161,7 +162,7 @@ class TowDController extends Controller
     // 12 pm two d play 
     public function store(Request $request)
     {
-    //Log::info($request->all());
+    Log::info($request->all());
     $validatedData = $request->validate([
         'selected_digits' => 'required|string',
         'amounts' => 'required|array',
@@ -180,6 +181,25 @@ class TowDController extends Controller
             return redirect()->back()->with('error', "Bets on numbers starting with '{$headDigitOfSelected}' are not allowed.");
         }
     }
+        $closedTwoDigits = CloseTwoDigit::pluck('digit')->map(function ($digit) {
+    // Ensure formatting as a two-digit string
+    return sprintf('%02d', $digit);
+})->toArray();
+
+$errors = [];
+foreach ($request->input('amounts') as $key => $value) {
+    // Assuming the structure is ['digit' => amount], directly use the key from the array
+    $twoDigitOfSelected = sprintf('%02d', $key);
+    if (in_array($twoDigitOfSelected, $closedTwoDigits)) {
+        $errors[] = "Bets on number '{$twoDigitOfSelected}' are not allowed.";
+    }
+}
+
+if (!empty($errors)) {
+    $errorMessage = implode(' ', $errors);
+    return redirect()->back()->with('error', $errorMessage);
+}
+
 
     $currentSession = $this->determineSession();
     $user = Auth::user();
@@ -218,9 +238,11 @@ class TowDController extends Controller
     }
     }
 
+
     // 4:30 pm two d play
     public function store4pm(Request $request)
     {
+        //dd($request->all());
         //Log::info($request->all());
         $validatedData = $request->validate([
             'selected_digits' => 'required|string',
@@ -231,16 +253,32 @@ class TowDController extends Controller
         ]);
 
         // Fetch all head digits not allowed
-        $headDigitsNotAllowed = HeadDigit::pluck('digit_one', 'digit_two', 'digit_three')->flatten()->unique()->toArray();
+         $headDigitsNotAllowed = HeadDigit::pluck('digit_one', 'digit_two', 'digit_three')->flatten()->unique()->toArray();
 
-        // Check if any selected digit starts with the head digits not allowed
-        foreach ($request->amounts as $two_digit_string => $sub_amount) {
-            $headDigitOfSelected = substr($two_digit_string, 0, 1); // Extract the head digit
-            if (in_array($headDigitOfSelected, $headDigitsNotAllowed)) {
-                return redirect()->back()->with('error', "Bets on numbers starting with '{$headDigitOfSelected}' are not allowed.");
-            }
+    // Check if any selected digit starts with the head digits not allowed
+    foreach ($request->amounts as $two_digit_string => $sub_amount) {
+        $headDigitOfSelected = substr($two_digit_string, 0, 1); // Extract the head digit
+        if (in_array($headDigitOfSelected, $headDigitsNotAllowed)) {
+            return redirect()->back()->with('error', "Bets on numbers starting with '{$headDigitOfSelected}' are not allowed.");
         }
+    }
 
+         //$closedDigits = CloseTwoDigit::pluck('digit')->map(function ($digit) {
+        //return sprintf('%02d', $digit)
+   // })->toArray();
+            $closedDigits = CloseTwoDigit::all()->pluck('digit')->map(function ($digit) {
+                return sprintf('%02d', $digit);
+            })->toArray();
+
+    // Iterate over submitted bets
+    foreach ($request->input('amounts') as $bet) {
+        $betDigit = sprintf('%02d', $bet['num']); // Format the bet number
+
+        // Check if the bet is on a closed digit
+        if (in_array($betDigit, $closedDigits)) {
+            return redirect()->back()->with('error', "Bets on number '{$betDigit}' are not allowed.");
+        }
+    }
         $currentSession = $this->determineSession();
         $user = Auth::user();
 
@@ -304,22 +342,48 @@ class TowDController extends Controller
         ]);
     }
 
-    private function processBet($two_digit_string, $sub_amount, $limitAmount, $lottery)
-    {
-        $two_digit_id = $two_digit_string === '00' ? 100 : intval($two_digit_string);
-        $totalBetAmount = DB::table('lottery_two_digit_copy')->where('two_digit_id', $two_digit_id)->sum('sub_amount');
+    // new logic 
+    private function processBet($betDigit, $subAmount, $limitAmount, $lottery)
+{
+    // Assuming $betDigit comes directly from the user input and represents the two-digit number they're betting on
+    $twoDigit = TwoDigit::where('two_digit', sprintf('%02d', $betDigit))->first();
 
-        if ($totalBetAmount + $sub_amount <= $limitAmount) {
-            LotteryTwoDigitPivot::create([
-                'lottery_id' => $lottery->id,
-                'two_digit_id' => $two_digit_id,
-                'sub_amount' => $sub_amount,
-                'prize_sent' => false,
-            ]);
-        } else {
-            throw new \Exception('The betting limit has been reached.');
-        }
+    if (!$twoDigit) {
+        // Optionally handle the case where the two-digit number doesn't exist in the database
+        throw new \Exception("Invalid bet digit: {$betDigit}");
     }
+
+    $totalBetAmount = DB::table('lottery_two_digit_copy')->where('two_digit_id', $twoDigit->id)->sum('sub_amount');
+
+    if ($totalBetAmount + $subAmount > $limitAmount) {
+        throw new \Exception('The betting limit has been reached.');
+    }
+
+    LotteryTwoDigitPivot::create([
+        'lottery_id' => $lottery->id,
+        'two_digit_id' => $twoDigit->id,
+        'bet_digit' => $betDigit, // Assuming bet_digit is a string representation of the bet
+        'sub_amount' => $subAmount,
+        'prize_sent' => false,
+    ]);
+}
+
+    // private function processBet($two_digit_string, $sub_amount, $limitAmount, $lottery)
+    // {
+    //     $two_digit_id = $two_digit_string === '00' ? 100 : intval($two_digit_string);
+    //     $totalBetAmount = DB::table('lottery_two_digit_copy')->where('two_digit_id', $two_digit_id)->sum('sub_amount');
+
+    //     if ($totalBetAmount + $sub_amount <= $limitAmount) {
+    //         LotteryTwoDigitPivot::create([
+    //             'lottery_id' => $lottery->id,
+    //             'two_digit_id' => $two_digit_id,
+    //             'sub_amount' => $sub_amount,
+    //             'prize_sent' => false,
+    //         ]);
+    //     } else {
+    //         throw new \Exception('The betting limit has been reached.');
+    //     }
+    // }
 
 
 

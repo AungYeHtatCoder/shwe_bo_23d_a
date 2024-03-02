@@ -14,10 +14,13 @@ use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\Wallet\BankController;
 use App\Http\Controllers\TwoD\TwoDQicklyPlayController;
+use App\Http\Controllers\Admin\TwoD\DataLejarController;
+use App\Http\Controllers\Admin\TwoD\TwoDLagarController;
 use App\Http\Controllers\Admin\TwoD\TwoDLimitController;
 use App\Http\Controllers\TwoD\TwoDigitUserDataController;
 use App\Http\Controllers\Admin\TwoD\TwoDigitDataController;
 use App\Http\Controllers\Admin\ThreeD\ThreeDLimitController;
+use App\Http\Controllers\Admin\TwoD\CloseTwoDigitController;
 use App\Http\Controllers\Admin\TwoD\TwodRoleLimitController;
 use App\Http\Controllers\Admin\Wallet\TransferLogController;
 use App\Http\Controllers\Admin\TwoD\HeadDigitCloseController;
@@ -61,6 +64,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'App\Http\Co
     Route::put('/change-join-date', [ProfileController::class, 'JoinDate'])->name('addJoinDate');
     // head digit close 
     Route::resource('head-digit-close', HeadDigitCloseController::class);
+    // two-digit-close resource route
+    Route::resource('two-digit-close', CloseTwoDigitController::class);
+    // morning - lajar 
+    Route::get('/morning-lajar', [TwoDLagarController::class, 'showData'])->name('morning-lajar');
+    // two digit data
+    Route::get('/two-digit-lejar-data', [DataLejarController::class, 'showData'])->name('two-digit-lejar-data');
     // get all two digit data 
     Route::get('/two-digit-data-morning', [TwoDigitDataController::class, 'morningData'])->name('two-digit-data.morning');
     Route::get('/two-digit-data-afternoon', [TwoDigitDataController::class, 'afternoonData'])->name('two-digit-data.afternoon');

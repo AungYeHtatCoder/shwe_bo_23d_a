@@ -15,6 +15,7 @@ return new class extends Migration
         $table->id();
         $table->unsignedBigInteger('lottery_id');
         $table->unsignedBigInteger('two_digit_id');
+        $table->string('bet_digit');
         // sub amount
         $table->integer('sub_amount')->default(0);
         //prize_sent 

@@ -18,10 +18,6 @@ class TwoDigitUserDataController extends Controller
     public function index()
     {
         $morningData = $this->twoDigitGetAllDataService->getUserTwoDigitData('morning');
-        // $userEveningTwoDigitData = $this->twoDigitGetAllDataService->getUserTwoDigitData('evening');
-
-        // Assuming 'user.two_digit_data.index' is the path to your blade file
-        // return view('user.two_d.history.morning_history', compact('userMorningTwoDigitData'));
         return view('user.two_d.history.morning_history', [
             'morningData' => $morningData['data'], // Access the data part
         'totalMorningSubAmount' => $morningData['totalSubAmount'],
@@ -33,7 +29,10 @@ class TwoDigitUserDataController extends Controller
         $userEveningTwoDigitData = $this->twoDigitGetAllDataService->getUserTwoDigitData('evening');
 
         // Assuming 'user.two_digit_data.index' is the path to your blade file
-        return view('user.two_d.history.evening_history', compact('userEveningTwoDigitData'));
+        return view('user.two_d.history.evening_history', [
+            'eveningData' => $userEveningTwoDigitData['data'], // Access the data part
+            'totalEveningSubAmount' => $userEveningTwoDigitData['totalSubAmount'],
+        ]);
     
     }
 }

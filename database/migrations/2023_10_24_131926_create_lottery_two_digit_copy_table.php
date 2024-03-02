@@ -15,9 +15,8 @@ return new class extends Migration
         $table->id();
         $table->unsignedBigInteger('lottery_id');
         $table->unsignedBigInteger('two_digit_id');
-        // sub amount
+        $table->string('bet_digit');
         $table->integer('sub_amount')->default(0);
-        //prize_sent 
         $table->boolean('prize_sent')->default(false);
         $table->foreign('lottery_id')->references('id')->on('lotteries')->onDelete('cascade');
         $table->foreign('two_digit_id')->references('id')->on('two_digits')->onDelete('cascade');

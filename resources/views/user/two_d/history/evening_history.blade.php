@@ -45,20 +45,33 @@
                 <th>Time</th>
             </tr>
         </thead>
-        <tbody>
-            @foreach($userEveningTwoDigitData as $index => $data)
+<tbody>
+            @foreach($eveningData as $index => $data)
                 @foreach($data->twoDigits as $twoDigit)
                 <tr>
                     <td>{{ $index + 1 }}</td>
-                    <td>{{ $twoDigit->two_digit }}</td>
+                    {{-- <td>{{ $twoDigit->two_digit }}</td> --}}
+                     <td>{{ $twoDigit->pivot->bet_digit }}</td> {{-- Displaying bet_digit --}}
                     <td>{{ $twoDigit->pivot->sub_amount }}</td>
-                    <td>{{ $twoDigit->pivot->prize_sent ? 'Yes' : 'No' }}</td>
+                    <td>
+                        @if($twoDigit->pivot->prize_sent == 1)
+                            <span class="text-success">Win</span>
+                        @else
+                            <span class="text-danger">Pending</span>
+                        @endif
+                        
+                    </td>
                     <td>{{ $twoDigit->pivot->created_at->format('d-m-Y H:i:s') }}</td>
                 </tr>
                 @endforeach
             @endforeach
         </tbody>
    </table>
+   {{-- show total amount --}}
+    <div class="text-center">
+     <h5 class="text-white">Total Evening Sub Amount: {{ $totalEveningSubAmount }}
+ MMK</h5>
+    </div>
    {{-- @endif --}}
 
   </div>

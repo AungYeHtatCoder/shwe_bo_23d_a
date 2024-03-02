@@ -77,7 +77,7 @@
                 </div>
                 <div class="d-flex justify-content-end mt-4">
                     <button class="btn btn-sm btn-danger me-3" type="reset">ဖျက်မည်</button>
-                    <a href="{{ route('user.twod-play-confirm-4pm') }}" onclick="storeSelectionsInLocalStorage()" class="btn btn-sm btn-purple text-white" style="font-size: 14px;">ထိုးမည်</a>
+                    <a href="{{ url('user/two-d-play-4-30-evening-confirm') }}" onclick="storeSelectionsInLocalStorage()" class="btn btn-sm btn-purple text-white" style="font-size: 14px;">ထိုးမည်</a>
                 </div>
                 <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
                </div>
