@@ -41,10 +41,14 @@
 @include('user_layouts.navbar')
 <div class="container-fluid py-5 mt-5">
  <div class="nine-thirty pb-5 pt-2">
-  <h5 class="text-center">2D မနက်ပိုင်းမှတ်တမ်း</h5>
+  <h5 class="text-center text-purple">2D မနက်ပိုင်းမှတ်တမ်း</h5>
   <div class="card mt-2 bg-transparent shadow border border-1">
    <div class="card-header">
+<<<<<<< HEAD
     <p class="text-center text-dark">
+=======
+    <p class="text-center text-purple">
+>>>>>>> c829e29f6819f9d9fb2fc02b3970787172df5524
      <script>
       var d = new Date();
       document.write(d.toLocaleDateString());
@@ -73,25 +77,36 @@
    {{-- @if($winners->isEmpty())
    <p style="color: #f5bd02">No winners found for the past month.</p>
    @else --}}
+<<<<<<< HEAD
    <table class="winner-table table table-striped">
+=======
+   <table class="table text-center">
+>>>>>>> c829e29f6819f9d9fb2fc02b3970787172df5524
     <thead>
             <tr>
-                <th>#</th>
-                <th>Two Digit</th>
-                <th>Sub Amount</th>
-                <th>Prize Sent</th>
-                <th>Time</th>
+                <th class="text-purple">#</th>
+                <th class="text-purple">Two Digit</th>
+                <th class="text-purple">Sub Amount</th>
+                <th class="text-purple">Prize Sent</th>
+                <th class="text-purple">Date</th>
             </tr>
         </thead>
         <tbody>
             @foreach($morningData as $index => $data)
                 @foreach($data->twoDigits as $twoDigit)
                 <tr>
+<<<<<<< HEAD
                     <td>{{ $index + 1 }}</td>
                     {{-- <td>{{ $twoDigit->two_digit }}</td> --}}
                      <td>{{ $twoDigit->pivot->bet_digit }}</td> {{-- Displaying bet_digit --}}
                     <td>{{ $twoDigit->pivot->sub_amount }}</td>
                     <td>
+=======
+                    <td class="text-purple">{{ $index + 1 }}</td>
+                    <td class="text-purple">{{ $twoDigit->two_digit }}</td>
+                    <td class="text-purple">{{ $twoDigit->pivot->sub_amount }}</td>
+                    <td class="text-purple">
+>>>>>>> c829e29f6819f9d9fb2fc02b3970787172df5524
                         @if($twoDigit->pivot->prize_sent == 1)
                             <span class="text-success">Win</span>
                         @else
@@ -99,7 +114,7 @@
                         @endif
                         
                     </td>
-                    <td>{{ $twoDigit->pivot->created_at->format('d-m-Y H:i:s') }}</td>
+                    <td class="text-purple">{{ $twoDigit->pivot->created_at->format('d-m-Y H:iA') }}</td>
                 </tr>
                 @endforeach
             @endforeach
@@ -107,7 +122,11 @@
    </table>
    {{-- show total amount --}}
     <div class="text-center">
+<<<<<<< HEAD
      <h5 class="text-dark">Total Morning Sub Amount: {{ $totalMorningSubAmount }}
+=======
+     <h5 class="text-purple">Total Morning Sub Amount: {{ number_format($totalMorningSubAmount) }}
+>>>>>>> c829e29f6819f9d9fb2fc02b3970787172df5524
  MMK</h5>
     </div>
    {{-- @endif --}}

@@ -15,15 +15,18 @@
     <div class=""
       style="padding-bottom:100px;">
     <div>
-      <h6 class="m-3 text-center text-white">ထိုးမည့်ဂဏန်းများ</h6>
+      <h6 class="m-3 text-center text-purple">ထိုးမည့်ဂဏန်းများ</h6>
       <table class="table text-center">
+        <thead>
+          <tr>
+            <th class="text-purple">စဉ်</th>
+            <th class="text-purple">ဂဏန်း</th>
+            <th class="text-purple">ငွေပမာဏ</th>
+            <th class="text-purple">ပြင် / ဖျက်</th>
+           </tr>
+        </thead>
        <tbody id="digit_data">
-        <tr>
-         <th>စဉ်</th>
-         <th>ဂဏန်း</th>
-         <th>ငွေပမာဏ</th>
-         <th>ပြင် / ဖျက်</th>
-        </tr>
+
 
        </tbody>
       </table>
@@ -131,16 +134,16 @@ function displayLocalStorageData() {
     const tr = document.createElement('tr');
 
     tr.innerHTML = `
-      <td>${index + 1}</td>
+      <td class="text-purple">${index + 1}</td>
       <td>
-        <span class="digit-display">${digit}</span>
+        <span class="digit-display text-purple">${digit}</span>
       </td>
       <td>
-        <input type="text" name="amounts[${digit}]" class="form-control" value="${amount}" readonly>
+        <input type="text" name="amounts[${digit}]" class="form-control form-control-sm w-75 text-center mx-auto" value="${amount}" readonly>
       </td>
       <td>
         <div class="d-flex justify-content-center">
-          <a href="#" onclick="editDigit('${digit}'); return false;"><i class="fa-regular fa-pen-to-square mx-3"></i></a>
+          <a href="#" onclick="editDigit('${digit}'); return false;"><i class="fa-regular fa-pen-to-square text-success mx-3"></i></a>
           <a href="#" onclick="removeDigit('${digit}'); return false;"><i class="fa-regular fa-trash-can text-danger"></i></a>
         </div>
       </td>
@@ -285,4 +288,3 @@ document.querySelector('form').addEventListener('submit', function(event) {
 </script>
 
 @endsection
-

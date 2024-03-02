@@ -27,9 +27,9 @@
     <!-- subnav -->
     <!-- winner result -->
     <div class="row my-4">
-        <div class="text-center text-white">
-            <h1 class="" style="font-size:90px;" id="live_2d">07</h1>
-            <p>Updated: <span id="live_updated_time">10-0-2023 4:30:00PM</span></p>
+        <div class="text-center">
+            <h1 class=" text-purple" style="font-size:90px;" id="live_2d">07</h1>
+            <p class=" text-purple">Updated: <span id="live_updated_time" class=" text-purple">10-0-2023 4:30:00PM</span></p>
             </div>
         <div class="text-center">
             <button class="btn btn-purple text-white" data-bs-toggle="modal" data-bs-target="#playtwod">ထိုးမည်</button>
@@ -71,7 +71,7 @@
             </div> --}}
             <div class="playTime">
                 {{-- @if ($currentTime->between($start9Time, $end12Time)) --}}
-                <a href="{{ route('user.twod-play-index-12pm') }}" class="btn btn-purple text-purple w-100">12:00 PM</a>
+                <a href="{{ route('user.twod-play-index-12pm') }}" class="btn btn-purple text-white w-100">12:00 PM</a>
                 {{-- @else --}}
                 {{-- <span class="w-100 border-purple py-2 rounded d-block text-purple text-center">12:00 PM</span> --}}
                 {{-- @endif --}}
@@ -85,7 +85,7 @@
             </div> --}}
             <div class="playTime">
                 {{-- @if ($currentTime->between($start2Time, $end4Time)) --}}
-                <a href="{{ route('user.twod-play-index-4pm') }}" class="btn btn-purple text-purple w-100">04:30 PM</a>
+                <a href="{{ route('user.twod-play-index-4pm') }}" class="btn btn-purple text-white w-100">04:30 PM</a>
                 {{-- @else --}}
                 {{-- <span class="w-100 border-purple py-2 rounded d-block text-purple text-center">04:30 PM</span> --}}
                 {{-- @endif --}}
