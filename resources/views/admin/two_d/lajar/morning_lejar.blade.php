@@ -96,7 +96,7 @@ td{
              <table class="table table-bordered">
                 <thead style="background-color: #910503; color: #fff;">
                 <tr class="">
-                    @for ($i = 0; $i < 14; $i+=2)
+                    @for ($i = 0; $i < 20; $i+=2)
                         <th scope="col">N</th>
                         <th scope="col">Amount</th>
                     @endfor
@@ -104,7 +104,7 @@ td{
                 </thead>
                 <tbody>
                 {{-- Assuming $data is structured correctly --}}
-                @foreach(array_chunk($data, 7, true) as $chunk)
+                @foreach(array_chunk($data, 10, true) as $chunk)
                     <tr class="m-0 p-0">
                         @foreach($chunk as $two_digit => $details)
                             <td class="text-dark text-center" style="background-color: #fda6a5">{{ $two_digit }}</td>
