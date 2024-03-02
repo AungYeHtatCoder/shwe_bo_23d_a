@@ -55,6 +55,14 @@
 .table-font-myanmar {
     font-family: 'Pyidaungsu', sans-serif;
 }
+td{
+    padding: 0 !important;
+    margin:0 !important;
+    height: auto;
+    align-items: center;
+    justify-items: center;
+    align-self: center;
+}
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.32/dist/sweetalert2.min.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/material-icons@1.13.12/iconfont/material-icons.min.css">
@@ -86,33 +94,32 @@
                   <div class="container mb-5 mt-3" id="twoD">
                <div class="twoDCard">
              <table class="table table-bordered">
-        <thead>
-        <tr class="col-tr">
-            @for ($i = 0; $i < 14; $i+=2)
-                <th scope="col" class="n-row">N</th>
-                <th scope="col" class="n-row">Amount</th>
-            @endfor
-        </tr>
-        </thead>
-        <tbody>
-        {{-- Assuming $data is structured correctly --}}
-        @foreach(array_chunk($data, 7, true) as $chunk)
-            <tr>
-                @foreach($chunk as $two_digit => $details)
-                    <td class="text-dark" style="background-color: #ea8e25">{{ $two_digit }}</td>
-                    <td>
-                     @if(isset($details['morning']->total_sub_amount))
-                        {{ $details['morning']->total_sub_amount }}
-                    @else
-                        <p>-</p>
-                    @endif
-                    </td>
+                <thead style="background-color: #910503; color: #fff;">
+                <tr class="">
+                    @for ($i = 0; $i < 14; $i+=2)
+                        <th scope="col">N</th>
+                        <th scope="col">Amount</th>
+                    @endfor
+                </tr>
+                </thead>
+                <tbody>
+                {{-- Assuming $data is structured correctly --}}
+                @foreach(array_chunk($data, 7, true) as $chunk)
+                    <tr class="m-0 p-0">
+                        @foreach($chunk as $two_digit => $details)
+                            <td class="text-dark text-center" style="background-color: #fda6a5">{{ $two_digit }}</td>
+                            <td>
+                            @if(isset($details['morning']->total_sub_amount))
+                                {{ $details['morning']->total_sub_amount }}
+                            @else
+                                <p>-</p>
+                            @endif
+                            </td>
+                        @endforeach
+                    </tr>
                 @endforeach
-            </tr>
-        @endforeach
-        </tbody>
-    </table>
-                 
+                </tbody>
+            </table>
                </div>
              </div>
                </div>
