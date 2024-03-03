@@ -95,10 +95,10 @@ td{
                <div class="twoDCard">
              <table class="table table-bordered">
                 <thead style="background-color: #910503; color: #fff;">
-                <tr class="">
+                <tr>
                     @for ($i = 0; $i < 20; $i+=2)
-                        <th scope="col">N</th>
-                        <th scope="col">Amount</th>
+                        <th class="px-3 m-0 text-center">N</th>
+                        <th class="px-1 m-0 text-center">Amount</th>
                     @endfor
                 </tr>
                 </thead>
