@@ -32,16 +32,18 @@ class TwoDLagarService
 
     // Fetch evening session data
     $eveningData = DB::table('lottery_two_digit_pivot')
-                    ->select(
-                        'two_digit_id',
-                        DB::raw('SUM(sub_amount) as total_sub_amount'),
-                        DB::raw('GROUP_CONCAT(DISTINCT bet_digit) as bet_digits'),
-                        DB::raw('COUNT(*) as total_bets'),
-                        DB::raw('MAX(created_at) as latest_bet_time') // Get the latest `created_at` time for each group
-                    )
-                    ->whereBetween(DB::raw('TIME(created_at)'), [$eveningStart, $eveningEnd])
-                    ->groupBy('two_digit_id')
-                    ->get();
+                        ->join('lotteries', 'lottery_two_digit_pivot.lottery_id', '=', 'lotteries.id')
+                        ->select(
+                            'two_digit_id',
+                            DB::raw('SUM(sub_amount) as total_sub_amount'),
+                            DB::raw('GROUP_CONCAT(DISTINCT bet_digit) as bet_digits'),
+                            DB::raw('GROUP_CONCAT(DISTINCT prize_sent) as prize_sent'),
+                            DB::raw('COUNT(*) as total_bets'),
+                            DB::raw('MAX(lottery_two_digit_pivot.created_at) as latest_bet_time')
+                        )
+                        ->whereBetween('lottery_two_digit_pivot.created_at', [$eveningStart, $eveningEnd])
+                        ->groupBy('two_digit_id')
+                        ->get();
 
     return [
         'morning' => $morningData,

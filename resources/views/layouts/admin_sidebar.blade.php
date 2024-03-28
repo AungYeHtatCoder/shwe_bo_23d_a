@@ -183,6 +183,14 @@
                 @endcan
                 @can('admin_access')
                 <li class="nav-item">
+                  <a class="nav-link text-white " href="{{ route('admin.evening-lajar') }}">
+                    <span class="sidenav-mini-icon"> 2D </span>
+                    <span class="sidenav-normal  ms-2  ps-1"> ညနေပိုင်းလယ်ဂျာ </span>
+                  </a>
+                </li>
+                @endcan
+                @can('admin_access')
+                <li class="nav-item">
                   <a class="nav-link text-white " href="{{ route('admin.two-d-commission-index') }}">
                     <span class="sidenav-mini-icon"> 2D </span>
                     <span class="sidenav-normal  ms-2  ps-1"> ကော်မစ်ရှင်း </span>
@@ -201,7 +209,7 @@
                 <li class="nav-item">
                   <a class="nav-link text-white " href="{{ url('/admin/two-digit-data-morning')}}">
                     <span class="sidenav-mini-icon"> 2D </span>
-                    <span class="sidenav-normal  ms-2  ps-1">12:1 MorningHistory </span>
+                    <span class="sidenav-normal  ms-2  ps-1">12:1 မနက်မှတ်တမ်း </span>
                   </a>
                 </li>
                 @endcan
@@ -209,7 +217,7 @@
                 <li class="nav-item">
                   <a class="nav-link text-white " href="{{ url('/admin/two-digit-data-afternoon')}}">
                     <span class="sidenav-mini-icon"> 2D </span>
-                    <span class="sidenav-normal  ms-2  ps-1">4:30: EveningHistory </span>
+                    <span class="sidenav-normal  ms-2  ps-1">4:30: ညနေမှတ်တမ်း </span>
                   </a>
                 </li>
                 @endcan
@@ -217,7 +225,7 @@
                 <li class="nav-item">
                   <a class="nav-link text-white " href="{{ url('/admin/two-digit-data-morning-history')}}">
                     <span class="sidenav-mini-icon"> 2D </span>
-                    <span class="sidenav-normal  ms-2  ps-1">12:1: OneMonthHistory </span>
+                    <span class="sidenav-normal  ms-2  ps-1">12:1: တလမှတ်တမ်း </span>
                   </a>
                 </li>
                 @endcan
@@ -225,7 +233,7 @@
                 <li class="nav-item">
                   <a class="nav-link text-white " href="{{ url('/admin/two-digit-data-afternoon-history')}}">
                     <span class="sidenav-mini-icon"> 2D </span>
-                    <span class="sidenav-normal  ms-2  ps-1">4:30: OneMonthHistory </span>
+                    <span class="sidenav-normal  ms-2  ps-1">4:30: တလမှတ်တမ်း </span>
                   </a>
                 </li>
                 @endcan

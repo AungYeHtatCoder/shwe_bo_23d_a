@@ -17,13 +17,22 @@ class DataLejarController extends Controller
     }
 
     public function showData()
-{
+    {
     $sessionsData = $this->lotteryService->getTwoDigitsData();
     
     return view('admin.two_d.lajar.morning_lejar', [
         'data' => $sessionsData, 
         
     ]);
-}
+    }
+
+     public function showDataEvening()
+    {
+            $sessionsData = $this->lotteryService->getTwoDigitsData();
+            
+            return view('admin.two_d.lajar.evening_lejar', [
+                'data' => $sessionsData,
+            ]);
+    }
 
 }

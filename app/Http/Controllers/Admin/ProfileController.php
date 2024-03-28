@@ -215,10 +215,8 @@ class ProfileController extends Controller
         }
     }
 
-    // phone address update function
     public function PhoneAddressChange(Request $request)
     {
-        //dd($request->all());
         $request->validate([
             'phone' => 'required',
             'address' => 'required',
@@ -242,10 +240,6 @@ class ProfileController extends Controller
 
     public function KpayNoChange(Request $request)
     {
-        //dd($request->all());
-        // $request->validate([
-        //     'kpay_no' => 'required',
-        // ]);
 
         $user = User::find(Auth::user()->id);
 

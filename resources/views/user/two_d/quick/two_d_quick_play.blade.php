@@ -130,16 +130,16 @@
           <div class="quickmodal mb-5">
               <p class="m-3 fw-bold">ပတ်သီး</p>
               <div class="d-flex justify-content-around">
-                  <button class="btn btn-sm btn-purple text-purple" type="button" id="zero" >0</button>
-                  <button class="btn btn-sm btn-purple text-purple" type="button" id="one" >1</button>
-                  <button class="btn btn-sm btn-purple text-purple" type="button" id="two" >2</button>
-                  <button class="btn btn-sm btn-purple text-purple" type="button" id="three" >3</button>
-                  <button class="btn btn-sm btn-purple text-purple" type="button" id="four" >4</button>
-                  <button class="btn btn-sm btn-purple text-purple" type="button" id="five" >5</button>
-                  <button class="btn btn-sm btn-purple text-purple" type="button" id="six">6</button>
-                  <button class="btn btn-sm btn-purple text-purple" type="button" id="seven">7</button>
-                  <button class="btn btn-sm btn-purple text-purple" type="button" id="eight">8</button>
-                  <button class="btn btn-sm btn-purple text-purple" type="button" id="nine">9</button>
+                  <button class="btn btn-sm btn-purple text-purple" type="button" id="zero">0</button>
+                  <button class="btn btn-sm btn-purple text-purple" type="button" id="one">1</button>
+                  <button class="btn btn-sm btn-purple text-white" type="button" id="two">2</button>
+                  <button class="btn btn-sm btn-purple text-white" type="button" id="three" >3</button>
+                  <button class="btn btn-sm btn-purple text-white" type="button" id="four" >4</button>
+                  <button class="btn btn-sm btn-purple text-white" type="button" id="five" >5</button>
+                  <button class="btn btn-sm btn-purple text-white" type="button" id="six">6</button>
+                  <button class="btn btn-sm btn-purple text-white" type="button" id="seven">7</button>
+                  <button class="btn btn-sm btn-purple text-white" type="button" id="eight">8</button>
+                  <button class="btn btn-sm btn-purple text-white" type="button" id="nine">9</button>
               </div>
           </div>
       </div>
@@ -162,19 +162,19 @@
           <div class="quickmodal mb-5">
               <p class="m-3 fw-bold">ဘရိတ်</p>
               <div class="d-flex justify-content-between">
-                <button class="btn btn-sm btn-purple text-purple" type="button" id="zero_break_digit">0</button>
-                <button class="btn btn-sm btn-purple text-purple" type="button" id="one_break_digit">1/11</button>
-                <button class="btn btn-sm btn-purple text-purple" type="button" id="two_break_digit">2/12</button>
-                <button class="btn btn-sm btn-purple text-purple" type="button" id="three_break_digit">3/13</button>
-                <button class="btn btn-sm btn-purple text-purple" type="button" id="four_break_digit">4/14</button>
+                <button class="btn btn-sm btn-purple text-white" type="button" id="zero_break_digit">0</button>
+                <button class="btn btn-sm btn-purple text-white" type="button" id="one_break_digit">1/11</button>
+                <button class="btn btn-sm btn-purple text-white" type="button" id="two_break_digit">2/12</button>
+                <button class="btn btn-sm btn-purple text-white" type="button" id="three_break_digit">3/13</button>
+                <button class="btn btn-sm btn-purple text-white" type="button" id="four_break_digit">4/14</button>
 
               </div>
               <div class="d-flex justify-content-between mt-2">
-                <button class="btn btn-sm btn-purple text-purple" type="button" id="five_break_digit" >5/15</button>
-                <button class="btn btn-sm btn-purple text-purple" type="button" id="six_break_digit">6/16</button>
-                <button class="btn btn-sm btn-purple text-purple" type="button" id="seven_break_digit">7/17</button>
-                <button class="btn btn-sm btn-purple text-purple" type="button" id="eight_break_digit">8/18</button>
-                <button class="btn btn-sm btn-purple text-purple" type="button" id="nine_break_digit">9/19</button>
+                <button class="btn btn-sm btn-purple text-white" type="button" id="five_break_digit" >5/15</button>
+                <button class="btn btn-sm btn-purple text-white" type="button" id="six_break_digit">6/16</button>
+                <button class="btn btn-sm btn-purple text-white" type="button" id="seven_break_digit">7/17</button>
+                <button class="btn btn-sm btn-purple text-white" type="button" id="eight_break_digit">8/18</button>
+                <button class="btn btn-sm btn-purple text-white" type="button" id="nine_break_digit">9/19</button>
               </div>
           </div>
       </div>
@@ -198,12 +198,12 @@
           <div class="quickmodal mb-5">
               <p class="m-3 fw-bold">Single & Double</p>
               <div class="d-flex justify-content-around">
-                  <button class="btn btn-sm btn-purple text-purple" type="button" id="brother_digit">ညီအကို</button>
-                  <button class="btn btn-sm btn-purple text-purple" type="button" id="full_digit">ဆယ်ပြည့်</button>
-                  <button class="btn btn-sm btn-purple text-purple" type="button" id="odd">မမ</button>
-                  <button class="btn btn-sm btn-purple text-purple" type="button" id="even">စုံစုံ</button>
-                  <button class="btn btn-sm btn-purple text-purple" type="button" id="odd_same">မမ အပူး</button>
-                  <button class="btn btn-sm btn-purple text-purple" type="button" id="even_same">စုံစုံ အပူး</button>
+                  <button class="btn btn-sm btn-purple text-white" type="button" id="brother_digit">ညီအကို</button>
+                  <button class="btn btn-sm btn-purple text-white" type="button" id="full_digit">ဆယ်ပြည့်</button>
+                  <button class="btn btn-sm btn-purple text-white" type="button" id="odd">မမ</button>
+                  <button class="btn btn-sm btn-purple text-white" type="button" id="even">စုံစုံ</button>
+                  <button class="btn btn-sm btn-purple text-white" type="button" id="odd_same">မမ အပူး</button>
+                  <button class="btn btn-sm btn-purple text-white" type="button" id="even_same">စုံစုံ အပူး</button>
               </div>
           </div>
       </div>

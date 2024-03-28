@@ -56,6 +56,19 @@
                         <hr class="horizontal dark my-3">
                         <h5 class="mb-0"> {{ Auth::user()->balance }} MMK</h5>
                     </div>
+                    <div class="card-body pt-0 p-3 text-center">
+                    <form action="{{ route('admin.admin-update-balance', Auth::user()->id) }}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <div class="input-group input-group-outline is-valid my-3">
+                        <label class="form-label">Enter  Balance Amount</label>
+                        <input type="text" class="form-control" name="balance">
+                    </div>
+                    <div class="input-group input-group-outline is-valid my-3">
+                        <button type="submit" class="btn btn-primary">UpdateAdminBalance</button>
+                    </div>
+                       </form>
+                    </div>
                 </div>
 
                 <div class="card-body">

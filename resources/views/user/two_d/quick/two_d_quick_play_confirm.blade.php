@@ -1,7 +1,14 @@
 @extends('user_layouts.master')
 
 @section('style')
-
+<style>
+  .digit-display{
+    font-size: 20px;
+    font-weight: bold;
+    color: #007BFF;
+  
+  }
+</style>
 @endsection
 
 @section('content')
@@ -15,7 +22,7 @@
     <div class=""
       style="padding-bottom:100px;">
     <div>
-      <h6 class="m-3 text-center text-white">ထိုးမည့်ဂဏန်းများ</h6>
+      <h6 class="m-3 text-center text-info">ထိုးမည့်ဂဏန်းများ</h6>
       <table class="table text-center">
        <tbody id="digit_data">
         <tr>
@@ -140,7 +147,7 @@ function displayLocalStorageData() {
       </td>
       <td>
         <div class="d-flex justify-content-center">
-          <a href="#" onclick="editDigit('${digit}'); return false;"><i class="fa-regular fa-pen-to-square mx-3"></i></a>
+          <a href="#" onclick="editDigit('${digit}'); return false;"><i class="fas fa-pen mx-3 text-info"></i></a>
           <a href="#" onclick="removeDigit('${digit}'); return false;"><i class="fa-regular fa-trash-can text-danger"></i></a>
         </div>
       </td>
