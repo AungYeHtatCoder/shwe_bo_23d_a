@@ -184,7 +184,50 @@ public function twodWiners()
         $this->$column = $this->$column - $amount;
         return $this->save();
     }
-   
-    
 
+    public static function getUserThreeDigits($userId) {
+    $displayThreeDigits = Lotto::where('user_id', $userId)
+                               ->with('DisplayThreeDigits')
+                               ->get()
+                               ->pluck('DisplayThreeDigits')
+                               ->collapse(); 
+    $totalAmount = $displayThreeDigits->sum(function ($threeDigit) {
+        return $threeDigit->pivot->sub_amount;
+    });
+
+    return [
+        'threeDigit' => $displayThreeDigits,
+        'total_amount' => $totalAmount
+    ];
+}
+
+    public static function getAdminthreeDigitsOneMonthHistory()
+    {
+        $jackpots = Lotto::with('displayThreeDigitsOneMonthHistory')->get();
+
+        $displayJackpotDigits = $jackpots->flatMap(function ($jackpot) {
+            return $jackpot->displayThreeDigitsOneMonthHistory;
+        });
+        $totalAmount = $displayJackpotDigits->sum('pivot.sub_amount');
+
+        return [
+            'threeDigit' => $displayJackpotDigits,
+            'total_amount' => $totalAmount,
+        ];
+    }
+
+    public static function getAdminthreeDigitsHistory()
+    {
+        $jackpots = Lotto::with('displayThreeDigitsOneWeekHistory')->get();
+
+        $displayJackpotDigits = $jackpots->flatMap(function ($jackpot) {
+            return $jackpot->displayThreeDigitsOneWeekHistory;
+        });
+        $totalAmount = $displayJackpotDigits->sum('pivot.sub_amount');
+
+        return [
+            'threeDigit' => $displayJackpotDigits,
+            'total_amount' => $totalAmount,
+        ];
+    }
 }

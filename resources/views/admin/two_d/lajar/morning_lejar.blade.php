@@ -76,6 +76,9 @@ td{
                     <div class="d-lg-flex">
                         <div>
                             <h5 class="mb-0">2D မနက်ပိုင်းလယ်ဂျာ ပေါင်းချုပ် စာရင်း  Dashboard
+                                <span>
+                                    <a href="{{ url('admin/morning-lajar') }}" class="btn btn-outline-primary btn-sm ms-4">Back</a>
+                                </span>
                             </h5>
 
                         </div>

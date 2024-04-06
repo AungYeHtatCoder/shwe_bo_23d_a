@@ -44,7 +44,7 @@
         <div class="col-6 mb-4">
             <a href="{{ $game->link }}" target="__blank" class="text-decoration-none">
                 <img src="{{ $game->img_url }}" width="100%" class="rounded-4" alt="">
-                <span class="d-block text-center text-white mt-2">{{ $game->name }}</span>
+                <span class="d-block text-center text-info mt-2">{{ $game->name }}</span>
             </a>
         </div>
         @endforeach

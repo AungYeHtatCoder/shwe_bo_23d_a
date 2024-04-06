@@ -6,7 +6,7 @@
                 ©Copyright <script>
                   document.write(new Date().getFullYear())
                 </script>,
-                All Rights Reserved By <a href="#">Aladding 2D 3D</a>
+                All Rights Reserved By <a href="#">AMK Techno</a>
                 
               </div>
             </div>

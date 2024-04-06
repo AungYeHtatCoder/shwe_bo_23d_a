@@ -37,7 +37,7 @@
                             <h5 class="mb-0">2D ညနေပိုင်းလယ်ဂျာ ပေါင်းချုပ် စာရင်း  
                                 <span>
                                     <a href="{{ url('admin/evening-two-digit-lejar-data') }}" class="btn btn-primary btn-sm ms-4">
-                                        <i class="fas fa-angle-double-left"></i> လယ်ဂျာ
+                                        <i class="fas fa-angle-double-left"></i> နောက်တမျက်နာသို့
                                     </a>
                                 </span>
                             </h5>

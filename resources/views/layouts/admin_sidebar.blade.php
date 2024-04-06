@@ -87,6 +87,30 @@
           <li class="nav-item ">
             <div class="collapse " id="extra_profile">
               <ul class="nav nav-sm flex-column">
+                @can('admin_access')
+                <li class="nav-item">
+                  <a class="nav-link text-white " href="{{ route('admin.banners.index')}}">
+                    <span class="sidenav-mini-icon"> <i class="fas fa-wallet"></i> </span>
+                    <span class="sidenav-normal ms-2 ps-1"> ဘန်နာပုံထဲ့ရန် </span>
+                  </a>
+                </li>
+                @endcan
+                @can('admin_access')
+                <li class="nav-item">
+                  <a class="nav-link text-white " href="{{ route('admin.text.index')}}">
+                    <span class="sidenav-mini-icon"> <i class="fas fa-wallet"></i> </span>
+                    <span class="sidenav-normal ms-2 ps-1"> ဘန်နာစာသားထဲ့ရန် </span>
+                  </a>
+                </li>
+                @endcan
+                @can('admin_access')
+                <li class="nav-item">
+                  <a class="nav-link text-white " href="{{ route('admin.games.index')}}">
+                    <span class="sidenav-mini-icon"> <i class="fas fa-wallet"></i> </span>
+                    <span class="sidenav-normal ms-2 ps-1"> Game-ကြေငြာထဲ့ရန် </span>
+                  </a>
+                </li>
+                @endcan
                 @php
                   $cashIn = App\Models\Admin\CashInRequest::all()->count();
                   $cashOut = App\Models\Admin\CashOutRequest::all()->count();
@@ -149,6 +173,16 @@
           <li class="nav-item ">
             <div class="collapse " id="twod_profile">
               <ul class="nav nav-sm flex-column">
+                @can('admin_access')
+                 <li class="nav-item">
+                  <a class="nav-link text-white " href="{{ url('/admin/two-d-commission') }}">
+                    <i class="fas fa-coins"></i>
+                    <span class="sidenav-normal  ms-2  ps-1"> 
+                      2D ကောင်မရှင်းသတ်မှတ်ရန်
+                    </span>
+                  </a>
+                </li>
+                @endcan
                 @can('admin_access')
                 <li class="nav-item">
                   <a class="nav-link text-white " href="{{ route('admin.role-limits.index')}}">
@@ -249,20 +283,30 @@
     {{-- 3d management --}}
     @can('admin_access')
     <li class="nav-item mt-3">
-      <h6 class="ps-4  ms-2 text-uppercase text-xs font-weight-bolder text-white">3D-Management</h6>
+      <h6 class="ps-4  ms-2 text-uppercase text-xs font-weight-bolder text-white">3D-စီမံရန်</h6>
     </li>
     @endcan
     @can('admin_access')
     <li class="nav-item">
       <a data-bs-toggle="collapse" href="#threed_profile" class="nav-link text-white" aria-controls="threed" role="button" aria-expanded="false">
         <i class="material-icons-round {% if page.brand == 'RTL' %}ms-2{% else %} me-2{% endif %}">manage_accounts</i>
-        <span class="nav-link-text ms-2 ps-1">3D Control</span>
+        <span class="nav-link-text ms-2 ps-1">3D ထိန်းချုပ်ရန်</span>
       </a>
       <div class="collapse show" id="threed">
         <ul class="nav">
           <li class="nav-item ">
             <div class="collapse " id="threed_profile">
               <ul class="nav nav-sm flex-column">
+                @can('admin_access')
+                <li class="nav-item">
+                  <a class="nav-link text-white " href="{{ url('/admin/three-d-commission') }}">
+                    <i class="fas fa-coins"></i>
+                    <span class="sidenav-normal  ms-2  ps-1"> 
+                      3D ကောင်မရှင်းသတ်မှတ်ရန်
+                    </span>
+                  </a>
+                </li>
+                @endcan
                 @can('admin_access')
                 <li class="nav-item">
                   <a class="nav-link text-white " href="{{ route('admin.three-digit-limit.index') }}">
@@ -273,17 +317,42 @@
                 @endcan
                 @can('admin_access')
                 <li class="nav-item">
-                  <a class="nav-link text-white " href="{{ route('admin.roles.index') }}">
-                    <span class="sidenav-mini-icon"> U R </span>
-                    <span class="sidenav-normal  ms-2  ps-1"> User's Roles </span>
+                  <a class="nav-link text-white " href="{{ route('admin.three-d-role-limits.index') }}">
+                    <span class="sidenav-mini-icon"> 3D </span>
+                    <span class="sidenav-normal  ms-2  ps-1"> RoleLimit-သတ်မှတ်ရန် </span>
                   </a>
                 </li>
                 @endcan
                 @can('admin_access')
                 <li class="nav-item">
-                  <a class="nav-link text-white " href="{{ route('admin.users.index')}}">
-                    <span class="sidenav-mini-icon"> U </span>
-                    <span class="sidenav-normal  ms-2  ps-1"> Users </span>
+                  <a class="nav-link text-white " href="{{ route('admin.three-digit-close.index')}}">
+                    <span class="sidenav-mini-icon"> 3D </span>
+                    <span class="sidenav-normal  ms-2  ps-1"> စိတ်ကြိုက်ဂဏန်းပိတ်ရန် </span>
+                  </a>
+                </li>
+                @endcan
+
+                @can('admin_access')
+                <li class="nav-item">
+                  <a class="nav-link text-white " href="{{ url('admin/three-digit-lejar')}}">
+                    <span class="sidenav-mini-icon"> 3D </span>
+                    <span class="sidenav-normal  ms-2  ps-1"> လယ်ဂျာ </span>
+                  </a>
+                </li>
+                @endcan
+                @can('admin_access')
+                <li class="nav-item">
+                  <a class="nav-link text-white " href="{{ url('admin/three-digit-one-month-history-conclude')}}">
+                    <span class="sidenav-mini-icon"> 3D </span>
+                    <span class="sidenav-normal  ms-2  ps-1"> တလမှတ်တမ်း </span>
+                  </a>
+                </li>
+                @endcan
+                @can('admin_access')
+                <li class="nav-item">
+                  <a class="nav-link text-white " href="{{ url('admin/three-digit-history-conclude')}}">
+                    <span class="sidenav-mini-icon"> 3D </span>
+                    <span class="sidenav-normal  ms-2  ps-1"> တပါတ်မှတ်တမ်း </span>
                   </a>
                 </li>
                 @endcan

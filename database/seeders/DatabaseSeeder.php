@@ -27,6 +27,10 @@ class DatabaseSeeder extends Seeder
             TwoDBreakSeeder::class,
             MatchTableSeeder::class,
             RoleLimitSeeder::class,
+            ThreeDRoleLimitSeeder::class,
+            BannerSeeder::class,
+            BannerTextSeeder::class,
+            GameTableSeeder::class,
         ]);
     }
 }

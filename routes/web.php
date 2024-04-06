@@ -5,20 +5,26 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TwoD\TowDController;
 use App\Http\Controllers\TwoD\TwoDController;
+use App\Http\Controllers\Admin\GameController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\RolesController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\User\WalletController;
+use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\User\WelcomeController;
 use App\Http\Controllers\Admin\ProfileController;
+use App\Http\Controllers\Admin\BannerTextController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\Wallet\BankController;
+use App\Http\Controllers\ThreeD\ThreeDPlayController;
 use App\Http\Controllers\TwoD\TwoDQicklyPlayController;
 use App\Http\Controllers\Admin\TwoD\DataLejarController;
 use App\Http\Controllers\Admin\TwoD\TwoDLagarController;
 use App\Http\Controllers\Admin\TwoD\TwoDLimitController;
 use App\Http\Controllers\TwoD\TwoDigitUserDataController;
 use App\Http\Controllers\Admin\TwoD\TwoDigitDataController;
+use App\Http\Controllers\Admin\ThreeD\ThreeDCloseController;
+use App\Http\Controllers\Admin\ThreeD\ThreeDLegarController;
 use App\Http\Controllers\Admin\ThreeD\ThreeDLimitController;
 use App\Http\Controllers\Admin\TwoD\CloseTwoDigitController;
 use App\Http\Controllers\Admin\TwoD\TwodRoleLimitController;
@@ -28,6 +34,7 @@ use App\Http\Controllers\Admin\TwoD\TwoDCommissionController;
 use App\Http\Controllers\Admin\Wallet\CashInRequestController;
 use App\Http\Controllers\Admin\Wallet\CashOutRequestController;
 use App\Http\Controllers\TwoD\TwoDCommissionTransferController;
+use App\Http\Controllers\Admin\ThreeD\ThreeDRoleLimitController;
 use App\Http\Controllers\Admin\TwoD\TwoDOneMonthHistoryController;
 use App\Http\Controllers\ThreeD\ThreeCommissionTransferController;
 
@@ -63,6 +70,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'App\Http\Co
     Route::put('/change-phone-address', [ProfileController::class, 'PhoneAddressChange'])->name('changePhoneAddress');
     Route::put('/change-kpay-no', [ProfileController::class, 'KpayNoChange'])->name('changeKpayNo');
     Route::put('/change-join-date', [ProfileController::class, 'JoinDate'])->name('addJoinDate');
+    Route::resource('banners', BannerController::class);
+    Route::resource('text', BannerTextController::class);
+    Route::resource('games', GameController::class);
+
     // head digit close 
     Route::resource('head-digit-close', HeadDigitCloseController::class);
     // two-digit-close resource route
@@ -99,6 +110,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'App\Http\Co
     Route::resource('/two-digit-limit', TwoDLimitController::class);
     // three Ditgit Limit
     Route::resource('/three-digit-limit', ThreeDLimitController::class);
+  Route::resource('three-d-role-limits', ThreeDRoleLimitController::class);
+   // three digit close
+    Route::resource('three-digit-close', ThreeDCloseController::class);
+
   // head digit close 
   Route::resource('head-digit-close', HeadDigitCloseController::class);
 
@@ -134,6 +149,41 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'App\Http\Co
 
   Route::get('/transferlogs', [TransferLogController::class, 'index'])->name('transferLog');
   //wallet system
+  // two d commission route
+    Route::get('/two-d-commission', [App\Http\Controllers\Admin\Commission\TwoDCommissionController::class, 'getTwoDTotalAmountPerUser'])->name('two-d-commission'); 
+
+    // show details
+    Route::get('/two-d-commission-show/{id}', [App\Http\Controllers\Admin\Commission\TwoDCommissionController::class, 'show'])->name('two-d-commission-show');
+    Route::put('/two-d-commission-update/{id}', [App\Http\Controllers\Admin\Commission\TwoDCommissionController::class, 'update'])->name('two-d-commission-update');
+    // commission update
+   Route::post('two-d-transfer-commission/{id}', [App\Http\Controllers\Admin\Commission\TwoDCommissionController::class, 'TwoDtransferCommission'])->name('two-d-transfer-commission');
+    
+    // three d commission route
+    Route::get('/three-d-commission', [App\Http\Controllers\Admin\Commission\ThreeDCommissionController::class, 'getThreeDTotalAmountPerUser'])->name('three-d-commission');
+    // show details 
+    Route::get('/three-d-commission-show/{id}', [App\Http\Controllers\Admin\Commission\ThreeDCommissionController::class, 'show'])->name('three-d-commission-show');
+    // three_d_commission_update
+    Route::put('/three-d-commission-update/{id}', [App\Http\Controllers\Admin\Commission\ThreeDCommissionController::class, 'update'])->name('three-d-commission-update');
+    // transfer commission route
+    Route::post('/three-d-transfer-commission/{id}', [App\Http\Controllers\Admin\Commission\ThreeDCommissionController::class, 'ThreeDtransferCommission'])->name('three-d-transfer-commission');
+    // show transfer commission
+
+    Route::get('/three-d-prize-number-create', [App\Http\Controllers\Admin\ThreeD\ThreeDPrizeNumberCreateController::class, 'index'])->name('three-d-prize-number-create');
+    // store_permutations
+    Route::post('/store-permutations', [App\Http\Controllers\Admin\ThreeD\ThreeDPrizeNumberCreateController::class, 'PermutationStore'])->name('storePermutations'); 
+    //deletePermutation
+    Route::delete('/delete-permutation/{id}', [App\Http\Controllers\Admin\ThreeD\ThreeDPrizeNumberCreateController::class, 'deletePermutation'])->name('deletePermutation');
+    Route::post('/three-d-prize-number-create', [App\Http\Controllers\Admin\ThreeD\ThreeDPrizeNumberCreateController::class, 'store'])->name('three-d-prize-number-create.store');
+    // 3d history
+    Route::get('/three-d-history', [App\Http\Controllers\Admin\ThreeD\ThreeDRecordHistoryController::class, 'index'])->name('three-d-history');
+    // 3d history show
+    Route::get('/three-d-history-show/{id}', [App\Http\Controllers\Admin\ThreeD\ThreeDRecordHistoryController::class, 'show'])->name('three-d-history-show');
+     Route::get('/three-digit-lejar', [ThreeDLegarController::class, 'showData'])->name('three-digit-lejar');
+      // three digit history conclude
+        Route::get('/three-digit-history-conclude', [App\Http\Controllers\Admin\ThreeD\ThreeDRecordHistoryController::class, 'OnceWeekThreedigitHistoryConclude'])->name('ThreeDigitHistoryConclude');
+     // three digit one month history conclude
+        Route::get('/three-digit-one-month-history-conclude', [App\Http\Controllers\Admin\ThreeD\ThreeDRecordHistoryController::class, 'OnceMonthThreedigitHistoryConclude'])->name('ThreeDigitOneMonthHistoryConclude');
+
 });
 
 
@@ -190,6 +240,26 @@ Route::group(['prefix' => 'user', 'as' => 'user.', 'namespace' => 'App\Http\Cont
     Route::get('/two-digit-data-4-30-pm-afternoon', [TwoDigitUserDataController::class, 'EveningDataHistory'])->name('two-digit-user-data.afternoon');
     Route::post('/two-d-comission-transfer-to-main', [TwoDCommissionTransferController::class, 'TwodCommissiontransferToMain'])->name('twod-transfer.to.main');
     Route::post('/three-d-comission-transfer-to-main', [ThreeCommissionTransferController::class, 'ThreedCommissiontransferToMain'])->name('three-d-transfer.to.main');
+
+    // 3d play index
+    Route::get('/three-d-play-index', [App\Http\Controllers\ThreeD\ThreeDPlayController::class, 'index'])->name('three-d-play-index');
+    // three-d-choice-play-index 
+    Route::get('/three-d-choice-play-index', [App\Http\Controllers\ThreeD\ThreeDPlayController::class, 'choiceplay'])->name('three-d-choice-play-index');
+
+    Route::get('/three-d-play-index', [ThreeDPlayController::class, 'index'])->name('three-d-play-index');
+    // three d choice play
+    Route::get('/three-d-choice-play-index', [ThreeDPlayController::class, 'choiceplay'])->name('three-d-choice-play');
+    // three d choice play confirm
+    Route::get('/three-d-choice-play-confirm', [ThreeDPlayController::class, 'confirm_play'])->name('three-d-choice-play-confirm');
+    // three d choice play store
+    Route::post('/three-d-choice-play-store', [ThreeDPlayController::class, 'store'])->name('three-d-choice-play-store');
+    // display three d play
+    Route::get('/three-d-display', [ThreeDPlayController::class, 'user_play'])->name('display');
+    // three d dream book
+    Route::get('/three-d-dream-book', [App\Http\Controllers\User\Threed\ThreeDreamBookController::class, 'index'])->name('three-d-dream-book-index');
+    // three d winner history
+    Route::get('/three-d-winners-history', [App\Http\Controllers\User\Threed\ThreedWinnerHistoryController::class, 'index'])->name('three-d-winners-history');
+
 
 });
 

@@ -14,9 +14,9 @@ class RoleLimitSeeder extends Seeder
     public function run(): void
     {
         $roleLimits = [
-            ['role_id' => 2, 'limit' => 10000], // Silver
-            ['role_id' => 3, 'limit' => 20000], // Gold
-            ['role_id' => 4, 'limit' => 50000], // Diamond
+            ['role_id' => 2, 'limit' => 10000, 'created_at' =>now(), 'updated_at' => now()], // Silver
+            ['role_id' => 3, 'limit' => 20000, 'created_at' =>now(), 'updated_at' => now()], // Gold
+            ['role_id' => 4, 'limit' => 50000, 'created_at' =>now(), 'updated_at' => now()], // Diamond
         ];
 
         foreach ($roleLimits as $roleLimit) {
