@@ -97,7 +97,8 @@
               <div class="card">
                 <div class="card-header p-3 pt-2 bg-transparent">
                   <div class="icon icon-lg icon-shape bg-gradient-success shadow-dark shadow text-center border-radius-xl mt-n4 position-absolute">
-                    <i class="fas fa-wallet text-white"></i>
+                    {{-- <i class="fas fa-wallet text-white"></i> --}}
+                    <img src="{{ asset('admin_app/assets/img/daily.png') }}" alt="" width="30" height="30" class="mt-3 text-white">
                   </div>
                   <div class="text-end pt-1">
                     <p class="text-sm mb-0 text-capitalize">2D Daily Income</p>
@@ -110,7 +111,9 @@
               <div class="card">
                 <div class="card-header p-3 pt-2 bg-transparent">
                   <div class="icon icon-lg icon-shape bg-info shadow-primary shadow text-center border-radius-xl mt-n4 position-absolute">
-                    <i class="fas fa-wallet"></i>
+                    {{-- <i class="fas fa-wallet"></i> --}}
+                    <img src="{{ asset('admin_app/assets/img/daily.png') }}" alt="" width="30" height="30" class="mt-3 text-white">
+
                   </div>
                   <div class="text-end pt-1">
                     <p class="text-sm mb-0 text-capitalize">2D Weekly Income</p>
@@ -123,7 +126,9 @@
               <div class="card">
                 <div class="card-header p-3 pt-2 bg-transparent">
                   <div class="icon icon-lg icon-shape bg-gradient-warning shadow-success text-center border-radius-xl mt-n4 position-absolute">
-                    <i class="fas fa-wallet"></i>
+                    {{-- <i class="fas fa-wallet"></i> --}}
+                    <img src="{{ asset('admin_app/assets/img/appointment.png') }}" alt="" width="30" height="30" class="mt-3 text-white">
+
                   </div>
                   <div class="text-end pt-1">
                     <p class="text-sm mb-0 text-capitalize ">2D Monthly Income</p>
@@ -136,7 +141,9 @@
               <div class="card">
                 <div class="card-header p-3 pt-2 bg-transparent">
                   <div class="icon icon-lg icon-shape bg-gradient-danger shadow-info text-center border-radius-xl mt-n4 position-absolute">
-                    <i class="fas fa-wallet"></i>
+                    {{-- <i class="fas fa-wallet"></i> --}}
+                    <img src="{{ asset('admin_app/assets/img/budget.png') }}" alt="" width="30" height="30" class="mt-3 text-white">
+
                   </div>
                   <div class="text-end pt-1">
                     <p class="text-sm mb-0 text-capitalize ">2D Yearly Income </p>
@@ -153,7 +160,9 @@
               <div class="card">
                 <div class="card-header p-3 pt-2 bg-transparent">
                   <div class="icon icon-lg icon-shape bg-gradient-success shadow-dark shadow text-center border-radius-xl mt-n4 position-absolute">
-                    <i class="fas fa-wallet text-white"></i>
+                    {{-- <i class="fas fa-wallet text-white"></i> --}}
+                    <img src="{{ asset('admin_app/assets/img/daily.png') }}" alt="" width="30" height="30" class="mt-3 text-white">
+
                   </div>
                   <div class="text-end pt-1">
                     <p class="text-sm mb-0 text-capitalize">3D Daily Income</p>
@@ -166,7 +175,9 @@
               <div class="card">
                 <div class="card-header p-3 pt-2 bg-transparent">
                   <div class="icon icon-lg icon-shape bg-gradient-info shadow-primary shadow text-center border-radius-xl mt-n4 position-absolute">
-                    <i class="fas fa-wallet"></i>
+                    {{-- <i class="fas fa-wallet"></i> --}}
+                    <img src="{{ asset('admin_app/assets/img/daily.png') }}" alt="" width="30" height="30" class="mt-3 text-white">
+
                   </div>
                   <div class="text-end pt-1">
                     <p class="text-sm mb-0 text-capitalize">3D Weekly Income</p>
@@ -179,7 +190,9 @@
               <div class="card">
                 <div class="card-header p-3 pt-2 bg-transparent">
                   <div class="icon icon-lg icon-shape bg-gradient-warning shadow-success text-center border-radius-xl mt-n4 position-absolute">
-                    <i class="fas fa-wallet"></i>
+                    {{-- <i class="fas fa-wallet"></i> --}}
+                    <img src="{{ asset('admin_app/assets/img/appointment.png') }}" alt="" width="30" height="30" class="mt-3 text-white">
+
                   </div>
                   <div class="text-end pt-1">
                     <p class="text-sm mb-0 text-capitalize ">3D Monthly Income</p>
@@ -192,7 +205,9 @@
               <div class="card ">
                 <div class="card-header p-3 pt-2 bg-transparent">
                   <div class="icon icon-lg icon-shape bg-gradient-danger shadow-info text-center border-radius-xl mt-n4 position-absolute">
-                    <i class="fas fa-wallet"></i>
+                    {{-- <i class="fas fa-wallet"></i> --}}
+                    <img src="{{ asset('admin_app/assets/img/budget.png') }}" alt="" width="30" height="30" class="mt-3 text-white">
+
                   </div>
                   <div class="text-end pt-1">
                     <p class="text-sm mb-0 text-capitalize ">3D Yearly Income </p>
