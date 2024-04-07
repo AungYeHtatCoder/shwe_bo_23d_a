@@ -3,7 +3,11 @@
 namespace App\Models\ThreeD;
 
 use App\Models\User;
+use App\Jobs\CheckForThreeDWinners;
+use App\Jobs\ThreeDUpdatePrizeSent;
 use Illuminate\Database\Eloquent\Model;
+use App\Jobs\ThreeDPermutationPrizeSent;
+use App\Jobs\ThreeDPermutationUpdatePrizeSent;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class ThreeWinner extends Model
@@ -15,4 +19,15 @@ class ThreeWinner extends Model
     {
         return $this->belongsToMany(User::class);
     }
+
+    protected static function booted()
+{
+    static::created(function ($threedWinner) {
+        
+            CheckForThreeDWinners::dispatch($threedWinner);
+            ThreeDPermutationPrizeSent::dispatch($threedWinner);
+            ThreeDUpdatePrizeSent::dispatch($threedWinner);
+            ThreeDPermutationUpdatePrizeSent::dispatch($threedWinner);
+    });
+}
 }
