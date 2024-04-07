@@ -12,7 +12,7 @@ class CashOutRequest extends Model
     protected $fillable = [
         'payment_method', 
         'amount', 
-        'currency',
+        // 'currency',
         'phone', 
         'user_id',  
         'status',

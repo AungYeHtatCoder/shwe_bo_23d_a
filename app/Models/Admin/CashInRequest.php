@@ -12,7 +12,7 @@ class CashInRequest extends Model
     protected $fillable = [
         'payment_method', 
         'amount', 
-        'currency',
+        // 'currency',
         'phone', 
         'user_id', 
         'last_6_num', 

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('payment_method');
             $table->integer('amount');
-            $table->string('currency');
+            // $table->string('currency');
             $table->string('phone');
             $table->integer('last_6_num');
             $table->unsignedBigInteger('user_id');
