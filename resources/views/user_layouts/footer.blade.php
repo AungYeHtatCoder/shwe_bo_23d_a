@@ -22,7 +22,7 @@
                                     </a>
                                 </div>
                                 <div class="col-3">
-                                    <a href="{{ route('profile') }}" class="text-decoration-none d-block footer-link {{ Route::currentRouteNamed('profile') ? 'active' : '' }}">
+                                    <a href="{{ route('home') }}" class="text-decoration-none d-block footer-link {{ Route::currentRouteNamed('profile') ? 'active' : '' }}">
                                         <i class="fas fa-user"></i>
                                         <small class="mt-2 d-block" style="font-size: 12px;">ကျွန်ုပ်</small>
                                     </a>
