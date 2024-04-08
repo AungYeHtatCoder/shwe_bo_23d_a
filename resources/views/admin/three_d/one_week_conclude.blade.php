@@ -65,6 +65,7 @@
            <thead class="thead-light">
                 <tr>
                 <th>No</th>
+                {{-- <th>UserName</th> --}}
                 <th>3D</th>
                 <th>ထိုးကြေး</th>
                 <th>ရက်စွဲ</th>
@@ -75,10 +76,6 @@
         @if(isset($displayThreeDigits['jackpotDigit']) && count($displayThreeDigits['jackpotDigit']) == 0)
         <p class="text-center text-white px-3 py-2 mt-3" style="background-color: #c50408">
           ကံစမ်းထားသော 3D ထီဂဏန်းများ မရှိသေးပါ
-          {{-- <span>
-            <a href="{{ url('/user/jackport-play')}}" style="color: #f5bd02; text-decoration:none">
-              <strong>ထီးထိုးရန် နိုပ်ပါ</strong></a>
-          </span> --}}
         </p>
         @endif
 
@@ -86,6 +83,7 @@
         @foreach ($displayThreeDigits['threeDigit'] as $index => $digit)
         <tr>
           <td>{{ $index + 1 }}</td>
+            {{-- <td>{{ $digit->user->user_name }}</td> --}}
           <td>{{ $digit->three_digit }}</td>
           <td>
            @if($digit->pivot->sub_amount >= $three_limits->three_d_limit)
@@ -98,14 +96,27 @@
            </p>
            @endif
           </td>
-          <td class="text-sm font-weight-normal">
+          {{-- <td class="text-sm font-weight-normal">
 
-                 <span
-                     class="badge bg-gradient-info">{{ $digit->created_at->format('d-m-Y (l) (h:i a)') }}</span>
-             </td>
+                 <span class="badge bg-gradient-info">
+                    {{ $digit->created_at->timezone('Asia/Yangon')->format('d-m-Y (l) (h:i a)') }}
+                </span>
+             </td> --}}
+             <td class="text-sm font-weight-normal">
+                <span class="badge bg-gradient-info">
+                    @if($digit->pivot && $digit->pivot->created_at)
+                        {{ $digit->pivot->created_at->timezone('Asia/Yangon')->format('d-m-Y (l) (h:i a)') }}
+                    @else
+                        N/A
+                    @endif
+                </span>
+            </td>
+            
              <td>
                  @if ($digit->pivot->prize_sent == 1)
                      <span class="text-success">Win</span>
+                @elseif($digit->pivot->prize_sent == 2)
+                     <span class="text-danger">ပါတ်လယ်</span>
                  @else
                      <span class="text-danger">Pending</span>
                  @endif

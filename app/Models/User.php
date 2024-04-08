@@ -230,4 +230,21 @@ public function twodWiners()
             'total_amount' => $totalAmount,
         ];
     }
+
+//     public static function getAdminthreeDigitsHistory()
+// {
+//     $jackpots = Lotto::with('displayThreeDigitsOneWeekHistory')->get();
+
+//     $displayJackpotDigits = $jackpots->map(function ($jackpot) {
+//         return $jackpot->displayThreeDigitsOneWeekHistory;
+//     })->flatten(); // Use flatten() to collapse the collection into a single dimension
+
+//     $totalAmount = $displayJackpotDigits->sum('pivot.sub_amount');
+
+//     return [
+//         'threeDigit' => $displayJackpotDigits,
+//         'total_amount' => $totalAmount,
+//     ];
+// }
+
 }

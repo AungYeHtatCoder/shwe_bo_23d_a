@@ -309,25 +309,17 @@
             </div>
             {{-- session reset 1 end --}}
             {{-- session reset 2 start --}}
-            <div class="col-lg-6 col-md-6 col-sm-6 mb-5">
+            {{-- <div class="col-lg-6 col-md-6 col-sm-6 mb-5">
               <div class="card  mb-2 p-3">
                 <div class="d-flex mt-n2">
                             <div class="avatar avatar-xl bg-danger border-radius-xl p-2 mt-n4">
                               <i class="fas fa-rotate fa-2x"></i>
-                                {{-- <img src="{{ asset('admin_app/assets/img/small-logos/logo-slack.svg') }}" alt="slack_logo"> --}}
+                               
                             </div>
                             <div class="ms-3 my-auto">
                                 <h6 class="mb-0"> 2D Over Amount Limit Reset</h6>
                                 <div class="avatar-group mt-4">
-                                    {{-- <a href="javascript:;" class="avatar avatar-xs rounded-circle" data-bs-toggle="tooltip"
-                                        data-original-title="Jessica Rowland">
-                                        <img alt="Image placeholder" src="{{ asset('admin_app/assets/img/team-3.jpg') }}"
-                                            class="">
-                                    </a> --}}
-                                    {{-- <form action="{{ route('admin.OverAmountLimitSessionReset') }}" method="POST">
-                                      @csrf
-                                      <button class="btn btn-primary" type="submit">OverAmountLimitReset</button>
-                                  </form> --}}
+                                    
                                 </div>
                             </div>
                         </div>
@@ -336,7 +328,7 @@
                           <p class="mb-0"><span class="text-success text-sm font-weight-bolder">ပွဲချိန်ပြီး တခုပြီးတိုင်း  </span>၁၅ မိနစ်အတွင်း လုပ်ပေးရပါမည်။</p>
                         </div>
                     </div>
-            </div>
+            </div> --}}
             {{-- session reset 2 --}}
             <div class="col-lg-6 col-md-6 col-sm-6 mb-2 mt-lg-0 mt-4">
               <div class="card  mb-2 p-3">
