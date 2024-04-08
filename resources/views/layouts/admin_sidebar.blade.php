@@ -3,10 +3,10 @@
     <li class="nav-item">
       <a class="nav-link text-white" href="{{ route('admin.profile') }}">
         
-        @if (Auth::user()->photo == null)
-        <i class="fas fa-user-circle fa-2x"></i>
-        @else
+        @if (Auth::user()->photo)
         <img src="{{ Auth::user()->photo }}" class="rounded-circle" width="100px">
+        @else
+        <i class="fas fa-user-circle fa-2x"></i>
         @endif
         
         <span class="nav-link-text ms-2 ps-1">{{ Auth::user()->name }}</span>
