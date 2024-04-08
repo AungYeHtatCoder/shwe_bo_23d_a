@@ -1,15 +1,17 @@
 <?php
 
 use App\Http\Controllers\Api\V1\Auth\AuthController;
-use App\Http\Controllers\Api\V1\Home\ThreeD\ThreeDController;
 use App\Http\Controllers\Api\V1\Home\BankController;
 use App\Http\Controllers\Api\V1\Home\BannerController;
 use App\Http\Controllers\Api\V1\Home\GameController;
+use App\Http\Controllers\Api\V1\Home\HomeController;
 use App\Http\Controllers\Api\V1\Home\PromotionController;
+use App\Http\Controllers\Api\V1\Home\ThreeD\ThreeDController;
 use App\Http\Controllers\Api\V1\Home\TwoD\TwoDController;
 use App\Http\Controllers\Api\V1\Home\WalletController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
 
 
 
@@ -29,6 +31,7 @@ Route::prefix('v1')->group(function () {
         Route::get('/profile', [AuthController::class, 'profile']);
         
         //banner
+        Route::get('/home', [HomeController::class, 'index']);
         Route::get('/banners', [BannerController::class, 'index']);
         Route::get('/banner-text', [BannerController::class, 'bannerText']);
         Route::get('/promotions', [PromotionController::class, 'index']);
