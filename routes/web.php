@@ -37,6 +37,7 @@ use App\Http\Controllers\TwoD\TwoDCommissionTransferController;
 use App\Http\Controllers\Admin\ThreeD\ThreeDRoleLimitController;
 use App\Http\Controllers\Admin\TwoD\TwoDOneMonthHistoryController;
 use App\Http\Controllers\ThreeD\ThreeCommissionTransferController;
+use App\Http\Controllers\Admin\TwoD\TwoDPrizeNumberCreateController;
 
 
 Auth::routes();
@@ -182,6 +183,18 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'App\Http\Co
         Route::get('/three-digit-history-conclude', [App\Http\Controllers\Admin\ThreeD\ThreeDRecordHistoryController::class, 'OnceWeekThreedigitHistoryConclude'])->name('ThreeDigitHistoryConclude');
      // three digit one month history conclude
         Route::get('/three-digit-one-month-history-conclude', [App\Http\Controllers\Admin\ThreeD\ThreeDRecordHistoryController::class, 'OnceMonthThreedigitHistoryConclude'])->name('ThreeDigitOneMonthHistoryConclude');
+        Route::resource('winner-prize', App\Http\Controllers\Admin\ThreeD\GreatherThanLessThanWinnerPrizeController::class);
+         // three d winners history
+        Route::get('/three-d-winners-history', [App\Http\Controllers\Admin\ThreeD\ThreeDWinnerController::class, 'getWinnersHistoryForAdmin'])->name('ThreeDWinnersHistory');
+        // three d permutation winners history
+        Route::get('/permutation-winners-history', [App\Http\Controllers\Admin\ThreeD\ThreeDWinnerController::class, 'getPermutationWinnersHistoryForAdmin'])->name('PermutationWinnersHistory'); 
+        Route::get('/prize-winners', [App\Http\Controllers\Admin\ThreeD\ThreeDWinnerController::class, 'getPrizeWinnersHistoryForAdmin'])->name('getPrizeWinnersHistory');
+        // two d winners history
+        Route::get('/admin-two-d-winners-history', [App\Http\Controllers\Admin\TwoD\TwoDWinnerHistoryController::class, 'getWinnersHistoryForAdmin'])->name('winnerHistoryForAdmin');
+        Route::get('/admin-two-d-winners-history-group-by-session', [App\Http\Controllers\Admin\TwoD\TwoDWinnerHistoryController::class, 'getWinnersHistoryForAdminGroupBySession'])->name('winnerHistoryForAdminSession');
+        Route::get('/two-d-morning-winner', [App\Http\Controllers\Admin\TwoD\TwoDMorningWinnerController::class, 'TwoDMorningWinner'])->name('morningWinner');
+        Route::get('/two-d-evening-winner', [App\Http\Controllers\Admin\TwoD\TwoDMorningWinnerController::class, 'TwoDEveningWinner'])->name('eveningWinner');
+        Route::resource('tow-d-win-number',TwoDPrizeNumberCreateController::class);
 
 });
 

@@ -240,6 +240,46 @@
                 </li>
                 @endcan
                 @can('admin_access')
+                <li class="nav-item ">
+                  <a class="nav-link text-white " href="{{ route('admin.tow-d-win-number.index') }}">
+                    <span class="sidenav-mini-icon"> 2D </span>
+                    <span class="sidenav-normal  ms-2  ps-1">  ထွက်ဂဏန်းထဲ့ရန် </span>
+                  </a>
+                </li>
+                @endcan
+                @can('user_access')
+              <li class="nav-item ">
+                <a class="nav-link text-white " href="{{ route('admin.winnerHistoryForAdmin')}}">
+                  <span class="sidenav-mini-icon"> 2D </span>
+                  <span class="sidenav-normal  ms-2  ps-1">  ပေါက်သူများ </span>
+                </a>
+              </li>
+              @endcan
+              @can('user_access')
+              <li class="nav-item ">
+                <a class="nav-link text-white " href="{{ route('admin.winnerHistoryForAdminSession')}}">
+                  <span class="sidenav-mini-icon"> 2D </span>
+                  <span class="sidenav-normal  ms-2  ps-1">Sessionအလိုက်ပေါက်စာရင်း </span>
+                </a>
+              </li>
+              @endcan
+              @can('admin_access')
+              <li class="nav-item ">
+                <a class="nav-link text-white " href="{{ route('admin.morningWinner') }}">
+                  <span class="sidenav-mini-icon"> 2D </span>
+                  <span class="sidenav-normal  ms-2  ps-1">  (12:) ပေါက်သူများ </span>
+                </a>
+              </li>
+              @endcan
+              @can('user_access')
+            <li class="nav-item ">
+              <a class="nav-link text-white " href="{{ route('admin.eveningWinner') }}">
+                <span class="sidenav-mini-icon"> 2D </span>
+                <span class="sidenav-normal  ms-2  ps-1">(4:30) ပေါက်သူများ </span>
+              </a>
+            </li>
+            @endcan
+                @can('admin_access')
                 <li class="nav-item">
                   <a class="nav-link text-white " href="{{ url('/admin/two-digit-data-morning')}}">
                     <span class="sidenav-mini-icon"> 2D </span>
@@ -365,6 +405,38 @@
                   </a>
                 </li>
                 @endcan
+                @can('admin_access')
+                <li class="nav-item">
+                <a class="nav-link text-white " href="{{ url('/admin/three-d-winners-history') }}">
+                <span class="sidenav-mini-icon"> 3D </span>
+                <span class="sidenav-normal  ms-2  ps-1">  ပေါက်သူများ </span>
+                </a>
+                </li>
+                @endcan
+                @can('admin_access')
+                <li class="nav-item">
+                <a class="nav-link text-white " href="{{ url('/admin/permutation-winners-history') }}">
+                <span class="sidenav-mini-icon"> 3D </span>
+                <span class="sidenav-normal  ms-2  ps-1">  ပတ်လယ်ပေါက်သူများ </span>
+                </a>
+              </li>
+                @endcan
+                @can('admin_access')
+                <li class="nav-item">
+                <a class="nav-link text-white " href="{{ route('admin.winner-prize.index') }}">
+                <span class="sidenav-mini-icon"> 3D </span>
+                <span class="sidenav-normal  ms-2  ps-1"> သွပ်ဂဏန်းထဲ့ရန် </span>
+                </a>
+              </li>
+              @endcan
+              @can('admin_access')
+              <li class="nav-item">
+              <a class="nav-link text-white " href="{{ url('/admin/prize-winners') }}">
+              <span class="sidenav-mini-icon"> 3D </span>
+              <span class="sidenav-normal  ms-2  ps-1">  သွပ်ရရှိသူများ </span>
+              </a>
+            </li>
+              @endcan
               </ul>
             </div>
           </li>
