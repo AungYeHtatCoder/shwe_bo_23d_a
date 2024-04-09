@@ -29,29 +29,29 @@
         <div class="d-flex justify-content-between">
             <div>
                 <div>
-                    <i class="fas fa-wallet me-2"></i><span>Balance</span>
-                    <span class="d-block" id="userBalance" data-balance="{{ Auth::user()->balance }}">{{ number_format(Auth::user()->balance) }} MMK</span>
+                    <i class="fas fa-wallet me-2 text-purple"></i><span class="text-purple">Balance</span>
+                    <span class="d-block text-purple" id="userBalance" data-balance="{{ Auth::user()->balance }}">{{ number_format(Auth::user()->balance) }} MMK</span>
                 </div>
                 <div class="mt-4">
-                    <small class="d-block mb-2">2D (04:30PM)</small>
+                    <small class="d-block mb-2 text-purple">2D (04:30PM)</small>
                     <a href="{{ route('user.twod-quick-play-index') }}" class="btn btn-sm btn-purple text-white">အမြန်ရွေး</a>
                 </div>
             </div>
             <div>
-                <small class="d-block mb-2 text-end">
-                    <i class="fas fa-clock text-white me-1"></i>
+                <small class="d-block mb-2 text-end text-purple">
+                    <i class="fas fa-clock text-white me-1 text-purple"></i>
                     ပိတ်ရန်ကျန်ချိန်
                 </small>
-                <small class="d-block text-end" id="todayDate"></small>
-                <small class="d-block text-end" id="currentTime"></small>
-                <small class="d-block text-end" id="sessionInfo"></small>
+                <small class="d-block text-end" id="todayDate text-purple"></small>
+                <small class="d-block text-end" id="currentTime text-purple"></small>
+                <small class="d-block text-end" id="sessionInfo text-purple"></small>
             </div>
         </div>
         <div class="d-flex justify-content-end mt-3">
             <div class="mb-3 text-end">
-                <label for="" class="form-label"><small><i class="fas fa-coins me-2 text-white"></i>ထိုးကြေး</small></label>
+                <label for="" class="form-label"><small class="text-purple"><i class="fas fa-coins me-2 text-purple"></i>ထိုးကြေး</small></label>
                 <div class="input-group">
-                    <input type="text" name="amount" id="all_amount" class="form-control form-control-sm text-center" placeholder="ပမာဏ">
+                    <input type="text" name="amount" id="all_amount" class="form-control form-control-sm text-center text-purple" placeholder="ပမာဏ">
                     <button class="btn btn-sm btn-purple text-white" type="button"  id="permuteButton" onclick="permuteDigits()"><small>ပတ်လည်</small></button>
                 </div>
             </div>
@@ -63,16 +63,16 @@
                @csrf
                <div class="row">
                  <div class="col-md-12">
-                   <label for="selected_digits" style="font-size: 14px;">ရွှေးချယ်ထားသောဂဏန်းများ</label>
+                   <label for="selected_digits" style="font-size: 14px;" class="text-purple">ရွှေးချယ်ထားသောဂဏန်းများ</label>
                    <input type="text" name="selected_digits" id="selected_digits" class="form-control form-control-sm mt-1" placeholder="Enter Digits" >
                  </div>
                 <div class="col-md-12 mt-2">
-                   <label for="totalAmount" style="font-size: 14px;">ပတ်လည်ဂဏန်းများ</label>
+                   <label for="totalAmount" style="font-size: 14px;" class="text-purple">ပတ်လည်ဂဏန်းများ</label>
                    <input type="text" id="permulated_digit" class="form-control form-control-sm" readonly>
                 </div>
                 <div id="amountInputs" class="col-md-12 mb-3 d-none"></div>
                 <div class="col-md-12 mt-2">
-                   <label for="totalAmount" style="font-size: 14px;"><i class="fas fa-coins me-2 text-white"></i>စုစုပေါင်းထိုးကြေး</label>
+                   <label for="totalAmount" style="font-size: 14px;" class="text-purple"><i class="fas fa-coins me-2 text-purple"></i>စုစုပေါင်းထိုးကြေး</label>
                    <input type="text" id="totalAmount" name="totalAmount" class="form-control form-control-sm mt-1" readonly>
                 </div>
                 <div class="d-flex justify-content-end mt-4">

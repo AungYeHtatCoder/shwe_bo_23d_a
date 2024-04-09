@@ -9,30 +9,30 @@
         <div class="d-flex justify-content-between">
             <div>
                 <div>
-                    <i class="fas fa-wallet me-2"></i><span>Balance</span>
-                    <span class="d-block" id="userBalance" data-balance="{{ Auth::user()->balance }}">{{ number_format(Auth::user()->balance) }} MMK</span>
+                    <i class="fas fa-wallet me-2 text-purple"></i><span class="text-purple">Balance</span>
+                    <span class="d-block text-purple" id="userBalance" data-balance="{{ Auth::user()->balance }}">{{ number_format(Auth::user()->balance) }} MMK</span>
                 </div>
                 <div class="mt-4">
-                    <small class="d-block mb-2">2D (12:00PM)</small>
+                    <small class="d-block mb-2 text-purple">2D (12:00PM)</small>
                     <a href="{{ route('user.twod-play-index') }}" class="btn btn-sm btn-purple text-white">ပုံမှန်ရွေး</a>
                 </div>
             </div>
 
             <div>
-                <small class="d-block mb-2 text-end">
+                <small class="d-block mb-2 text-end text-purple">
                     <i class="fas fa-clock text-white me-1"></i>
                     ပိတ်ရန်ကျန်ချိန်
                 </small>
-                <small class="d-block text-end" id="todayDate"></small>
-                <small class="d-block text-end" id="currentTime"></small>
-                <small class="d-block text-end" id="sessionInfo"></small>
+                <small class="d-block text-end text-purple" id="todayDate"></small>
+                <small class="d-block text-end text-purple" id="currentTime"></small>
+                <small class="d-block text-end text-purple" id="sessionInfo"></small>
             </div>
         </div>
     </div>
 
     <div class="d-flex justify-content-end mt-3">
         <div class="mb-3 text-end">
-            <label for="" class="form-label"><small><i class="fas fa-coins me-2 text-white"></i>ထိုးကြေး</small></label>
+            <label for="" class="form-label text-purple"><small class="text-purple"><i class="fas fa-coins me-2 text-purple"></i>ထိုးကြေး</small></label>
             <div class="input-group">
                 <input type="text" name="amount" id="all_amount" class="form-control form-control-sm text-center" placeholder="ပမာဏ">
                 <button class="btn btn-sm btn-purple text-white" type="button"  id="permuteButton" onclick="permuteDigits()"><small>ပတ်လည်</small></button>
@@ -43,20 +43,20 @@
     <form action="" method="post" class="p-1">
         @csrf
         <div class="mb-3">
-            <input type="text" id="outputField" name="selected_digits" class="form-control form-control-sm" placeholder="Selected digits">
+            <input type="text" id="outputField" name="selected_digits" class="form-control form-control-sm text-purple" placeholder="Selected digits">
         </div>
         <div class="mb-3 mt-3">
 
-            <label class="form-label mb-2" for="permulated_digit" style="font-size: 14px;">ပတ်လည် ဂဏန်းများ</label>
+            <label class="form-label mb-2 text-purple" for="permulated_digit" style="font-size: 14px;">ပတ်လည် ဂဏန်းများ</label>
             <input type="text" id="permulated_digit" class="form-control form-control-sm" readonly>
         </div>
 
         <!-- Amounts Inputs will be appended here -->
-        <div id="amountInputs" class="col-md-12 mb-3 d-none"></div>
+        <div id="amountInputs" class="col-md-12 mb-3 d-none text-purple"></div>
 
         <!-- Total Amount Input -->
         <div class="col-md-12 mb-3">
-            <label for="totalAmount" style="font-size: 14px;" class="form-label mb-2"><i class="fas fa-coins me-2 text-white"></i>စုစုပေါင်းထိုးကြေး</label>
+            <label for="totalAmount" style="font-size: 14px;" class="form-label mb-2 text-purple"><i class="fas fa-coins me-2 text-purple"></i>စုစုပေါင်းထိုးကြေး</label>
             <input type="text" id="totalAmount" name="totalAmount" class="form-control form-control-sm" readonly>
         </div>
         <div class="d-flex justify-content-end my-2" >
