@@ -13,11 +13,14 @@ return new class extends Migration
     {
         Schema::create('lotto_three_digit_copy', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('three_digit_id');
+            $table->unsignedBigInteger('result_date_id')->nullable();
             $table->unsignedBigInteger('lotto_id');
             $table->string('bet_digit');
             $table->integer('sub_amount')->default(0);
             $table->boolean('prize_sent')->default(false);
+            $table->string('match_status');
+            $table->date('res_date');
+            $table->foreign('result_date_id')->references('id')->on('result_dates')->onDelete('cascade');
             $table->foreign('lotto_id')->references('id')->on('lottos')->onDelete('cascade');
             $table->timestamps();
         });

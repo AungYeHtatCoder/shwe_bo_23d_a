@@ -195,6 +195,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'App\Http\Co
         Route::get('/two-d-morning-winner', [App\Http\Controllers\Admin\TwoD\TwoDMorningWinnerController::class, 'TwoDMorningWinner'])->name('morningWinner');
         Route::get('/two-d-evening-winner', [App\Http\Controllers\Admin\TwoD\TwoDMorningWinnerController::class, 'TwoDEveningWinner'])->name('eveningWinner');
         Route::resource('tow-d-win-number',TwoDPrizeNumberCreateController::class);
+        // get three d result date 
+        Route::get('three-d-result-date', [App\Http\Controllers\Admin\ThreeD\ResultDateController::class, 'index']);
+        // result date update 
+        Route::patch('/lottery-results/{id}/status', [App\Http\Controllers\Admin\ThreeD\ResultDateController::class, 'updateStatus'])
+    ->name('lotteryResults.updateStatus');
 
 });
 

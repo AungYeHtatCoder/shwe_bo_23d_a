@@ -396,7 +396,14 @@
                   </a>
                 </li>
                 @endcan
-
+                @can('admin_access')
+                <li class="nav-item">
+                  <a class="nav-link text-white " href="{{ url('admin/three-d-result-date') }}">
+                    <span class="sidenav-mini-icon"> 3D </span>
+                    <span class="sidenav-normal  ms-2  ps-1"> OpeningDate </span>
+                  </a>
+                </li>
+                @endcan
                  @can('admin_access')
                 <li class="nav-item">
                   <a class="nav-link text-white " href="{{ url('admin/three-d-prize-number-create')}}">

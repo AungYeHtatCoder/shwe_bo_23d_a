@@ -32,10 +32,6 @@ class Lottery extends Model
         return $this->belongsTo(LotteryMatch::class, 'lottery_match_id');
     }
 
-    // public function twoDigits() {
-    //     return $this->belongsToMany(TwoDigit::class, 'lottery_two_digit_pivot')->withPivot('sub_amount', 'prize_sent')->withTimestamps();
-    // }
-    // Inside your Lottery model
     public function twoDigits()
     {
         return $this->belongsToMany(TwoDigit::class, 'lottery_two_digit_pivot')

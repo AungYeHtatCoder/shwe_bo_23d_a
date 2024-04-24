@@ -31,6 +31,7 @@ class DatabaseSeeder extends Seeder
             BannerSeeder::class,
             BannerTextSeeder::class,
             GameTableSeeder::class,
+            ThreeDResultDateSeeder::class
         ]);
     }
 }

@@ -24,7 +24,7 @@ class TwoDPlayRequest extends FormRequest
         return [
             'totalAmount' => 'required|numeric|min:1',
             'amounts' => 'required|array',
-            'amounts.*.num' => 'required|integer',
+            'amounts.*.num' => 'required|string',
             'amounts.*.amount' => 'required|integer|min:1',
         ];
     }

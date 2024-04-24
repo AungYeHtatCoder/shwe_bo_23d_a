@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Api\V1\ThreeD;
 
+use Carbon\Carbon;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Traits\HttpResponses;
 use App\Services\LottoService;
+use App\Models\ThreeD\ResultDate;
 use Illuminate\Http\JsonResponse;
 use App\Models\Admin\LotteryMatch;
 use App\Models\Admin\ThreeDDLimit;
@@ -45,6 +47,16 @@ class ThreeDPlayController extends Controller
 
      public function play(ThreedPlayRequest $request): JsonResponse
     {
+    $currentDate = ResultDate::where('status', 'open')->first();
+
+    
+    // If no result date is found or it's closed, return an error
+    if (!$currentDate || $currentDate->status === 'closed') {
+        return response()->json([
+            'success' => false,
+            'message' => 'This 3D lottery match is closed for at this time. Welcome back Next Time!',
+        ], 401);
+    }
         //Log::info($request->all());
         $totalAmount = $request->input('totalAmount');
         $amounts = $request->input('amounts');

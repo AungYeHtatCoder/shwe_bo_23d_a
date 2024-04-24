@@ -65,10 +65,11 @@
            <thead class="thead-light">
                 <tr>
                 <th>No</th>
-                {{-- <th>UserName</th> --}}
+                <th>UserName</th>
                 <th>3D</th>
                 <th>ထိုးကြေး</th>
                 <th>ရက်စွဲ</th>
+                <th>OpenDate</th>
                 <th>Win/Lose</th>
                 </tr>
            </thead>
@@ -80,19 +81,19 @@
         @endif
 
         @if($displayThreeDigits)
-        @foreach ($displayThreeDigits['threeDigit'] as $index => $digit)
+        @foreach ($displayThreeDigits as $index => $digit)
         <tr>
           <td>{{ $index + 1 }}</td>
-            {{-- <td>{{ $digit->user->user_name }}</td> --}}
-          <td>{{ $digit->three_digit }}</td>
+            <td>{{ $digit->user_name }}</td>
+          <td>{{ $digit->bet_digit }}</td>
           <td>
-           @if($digit->pivot->sub_amount >= $three_limits->three_d_limit)
+           @if($digit->sub_amount >= $three_limits->three_d_limit)
            <span class="text-danger">
-            {{ $digit->pivot->sub_amount }}
+            {{ $digit->sub_amount }}
            </span>
            @else
            <p class="text-info">
-            {{ $digit->pivot->sub_amount }}
+            {{ $digit->sub_amount }}
            </p>
            @endif
           </td>
@@ -104,18 +105,21 @@
              </td> --}}
              <td class="text-sm font-weight-normal">
                 <span class="badge bg-gradient-info">
-                    @if($digit->pivot && $digit->pivot->created_at)
-                        {{ $digit->pivot->created_at->timezone('Asia/Yangon')->format('d-m-Y (l) (h:i a)') }}
+                    @if($digit->created_at)
+                        {{ $digit->created_at->timezone('Asia/Yangon')->format('d-m-Y (l) (h:i a)') }}
                     @else
                         N/A
                     @endif
                 </span>
             </td>
+            <td>
+                {{ $digit->res_date }}
+            </td>
             
              <td>
-                 @if ($digit->pivot->prize_sent == 1)
+                 @if ($digit->prize_sent == 1)
                      <span class="text-success">Win</span>
-                @elseif($digit->pivot->prize_sent == 2)
+                @elseif($digit->prize_sent == 2)
                      <span class="text-danger">ပါတ်လယ်</span>
                  @else
                      <span class="text-danger">Pending</span>
@@ -128,7 +132,7 @@
        </table>
         <div class="mb-3 d-flex justify-content-around text-white p-2 shadow border border-1" style="border-radius: 10px; background: var(--Primary, #12486b)">
       <p class="text-end pt-1" style="color: #fff">Total Amount : ||&nbsp; &nbsp; စုစုပေါင်းထိုးကြေး
-        <strong>{{ $displayThreeDigits['total_amount'] }} MMK</strong>
+        <strong>{{ $totalSubAmount }} MMK</strong>
       </p>
     </div>
    </div>

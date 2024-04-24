@@ -10,8 +10,8 @@ class ThreeDigitDataService {
  public function getThreeDigitsData() {
     $today = Carbon::now();
     // Determine the start and end times based on the current day of the month
-    $morningStart = $today->day <= 16 ? $today->copy()->startOfMonth() : $today->copy()->day(17)->startOfDay();
-    $morningEnd = $today->day <= 16 ? $today->copy()->day(16)->endOfDay() : $today->copy()->addMonthNoOverflow()->day(1)->subSecond();
+    $sessionStart = $today->day <= 16 ? $today->copy()->startOfMonth() : $today->copy()->day(17)->startOfDay();
+    $sessionEnd = $today->day <= 16 ? $today->copy()->day(16)->endOfDay() : $today->copy()->addMonthNoOverflow()->day(1)->subSecond();
 
     $threeDigits = ThreeDigit::all();
     $data = [];
@@ -21,7 +21,7 @@ class ThreeDigitDataService {
         $periodData = DB::table('lotto_three_digit_copy')
                         ->join('lottos', 'lotto_three_digit_copy.lotto_id', '=', 'lottos.id')
                         ->where('three_digit_id', $digit->id)
-                        ->whereBetween('lotto_three_digit_copy.created_at', [$morningStart, $morningEnd])
+                        ->whereBetween('lotto_three_digit_copy.created_at', [$sessionStart, $sessionEnd])
                         ->select(
                             'lotto_three_digit_copy.three_digit_id',
                             DB::raw('SUM(lotto_three_digit_copy.sub_amount) as total_sub_amount'),

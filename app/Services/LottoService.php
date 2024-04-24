@@ -2,7 +2,9 @@
 
 namespace App\Services;
 
+use Carbon\Carbon;
 use App\Models\ThreeDigit\Lotto;
+use App\Models\ThreeD\ResultDate;
 use App\Models\Admin\ThreeDDLimit;
 use App\Models\ThreeD\ThreeDLimit;
 use Illuminate\Support\Facades\DB;
@@ -72,10 +74,17 @@ class LottoService
 
     protected function preProcessAmountCheck($item)
 {
-    $num = str_pad($item['num'], 3, '0', STR_PAD_LEFT);
+    // $num = str_pad($item['num'], 3, '0', STR_PAD_LEFT);
+    // $sub_amount = $item['amount'];
+    // $three_digit = ThreeDigit::where('three_digit', $num)->firstOrFail();
+    // $totalBetAmount = DB::table('lotto_three_digit_copy')->where('three_digit_id', $three_digit->id)->sum('sub_amount');
+    $num = str_pad($item['num'], 3, '0', STR_PAD_LEFT); // Ensure three-digit format
     $sub_amount = $item['amount'];
-    $three_digit = ThreeDigit::where('three_digit', $num)->firstOrFail();
-    $totalBetAmount = DB::table('lotto_three_digit_copy')->where('three_digit_id', $three_digit->id)->sum('sub_amount');
+
+    $totalBetAmount = DB::table('lotto_three_digit_pivot')
+                        ->where('bet_digit', $num)
+                        ->sum('sub_amount');
+
     $break = ThreeDLimit::latest()->first()->three_d_limit;
 
     if ($totalBetAmount + $sub_amount > $break) {
@@ -85,36 +94,95 @@ class LottoService
 }
 
     protected function processAmount($item, $lotteryId)
-    {
-        $num = str_pad($item['num'], 3, '0', STR_PAD_LEFT);
-        $sub_amount = $item['amount'];
-        $bet_digit = $item['num'];
+{
+    $num = str_pad($item['num'], 3, '0', STR_PAD_LEFT); // Ensure three-digit format
+    $sub_amount = $item['amount'];
 
-        // Find the corresponding three digit record
-        $three_digit = ThreeDigit::where('three_digit', $num)->firstOrFail();
+    $totalBetAmount = DB::table('lotto_three_digit_pivot')
+                        ->where('bet_digit', $num)
+                        ->sum('sub_amount');
 
-        // Calculate the total bet amount for the three_digit
-        $totalBetAmount = DB::table('lotto_three_digit_copy')
-                            ->where('three_digit_id', $three_digit->id)
-                            ->sum('sub_amount');
+    $break = ThreeDLimit::latest()->first()->three_d_limit;
 
-        // Check if the limit is exceeded
-        $break = ThreeDLimit::latest()->first()->three_d_limit;
-        if ($totalBetAmount + $sub_amount <= $break) {
-            // Create a pivot record for a valid bet
+    if ($totalBetAmount + $sub_amount <= $break) {
+        $currentMonthStart = Carbon::now()->startOfMonth();
+        $currentMonthEnd = Carbon::now()->endOfMonth();
+
+        $results = ResultDate::where('status', 'open')
+            ->whereBetween('result_date', [$currentMonthStart, $currentMonthEnd])
+            ->first();
+
+        if ($results->status == 'closed') {
+            return response()->json(['message' => '3D game does not open for this time']);
+        } 
+        // Insert into the pivot table
             $pivot = new LotteryThreeDigitPivot([
                 'lotto_id' => $lotteryId,
-                'three_digit_id' => $three_digit->id,
-                'bet_digit' => $bet_digit,
+                'result_date_id' => $results->id,
+                'bet_digit' => $num,
                 'sub_amount' => $sub_amount,
                 'prize_sent' => false,
-                'currency' => 'mmk'
+                //'currency' => 'mmk',
+                'match_status' => $results->status,
+                'res_date' => $results->result_date,
             ]);
+
             $pivot->save();
-        }else{
-            return [$item['num']];
-            // throw new \Exception('The bet amount exceeds the limit.');
-            // return response()->json(['message'=> 'သတ်မှတ်ထားသော limit ပမာဏထပ်ကျော်လွန်နေပါသည်။'], 401);
-        }
+    } else {
+        return [$item['num']];
+            throw new \Exception('The bet amount exceeds the limit.');
+            return response()->json(['message'=> 'သတ်မှတ်ထားသော limit ပမာဏထပ်ကျော်လွန်နေပါသည်။'], 401);
     }
+}
+
+
+    // protected function processAmount($item, $lotteryId)
+    // {
+    //     $num = str_pad($item['num'], 3, '0', STR_PAD_LEFT);
+    //     $sub_amount = $item['amount'];
+    //     $bet_digit = $item['num'];
+
+    //     // Find the corresponding three digit record
+    //     $three_digit = ThreeDigit::where('three_digit', $num)->firstOrFail();
+
+    //     // Calculate the total bet amount for the three_digit
+    //     $totalBetAmount = DB::table('lotto_three_digit_copy')
+    //                         ->where('three_digit_id', $three_digit->id)
+    //                         ->sum('sub_amount');
+
+    //     // Check if the limit is exceeded
+    //     $break = ThreeDLimit::latest()->first()->three_d_limit;
+    //     if ($totalBetAmount + $sub_amount <= $break) {
+    //         // Create a pivot record for a valid bet
+    //         $currentMonthStart = Carbon::now()->startOfMonth();
+    // $currentMonthEnd = Carbon::now()->endOfMonth();
+
+    // // Get the start and end dates for the next month
+    // $nextMonthStart = Carbon::now()->addMonth()->startOfMonth();
+    // $nextMonthEnd = Carbon::now()->addMonth()->endOfMonth();
+
+    // // Fetch results with status 'open' or 'closed' within these date ranges
+    // $results = ResultDate::where('status', 'open')
+    //     ->where(function ($query) use ($currentMonthStart, $currentMonthEnd, $nextMonthStart, $nextMonthEnd) {
+    //         $query->whereBetween('result_date', [$currentMonthStart, $currentMonthEnd])
+    //               ->orWhereBetween('result_date', [$nextMonthStart, $nextMonthEnd]);
+    //     })
+    //     ->first();
+    //         $pivot = new LotteryThreeDigitPivot([
+    //             'lotto_id' => $lotteryId,
+    //             'three_digit_id' => $three_digit->id,
+    //             'bet_digit' => $bet_digit,
+    //             'sub_amount' => $sub_amount,
+    //             'prize_sent' => false,
+    //             'currency' => 'mmk',
+    //             'match_status' => $results->status,
+    //             'res_date' => $results->result_date
+    //         ]);
+    //         $pivot->save();
+    //     }else{
+    //         return [$item['num']];
+    //         // throw new \Exception('The bet amount exceeds the limit.');
+    //         // return response()->json(['message'=> 'သတ်မှတ်ထားသော limit ပမာဏထပ်ကျော်လွန်နေပါသည်။'], 401);
+    //     }
+    // }
 }
