@@ -56,7 +56,7 @@ class WalletController extends Controller
         TransferLog::create([
             'user_id' => $req->user_id,
             'amount' => $req->amount,
-            'type' => 'Deposit',
+            'type' => 'Withdraw',
         ]);
         return $this->success($req, 'Cash out request sent successfully.');
     }
