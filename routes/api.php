@@ -29,7 +29,6 @@ Route::prefix('v1')->group(function () {
         //logout
         Route::post('/logout', [AuthController::class, 'logout']);
         Route::get('/profile', [AuthController::class, 'profile']);
-        
         //banner
         Route::get('/home', [HomeController::class, 'index']);
         Route::get('/banners', [BannerController::class, 'index']);
@@ -42,10 +41,8 @@ Route::prefix('v1')->group(function () {
         Route::post('/cash-in-request', [WalletController::class, 'cashInRequest']);
         Route::post('/cash-out-request', [WalletController::class, 'cashOutRequest']);
         Route::get('/transfer-logs', [WalletController::class, 'transferLogs']);
-
         //2D Digits
         Route::get('/twoD-digits', [TwoDController::class, 'index']);
-
         //3D Digits
         Route::get('threeD-digits', [ThreeDController::class, 'index']);
         // two digit play
