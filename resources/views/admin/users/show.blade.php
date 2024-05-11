@@ -60,7 +60,7 @@
 @endsection
 @section('content')
 <div class="row justify-content-center">
- <div class="col-8">
+ <div class="col-md-12">
   <div class="container mt-2">
    <div class="d-flex justify-content-between">
     <h4>User Detail</h4>
@@ -72,17 +72,132 @@
     <div class="table-responsive">
      <table class="table align-items-center mb-0">
       <tbody>
+        <tr>
+          <th>Profile</th>
+          <td>
+            <div class="card-header mx-4 p-3 text-center">
+                        <div class="avatar avatar-xl position-relative">
+                            <img src="{{ Auth::user()->profile }}" alt="bruce" class="w-100 rounded-circle shadow-sm">
+                        </div>
+                    </div>
+          </td>
+        </tr>
        <tr>
+
         <th>ID</th>
         <td>{!! $user_detail->id !!}</td>
        </tr>
        <tr>
         <th>User Name</th>
         <td>{!! $user_detail->name !!}</td>
+        <td id="password">
+         <form action="{{ route('admin.password-reset', ['id' => $user_detail->id]) }}" method="POST">
+                        @csrf
+                        @method('PUT')
+        <div class="card-body pt-0">
+            <div class="input-group input-group-outline my-4">
+                <label class="form-label">New password</label>
+                <input type="password" name="password" class="form-control">
+            </div>
+
+            <div class="input-group input-group-outline my-4">
+              <input type="password" name="password_confirmation" class="form-control" required placeholder="Enter Confirm password">
+          </div>
+            
+            <h5 class="mt-3">Password requirements</h5>
+            <p class="text-muted mb-2">
+                Please follow this guide for a strong password:
+            </p>
+            <ul class="text-muted ps-4 mb-0 float-start">
+                <li>
+                    <span class="text-sm">One special characters</span>
+                </li>
+                <li>
+                    <span class="text-sm">Min 6 characters</span>
+                </li>
+                <li>
+                    <span class="text-sm">One number (2 are recommended)</span>
+                </li>
+                <li>
+                    <span class="text-sm">Change it often</span>
+                </li>
+            </ul>
+            <button type="submit" class="btn bg-gradient-dark btn-sm float-end mb-0">PasswordReset</button>
+        </div>
+        </form>
+        </td>
        </tr>
        <tr>
-        <th>Email</th>
-        <td>{!! $user_detail->email !!}</td>
+        <th>Phone</th>
+        <td>{!! $user_detail->phone !!}</td>
+       </tr>
+       <tr>
+        <th>2D Commission</th>
+        <td>{!! $user_detail->cor !!}</td>
+        <td>
+          <form method="POST" action="{{ route('admin.updateCor', ['id' => $user_detail->id]) }}">
+                @csrf
+                @method('PATCH')
+               <div class="input-group input-group-outline my-4">
+                <input type="text" name="cor" placeholder="Enter 2D Commission Amount" required class="form-control">
+               </div>
+                <button type="submit" class="btn bg-gradient-dark btn-sm float-end mb-0">Update2DCommission</button>
+            </form>
+        </td>
+       </tr>
+       <tr>
+        <th>3D Commission</th>
+        <td>{!! $user_detail->cor3 !!}</td>
+        <td>
+          <form method="POST" action="{{ route('admin.updateCor3', ['id' => $user_detail->id]) }}">
+                @csrf
+                @method('PATCH')
+               <div class="input-group input-group-outline my-4">
+                <input type="text" name="cor3" placeholder="Enter 3D Commission Amount" required class="form-control">
+               </div>
+                <button type="submit" class="btn bg-gradient-dark btn-sm float-end mb-0">Update3DCommission</button>
+            </form>
+        </td>
+       </tr>
+       <tr>
+        <th>2D Limit</th>
+        <td>{!! $user_detail->limit !!}</td>
+        <td>
+          <form method="POST" action="{{ route('admin.updatelimit', ['id' => $user_detail->id]) }}">
+                @csrf
+                @method('PATCH')
+               <div class="input-group input-group-outline my-4">
+                <input type="text" name="limit" placeholder="Enter 2D Limit Amount" required class="form-control">
+               </div>
+                <button type="submit" class="btn bg-gradient-dark btn-sm float-end mb-0">Update2DLimit</button>
+            </form>
+        </td>
+       </tr>
+       <tr>
+        <th>3D Limit</th>
+        <td>{!! $user_detail->limit !!}</td>
+        <td>
+          <form method="POST" action="{{ route('admin.threeDupdatelimit', ['id' => $user_detail->id]) }}">
+                @csrf
+                @method('PATCH')
+               <div class="input-group input-group-outline my-4">
+                <input type="text" name="limit3" placeholder="Enter 3D Limit Amount" required class="form-control">
+               </div>
+                <button type="submit" class="btn bg-gradient-dark btn-sm float-end mb-0">Update3DLimit</button>
+            </form>
+        </td>
+       </tr>
+       <tr>
+        <th>Gem</th>
+        <td>{!! $user_detail->gem !!}</td>
+       </tr>
+       <tr>
+        <th>Bonu</th>
+        <td>{!! $user_detail->bonus !!}</td>
+       </tr>
+       <tr>
+        <th>Winning Prize</th>
+        <td>{!! $user_detail->prize_balance !!}</td>
        </tr>
        <tr>
         <th>Create Date</th>

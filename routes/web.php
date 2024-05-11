@@ -66,6 +66,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'App\Http\Co
   Route::resource('profiles', ProfileController::class);
   Route::put('/super-admin-update-balance/{id}', [App\Http\Controllers\Admin\ProfileController::class, 'AdminUpdateBalance'])->name('admin-update-balance');
   Route::put('/change-password', [ProfileController::class, 'newPassword'])->name('changePassword');
+  Route::put('/users/{id}/password-reset', [ProfileController::class, 'PasswordReset'])->name('password-reset');
     // PhoneAddressChange route with auth id route with put method
     Route::put('/change-phone-address', [ProfileController::class, 'PhoneAddressChange'])->name('changePhoneAddress');
     Route::put('/change-kpay-no', [ProfileController::class, 'KpayNoChange'])->name('changeKpayNo');
@@ -199,7 +200,41 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'App\Http\Co
         Route::get('three-d-result-date', [App\Http\Controllers\Admin\ThreeD\ResultDateController::class, 'index']);
         // result date update 
         Route::patch('/lottery-results/{id}/status', [App\Http\Controllers\Admin\ThreeD\ResultDateController::class, 'updateStatus'])
-    ->name('lotteryResults.updateStatus');
+    ->name('ThreedOpenClose');
+
+    Route::patch('/three-d-admin-log/{id}/status', [App\Http\Controllers\Admin\ThreeD\ResultDateController::class, 'AdminLogThreeDOpenClose'])
+    ->name('ThreeDAdminLogOpenClose');
+
+    Route::patch('/three-d-user-log/{id}/status', [App\Http\Controllers\Admin\ThreeD\ResultDateController::class, 'UserLogThreeDOpenClose'])
+    ->name('ThreeDUserLogOpenClose');
+
+    // two d result date and result number 
+        Route::get('two-d-result-date', [App\Http\Controllers\Admin\TwoD\TwoGameResultController::class, 'index']);
+        Route::patch('/two-2-results/{id}/status', [App\Http\Controllers\Admin\TwoD\TwoGameResultController::class, 'updateStatus'])
+    ->name('twoDResults.ResultupdateStatus');
+    Route::patch('/two-d-results/{id}/status', [App\Http\Controllers\Admin\TwoD\TwoGameResultController::class, 'updateResultNumber'])
+    ->name('update_result_number');
+    Route::patch('/three-d-results/{id}/status', [App\Http\Controllers\Admin\ThreeD\ResultDateController::class, 'updateResultNumber'])
+    ->name('UpdateResult_number');
+
+    Route::patch('/two-d-cor/{id}/update', [App\Http\Controllers\Admin\ProfileController::class, 'update2DCommission'])
+    ->name('updateCor');
+
+    Route::patch('/three-d-cor/{id}/update', [App\Http\Controllers\Admin\ProfileController::class, 'update3DCommission'])
+    ->name('updateCor3');
+
+    Route::patch('/two-d-limit/{id}/update', [App\Http\Controllers\Admin\ProfileController::class, 'update2DLimit'])
+    ->name('updatelimit');
+    Route::patch('/three-d-limit/{id}/update', [App\Http\Controllers\Admin\ProfileController::class, 'update3DLimit'])
+    ->name('threeDupdatelimit');
+    // morning section rec
+     Route::get('/morning-session-rec', [App\Http\Controllers\Admin\TwoD\MorningSessionRecordController::class, 'index'])
+    ->name('morningSessionRec');
+
+     Route::get('/evening-session-rec', [App\Http\Controllers\Admin\TwoD\EveningSessionRecordController::class, 'index'])
+    ->name('eveningSessionRec');
+
+
 
 });
 
@@ -210,6 +245,9 @@ Route::group(['prefix' => 'user', 'as' => 'user.', 'namespace' => 'App\Http\Cont
     Route::put('editProfile/{profile}', [ProfileController::class, 'update'])->name('editProfile');
     Route::post('editInfo', [ProfileController::class, 'editInfo'])->name('editInfo');
     Route::post('changePassword', [ProfileController::class, 'changePassword'])->name('changePassword');
+
+     
+   
     //profile management
 
   //home routes

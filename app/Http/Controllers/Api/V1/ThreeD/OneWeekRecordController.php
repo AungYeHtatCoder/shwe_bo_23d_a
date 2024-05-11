@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\Api\V1\ThreeD;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\ThreeD\LottoThreeDigitPivot;
+use App\Models\ThreeDigit\LotteryThreeDigitPivot;
 
 class OneWeekRecordController extends Controller
 {
@@ -23,7 +24,7 @@ public function oneWeekHistory(): JsonResponse
     }
 
     // Get the open matches for the authenticated user along with related lotto information
-    $userData = LottoThreeDigitPivot::where('match_status', 'open')
+    $userData = LotteryThreeDigitPivot::where('match_status', 'open')
         ->join('lottos', 'lotto_three_digit_pivot.lotto_id', '=', 'lottos.id')
         ->join('users', 'lottos.user_id', '=', 'users.id')
         ->where('users.id', $userId) // Filter by the authenticated user's ID
@@ -39,7 +40,7 @@ public function oneWeekHistory(): JsonResponse
         ->get();
 
     // Calculate the total sub_amount for the authenticated user's open matches
-    $totalSubAmount = LottoThreeDigitPivot::where('match_status', 'open')
+    $totalSubAmount = LotteryThreeDigitPivot::where('match_status', 'open')
         ->join('lottos', 'lotto_three_digit_pivot.lotto_id', '=', 'lottos.id')
         ->where('lottos.user_id', $userId) // Filter by the authenticated user's ID
         ->sum('sub_amount');

@@ -38,25 +38,30 @@ Route::prefix('v1')->group(function () {
         Route::get('/promotions', [PromotionController::class, 'index']);
         Route::get('/banks', [BankController::class, 'index']);
         Route::get('/games', [GameController::class, 'index']);
-
         //wallets
         Route::post('/cash-in-request', [WalletController::class, 'cashInRequest']);
         Route::post('/cash-out-request', [WalletController::class, 'cashOutRequest']);
         Route::get('/transfer-logs', [WalletController::class, 'transferLogs']);
         //2D Digits
-        Route::get('/twoD-digits', [TwoDController::class, 'index']);
-        //3D Digits
-        Route::get('threeD-digits', [ThreeDController::class, 'index']);
-        // two digit play
+        // Route::get('/twoD-digits', [TwoDController::class, 'index']);
+        // //3D Digits
+        // Route::get('threeD-digits', [ThreeDController::class, 'index']);
+        // // two digit play
         Route::post('/two-d-play', [TwoPlayController::class, 'play']);
         // three digit play
         Route::post('/three-d-play', [ThreeDPlayController::class, 'play']);
         // twod auth user data with session (current day) == current play data 
         // morning play auth user history
-        Route::get('/two-d-morning-record', [TwoDMorningRecordController::class, 'MorningRecord']);
-        // evening play auth user history 
-        Route::get('/two-d-evening-record', [TwoDEveningRecordController::class, 'EveningRecord']);
+        // Route::get('/two-d-morning-record', [TwoDMorningRecordController::class, 'MorningRecord']);
+        // // evening play auth user history 
+        // Route::get('/two-d-evening-record', [TwoDEveningRecordController::class, 'EveningRecord']);
         // 3d auth user one week record
         Route::get('three-d-one-week-rec', [OneWeekRecordController::class, 'oneWeekHistory']);
+        Route::get('/morning-2d-session-rec', [App\Http\Controllers\Api\V1\TwoD\OnedayMorningHistoryController::class, 'index'])
+        ->name('morning2dSessionRec');
+
+        Route::get('/evening-2d-session-rec', [App\Http\Controllers\Api\V1\TwoD\OnedayEveningHistoryController::class, 'index'])
+        ->name('evening2dSessionRec');
+
     });
 });

@@ -12,10 +12,12 @@ use App\Models\TwoD\TwoDLimit;
 use Illuminate\Http\JsonResponse;
 use App\Models\Admin\LotteryMatch;
 use App\Models\TwoD\CloseTwoDigit;
+use App\Models\TwoD\TwodGameResult;
 use App\Http\Controllers\Controller;
 use App\Services\TwoDLotteryService;
 use App\Http\Requests\TwoDPlayRequest;
 use App\Models\TwoD\LotteryTwoDigitCopy;
+use App\Models\TwoD\LotteryTwoDigitPivot;
 
 class TwoPlayController extends Controller
 {
@@ -46,7 +48,17 @@ class TwoPlayController extends Controller
     }
 
     public function play(TwoDPlayRequest $request, TwoDService $twoDService): JsonResponse
-{
+    {
+    $currentDate = TwodGameResult::where('status', 'open')->first();
+
+    
+    // If no result date is found or it's closed, return an error
+    if (!$currentDate || $currentDate->status === 'closed') {
+        return response()->json([
+            'success' => false,
+            'message' => 'This 2D lottery match is closed for at this time. Welcome back Next Time!',
+        ], 401);
+    }
     //Log::info($request->all());
 
     // Retrieve the validated data from the request
@@ -90,18 +102,29 @@ class TwoPlayController extends Controller
         }
 
         // Pass the validated data to the TwoDService
-        $result = $twoDService->play($totalAmount, $amounts);
+        // $result = $twoDService->play($totalAmount, $amounts);
 
-        if ($result === "Insufficient funds.") {
+        // if ($result === "Insufficient funds.") {
+        //     // Insufficient funds message
+        //     return response()->json(['message' => "လက်ကျန်ငွေ မလုံလောက်ပါ။"], 401);
+        // } elseif (is_array($result)) {
+        //     // Process exceeding limit message
+        //     $digitStrings = collect($result)->map(function ($r) {
+        //         return LotteryTwoDigitPivot::find($r)->bet_digit ?? 'Unknown';
+        //     })->implode(",");
+            
+        //     $message = "{$digitStrings} Over Limit ";
+        //     return response()->json(['message' => $message], 401);
+        // }
+
+        $result = $twoDService->play($totalAmount, $amounts);
+         if ($result === "Insufficient funds.") {
             // Insufficient funds message
             return response()->json(['message' => "လက်ကျန်ငွေ မလုံလောက်ပါ။"], 401);
-        } elseif (is_array($result)) {
-            // Process exceeding limit message
-            $digitStrings = collect($result)->map(function ($r) {
-                return TwoDigit::find($r)->two_digit ?? 'Unknown';
-            })->implode(",");
-            
-            $message = "{$digitStrings} ဂဏန်းမှာ သတ်မှတ် Limit ထက်ကျော်လွန်နေပါသည်။";
+        }
+        if (is_array($result) && !empty($result)) {
+            $digitStrings = collect($result)->implode(", "); // Over-limit digits
+            $message = "သင့်ရွှေးချယ်ထားသော {$digitStrings} ဂဏန်းမှာ သတ်မှတ် အမောင့်ထက်ကျော်လွန်ပါသောကြောင့် ကံစမ်း၍မရနိုင်ပါ။";
             return response()->json(['message' => $message], 401);
         }
 

@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Validator;
 
 class ProfileController extends Controller
 {
@@ -193,7 +194,7 @@ class ProfileController extends Controller
     {
         //dd($request->all());
         $request->validate([
-            'old_password' => 'required',
+            //'old_password' => 'required',
             'password' => 'required|min:6',
 
         ]);
@@ -215,6 +216,28 @@ class ProfileController extends Controller
         }
     }
 
+    public function PasswordReset(Request $request, $id)
+{
+    // Validate the request to ensure the password meets the required criteria
+    $validator = Validator::make($request->all(), [
+        'password' => 'required|min:6|confirmed', // Add confirmed rule to ensure matching passwords
+    ]);
+
+    // If validation fails, return back with error messages
+    if ($validator->fails()) {
+        return redirect()->back()->withErrors($validator)->withInput();
+    }
+
+    // Find the user by ID
+    $user = User::findOrFail($id);
+
+    // Update the user's password securely
+    $user->password = Hash::make($request->input('password'));
+    $user->save();
+
+    // Return a success message after successful password reset
+    return redirect()->back()->with('success', 'Password has been updated successfully.');
+}
     public function PhoneAddressChange(Request $request)
     {
         $request->validate([
@@ -306,5 +329,69 @@ class ProfileController extends Controller
     {
         return view('admin.profile.fill_money');
     }
+
+
+    public function update2DCommission(Request $request, $id)
+    {
+        $cor = $request->input('cor'); // The new status
+
+        // Find the result by ID
+        $result = User::findOrFail($id);
+
+        // Update the status
+        $result->cor = $cor;
+        $result->save();
+
+        // Return a response (like a JSON object)
+        return redirect()->back()->with('success', 'Result number updated successfully.'); // Redirect back with success message
+    }
+
+
+    public function update3DCommission(Request $request, $id)
+    {
+        $cor3 = $request->input('cor3'); // The new status
+
+        // Find the result by ID
+        $result = User::findOrFail($id);
+
+        // Update the status
+        $result->cor3 = $cor3;
+        $result->save();
+
+        // Return a response (like a JSON object)
+        return redirect()->back()->with('success', 'Result number updated successfully.'); // Redirect back with success message
+    }
+
+
+    public function update2DLimit(Request $request, $id)
+    {
+        $limit = $request->input('limit'); // The new status
+
+        // Find the result by ID
+        $result = User::findOrFail($id);
+
+        // Update the status
+        $result->limit = $limit;
+        $result->save();
+
+        // Return a response (like a JSON object)
+        return redirect()->back()->with('success', 'Result number updated successfully.'); // Redirect back with success message
+    }
+    public function update3DLimit(Request $request, $id)
+    {
+        $limit3 = $request->input('limit3'); // The new status
+
+        // Find the result by ID
+        $result = User::findOrFail($id);
+
+        // Update the status
+        $result->limit3 = $limit3;
+        $result->save();
+
+        // Return a response (like a JSON object)
+        return redirect()->back()->with('success', 'Result number updated successfully.'); // Redirect back with success message
+    }
+
+
 
 }

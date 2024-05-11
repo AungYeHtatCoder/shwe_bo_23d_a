@@ -217,6 +217,22 @@
                 @endcan
                 @can('admin_access')
                 <li class="nav-item">
+                  <a class="nav-link text-white " href="{{ url('admin/morning-session-rec') }}">
+                    <span class="sidenav-mini-icon"> 2D </span>
+                    <span class="sidenav-normal  ms-2  ps-1"> MorningSec </span>
+                  </a>
+                </li>
+                @endcan
+                @can('admin_access')
+                <li class="nav-item">
+                  <a class="nav-link text-white " href="{{ url('admin/evening-session-rec') }}">
+                    <span class="sidenav-mini-icon"> 2D </span>
+                    <span class="sidenav-normal  ms-2  ps-1"> EveningSec </span>
+                  </a>
+                </li>
+                @endcan
+                @can('admin_access')
+                <li class="nav-item">
                   <a class="nav-link text-white " href="{{ route('admin.evening-lajar') }}">
                     <span class="sidenav-mini-icon"> 2D </span>
                     <span class="sidenav-normal  ms-2  ps-1"> ညနေပိုင်းလယ်ဂျာ </span>
@@ -247,6 +263,16 @@
                   </a>
                 </li>
                 @endcan
+
+                @can('admin_access')
+                <li class="nav-item ">
+                  <a class="nav-link text-white " href="{{ url('admin/two-d-result-date') }}">
+                    <span class="sidenav-mini-icon"> 2D </span>
+                    <span class="sidenav-normal  ms-2  ps-1">  Setting </span>
+                  </a>
+                </li>
+                @endcan
+
                 @can('user_access')
               <li class="nav-item ">
                 <a class="nav-link text-white " href="{{ route('admin.winnerHistoryForAdmin')}}">
@@ -400,7 +426,7 @@
                 <li class="nav-item">
                   <a class="nav-link text-white " href="{{ url('admin/three-d-result-date') }}">
                     <span class="sidenav-mini-icon"> 3D </span>
-                    <span class="sidenav-normal  ms-2  ps-1"> OpeningDate </span>
+                    <span class="sidenav-normal  ms-2  ps-1"> Setting </span>
                   </a>
                 </li>
                 @endcan

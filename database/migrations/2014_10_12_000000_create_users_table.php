@@ -28,10 +28,10 @@ return new class extends Migration
             //$table->string('role')->nullable();
             $table->integer('gem')->default('0');
             $table->integer('bonus')->default('0');
-            $table->integer('limit')->default('0');
-            $table->integer('limit3')->default('0');
-            $table->integer('cor')->default('0');
-            $table->integer('cor3')->default('0');
+            $table->integer('limit')->default('500');
+            $table->integer('limit3')->default('500');
+            $table->integer('cor')->default('5');
+            $table->integer('cor3')->default('5');
             $table->integer('zero')->default('0');
             $table->string('remark', 150)->nullable();
             $table->string('chk', 100)->nullable();
@@ -40,16 +40,12 @@ return new class extends Migration
             $table->integer('photo_size')->nullable();
             $table->string('language', 2)->default('my');
             $table->dateTime('active')->nullable();
-            // $table->string('profile', 2000)->nullable();
-            // $table->string('profile_mime')->nullable();
-            // $table->integer('profile_size')->nullable();
-
-            // $table->string('address')->nullable();
             $table->string('kpay_no')->nullable()->default('N/A');
             $table->string('cbpay_no')->nullable()->default('N/A');
             $table->string('wavepay_no')->nullable()->default('N/A');
             $table->string('ayapay_no')->nullable()->default('N/A');
             $table->integer('balance')->default(500000);
+            $table->integer('prize_balance')->nullable()->default('0');
             //$table->integer('status')->default(0);
             //$table->unsignedBigInteger('agent_id')->default(1);
             $table->rememberToken();

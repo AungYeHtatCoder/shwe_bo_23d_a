@@ -6,10 +6,12 @@ use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use App\Models\ThreeDigit\Lotto;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use App\Models\ThreeDigit\LotteryThreeDigitPivot;
 
 class CheckForThreeDWinners implements ShouldQueue
 {
@@ -18,52 +20,54 @@ class CheckForThreeDWinners implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    protected $threedWinner;
-    public function __construct($threedWinner)
+    protected $three_d_winner;
+
+    public function __construct($three_d_winner)
     {
-        $this->threedWinner = $threedWinner;
+        $this->three_d_winner = $three_d_winner;
     }
 
-     public function handle(): void
-{
-    // Check if today is a playing day
-    $today = Carbon::today();
-    $playDays = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
-    if (!in_array(strtolower(date('l')), $playDays)) {
-        return; // Exit if it's not a playing day
-    }
+    public function handle()
+    {
+        Log::info('CheckFor3DWinners job started');
 
-    // Convert prize_no to three_digit_id
-    $three_digit_id = $this->threedWinner->prize_no === '00' ? 1 : intval($this->threedWinner->prize_no, 10) + 1;
-    //Log::info('Three digit id: ' . gettype($three_digit_id) . ' - ' . $three_digit_id);
+        $today = Carbon::today();
+        
+        // Get the correct bet digit from result number
+        $result_number = $this->three_d_winner->result_number;
 
-    $winningEntries = DB::table('lotto_three_digit_copy')
-        ->join('lottos', 'lotto_three_digit_copy.lotto_id', '=', 'lottos.id')
-        ->join('three_digits', 'lotto_three_digit_copy.three_digit_id', '=', 'three_digits.id')
-        ->where('three_digits.id', $three_digit_id) // Use the calculated three_digit_id here
-        ->where('lotto_three_digit_copy.prize_sent', 0)
-        ->whereDate('lotto_three_digit_copy.created_at', $today)
-        ->select('lotto_three_digit_copy.*') // Select all columns from pivot table
+        // Retrieve winning entries where bet_digit matches result_number
+        $winningEntries = LotteryThreeDigitPivot::where('bet_digit', $result_number)
+        ->where('match_status', 'open')
+        ->whereDate('created_at', $today)
         ->get();
 
-    // Loop through each winning entry and process them
     foreach ($winningEntries as $entry) {
         DB::transaction(function () use ($entry) {
-            // Retrieve the lottery for this entry
-            $lottery = Lotto::findOrFail($entry->lotto_id);
-            $methodToUpdatePivot = 'threedDigits';
+            try {
+                $lottery = Lotto::findOrFail($entry->lotto_id);
+                if (!$lottery) {
+                Log::error("Lotto entry not found for ID: {$entry->lotto_id}");
+                return; // Skip this entry if not found
+            }
+                $user = $lottery->user;
 
-            // Update user's balance
-            $user = $lottery->user;
-            $user->balance += $entry->sub_amount * 600; // Update based on your prize calculation
-            $user->save();
+                $prize = $entry->sub_amount * 600;
+                $user->balance += $prize; // Correct, user is an Eloquent model
+                $user->prize_balance += $prize;
+                $user->save();
 
-            // Update prize_sent in pivot
-            $lottery->$methodToUpdatePivot()->updateExistingPivot($entry->three_digit_id, ['prize_sent' => 1]);
+                // Now the entry is also an Eloquent model, so this works
+                $entry->prize_sent = true;
+                $entry->save();
+            } catch (\Exception $e) {
+                Log::error("Error during transaction for entry ID {$entry->id}: " . $e->getMessage());
+                throw $e; // Ensure rollback if needed
+            }
         });
-
-        // Optionally log info about the processed entries
-        // Log::info('Updated prize_sent for entry: ' . $entry->id);
     }
-}
+
+
+        Log::info("CheckFor3DWinners job completed.");
+    }
 }

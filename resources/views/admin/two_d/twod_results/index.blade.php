@@ -21,7 +21,7 @@
    <div class="card-header pb-0">
     <div class="d-lg-flex">
      <div>
-      <h5 class="mb-0">OpeningDate Dashboards</h5>
+      <h5 class="mb-0">2D Opening Date & Time Dashboards</h5>
       {{-- <p class="text-sm mb-0">
                     A lightweight, extendable, dependency-free javascript HTML table plugin.
                   </p> --}}
@@ -44,108 +44,43 @@
     <table class="table table-flush" id="permission-search">
      <thead class="thead-light">
       <tr>
-       <th>အကြိမ်ရေ</th>
-       <th>OpenDate</th>
-       <th>OpenTime</th>
-       <th>ResNumber</th>
-       {{-- <th>3DMatch</th> --}}
-       <th>CreatePrizeNumber</th>
-       <th>3DMatch Open/Close</th>
-       <th>AdminLog</th>
-       <th>UserLog</th>
+       <th>#</th>
+       <th>OpeningDate</th>
+       <th>OpeningTime</th>
+       <th>ResultNumber</th>
+       <th>PrizeNumber</th>
+       <th>Status</th>
+       <th>Session</th>
+       <th>Update</th>
+       
       </tr>
      </thead>
      <tbody>
       @foreach($results as $key => $result)
       <tr>
-       {{-- <td class="text-sm font-weight-normal">{{ ++$key }}</td> --}}
-       <td>{{ $result->id }}</td>
+       <td class="text-sm font-weight-normal">{{ ++$key }}</td>
        <td class="text-sm font-weight-normal">{{ $result->result_date }}</td>
        <td class="text-sm font-weight-normal">{{ $result->result_time }}</td>
-        <td class="text-sm font-weight-normal">{{ $result->result_number ?? 'Pending' }}</td>
-       {{-- <td id="status-{{ $result->id }}">{{ $result->status }}</td> --}}
+       <td class="text-sm font-weight-normal">{{ $result->result_number ?? 'Pending' }}</td>
        <td>
-            <form method="POST" action="{{ route('admin.UpdateResult_number', ['id' => $result->id]) }}">
+            <form method="POST" action="{{ route('admin.update_result_number', ['id' => $result->id]) }}">
                 @csrf
                 @method('PATCH')
                 <input type="text" name="result_number" placeholder="Enter result number" required class="form-control">
-                <button type="submit" class="btn btn-primary">ထွက်ဂဏန်းထဲ့ရန်</button>
+                <button type="submit" class="btn btn-primary">CreatePrizeNumber</button>
             </form>
         </td>
-        {{-- <td>
+       <td id="status-{{ $result->id }}">{{ ucfirst($result->status) }}</td>
+        <td>{{ ucfirst($result->session) }}</td>
+        <td>
+            <!-- Toggle button to update status -->
             <button class="toggle-status"
                     data-id="{{ $result->id }}"
                     data-status="{{ $result->status == 'open' ? 'closed' : 'open' }}">
                 Open/Close
             </button>
-        </td> --}}
-        <td>
-    <form action="{{ route('admin.ThreedOpenClose', ['id' => $result->id]) }}" method="post">
-    @csrf
-    @method('PATCH')
-    
-    <!-- Switch for toggling status -->
-    <div class="form-check form-switch">
-        <input class="form-check-input" type="checkbox" id="statusSwitch-{{ $result->id }}"
-            name="status" value="{{ $result->status == 'open' ? 'closed' : 'open' }}"
-            {{ $result->status == 'open' ? 'checked' : '' }}>
-
-        <label class="form-check-label" for="statusSwitch-{{ $result->id }}">
-            {{ $result->status == 'open' ? 'Open' : 'Closed' }}
-        </label>
-    </div>
-    
-    <!-- Submit button -->
-    <button type="submit" class="btn btn-primary mt-2">{{ $result->status == 'open' ? 'closed' : 'open' }}"
-            {{ $result->status == 'open' ? 'checked' : '' }}</button>
-</form>
-
-</td>
-
-        <td>
-            <form action="{{ route('admin.ThreeDAdminLogOpenClose', ['id' => $result->id]) }}" method="post">
-    @csrf
-    @method('PATCH')
-    
-    <!-- Switch for toggling status -->
-    <div class="form-check form-switch">
-        <input class="form-check-input" type="checkbox" id="statusSwitch-{{ $result->id }}"
-            name="admin_log" value="{{ $result->admin_log == 'open' ? 'closed' : 'open' }}"
-            {{ $result->admin_log == 'open' ? 'checked' : '' }}>
-
-        <label class="form-check-label" for="statusSwitch-{{ $result->id }}">
-            {{ $result->admin_log == 'open' ? 'Open' : 'Closed' }}
-        </label>
-    </div>
-    
-    <!-- Submit button -->
-    <button type="submit" class="btn btn-primary mt-2">{{ $result->admin_log == 'open' ? 'closed' : 'open' }}"
-            {{ $result->admin_log == 'open' ? 'checked' : '' }}</button>
-</form>
-
         </td>
-        <td>
-            <form action="{{ route('admin.ThreeDUserLogOpenClose', ['id' => $result->id]) }}" method="post">
-    @csrf
-    @method('PATCH')
-    
-    <!-- Switch for toggling status -->
-    <div class="form-check form-switch">
-        <input class="form-check-input" type="checkbox" id="statusSwitch-{{ $result->id }}"
-            name="user_log" value="{{ $result->user_log == 'open' ? 'closed' : 'open' }}"
-            {{ $result->user_log == 'open' ? 'checked' : '' }}>
-
-        <label class="form-check-label" for="statusSwitch-{{ $result->id }}">
-            {{ $result->user_log == 'open' ? 'Open' : 'Closed' }}
-        </label>
-    </div>
-    
-    <!-- Submit button -->
-    <button type="submit" class="btn btn-primary mt-2">{{ $result->user_log == 'open' ? 'closed' : 'open' }}"
-            {{ $result->user_log == 'open' ? 'checked' : '' }}</button>
-</form>
-
-        </td>
+       
       </tr>
       @endforeach
      </tbody>
@@ -172,7 +107,7 @@ $(document).ready(function() {
         const newStatus = $(this).data('status'); // The new status to set
 
         $.ajax({
-            url: '/admin/lottery-results/' + resultId + '/status', // Your route
+            url: '/admin/two-2-results/' + resultId + '/status', // Your route
             method: 'PATCH',
             data: {
                 status: newStatus,

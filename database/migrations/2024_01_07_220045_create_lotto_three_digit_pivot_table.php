@@ -20,6 +20,9 @@ return new class extends Migration
             $table->boolean('prize_sent')->default(false);
             $table->string('match_status');
             $table->date('res_date');
+            $table->string('result_number')->nullable();
+            $table->enum('admin_log', ['open', 'closed'])->default('open'); // New status column
+            $table->enum('user_log', ['open', 'closed'])->default('open'); // New status column
             $table->foreign('result_date_id')->references('id')->on('result_dates')->onDelete('cascade');
             $table->foreign('lotto_id')->references('id')->on('lottos')->onDelete('cascade');
             $table->timestamps();

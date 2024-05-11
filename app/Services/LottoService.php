@@ -125,6 +125,8 @@ class LottoService
                 //'currency' => 'mmk',
                 'match_status' => $results->status,
                 'res_date' => $results->result_date,
+                'admin_log' => $results->admin_log,
+                'user_log' => $results->user_log
             ]);
 
             $pivot->save();

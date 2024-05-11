@@ -40,6 +40,11 @@
       <th>#</th>
       <th>UserName</th>
       <th>Phone</th>
+      <th>Balance</th>
+      <th>2DCor</th>
+      <th>3DCor</th>
+      <th>2DLimit</th>
+      <th>3DLimit</th>
       <th>Status</th>
       <th>Created_at</th>
       <th>Action</th>
@@ -58,6 +63,13 @@
           @endforeach
         </td>
         <td class="text-sm font-weight-normal">{{ $user->phone }}</td>
+        <td class="text-sm font-weight-normal">{{ $user->balance }}</td>
+        <td class="text-sm font-weight-normal">{{ $user->cor }}</td>
+        <td class="text-sm font-weight-normal">{{ $user->cor3 }}</td>
+        <td class="text-sm font-weight-normal">{{ $user->limit }}</td>
+        <td class="text-sm font-weight-normal">{{ $user->limit3 }}</td>
+
+
         <td class="text-sm font-weight-normal">
           <span class="badge badge-{{ $user->status == 0 ? 'success' : 'danger' }}">{{ $user->status == 0 ? "active" : "ban" }}</span>
         </td>

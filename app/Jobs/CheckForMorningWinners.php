@@ -2,25 +2,20 @@
 
 namespace App\Jobs;
 
-use Log;
 use Carbon\Carbon;
 use App\Models\TwoD\Lottery;
 use Illuminate\Bus\Queueable;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
+use App\Models\TwoD\LotteryTwoDigitPivot;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 
 class CheckForMorningWinners implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
-    /**
-     * Create a new job instance.
-     */
-     //use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     protected $twodWiner;
 
@@ -28,84 +23,54 @@ class CheckForMorningWinners implements ShouldQueue
     {
         $this->twodWiner = $twodWiner;
     }
+
     public function handle()
-{
-    //\Log::info('Job started for TwodWiner with prize_no: ' . $this->twodWiner->prize_no);
+    {
+        Log::info('CheckForMorningWinners job started');
 
-    $today = Carbon::today();
-    //\Log::info("Today's date: " . $today->toDateString());
-    $playDays = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'];
-    if (!in_array(strtolower(date('l')), $playDays)) {
-         return; // exit if it's not a playing day
-     }
-    if ($this->twodWiner->session !== 'morning') {
-      //  \Log::info('This TwodWiner is not for the evening session, exiting.');
-        return;
-    }
+        $today = Carbon::today();
+        $playDays = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'];
 
-    // Convert prize_no to two_digit_id
-    $two_digit_id = $this->twodWiner->prize_no === '00' ? 1 : intval($this->twodWiner->prize_no, 10) + 1;
+        if (!in_array(strtolower($today->isoFormat('dddd')), $playDays)) {
+            Log::info("Today is not a play day: " . $today->isoFormat('dddd'));
+            return; // Not a play day
+        }
 
-    $winningEntries = DB::table('lottery_two_digit_copy')
-        ->join('lotteries', 'lottery_two_digit_copy.lottery_id', '=', 'lotteries.id')
-        ->where('lottery_two_digit_copy.two_digit_id', $two_digit_id) // Use the calculated two_digit_id
-        ->where('lottery_two_digit_copy.prize_sent', false)
-        ->whereDate('lottery_two_digit_copy.created_at', $today)
-        ->select('lottery_two_digit_copy.*')
+        if ($this->twodWiner->session !== 'morning') {
+            Log::info("Session is not morning, exiting.");
+            return; // Not a morning session
+        }
+
+        // Get the correct bet digit from result number
+        $result_number = $this->twodWiner->result_number;
+
+        // Retrieve winning entries where bet_digit matches result_number
+        $winningEntries = LotteryTwoDigitPivot::where('bet_digit', $result_number)
+        ->where('match_status', 'open')
+        ->whereDate('created_at', $today)
         ->get();
-
-    // if ($winningEntries->isEmpty()) {
-    //     \Log::info('No winning entries found.');
-    // } else {
-    //     \Log::info('Processing ' . $winningEntries->count() . ' winning entries.');
-    // }
 
     foreach ($winningEntries as $entry) {
         DB::transaction(function () use ($entry) {
-            $lottery = Lottery::findOrFail($entry->lottery_id);
-            $user = $lottery->user;
-            $user->balance += $entry->sub_amount * 85; // Assuming the prize multiplier is 85
-            $user->save();
+            try {
+                $lottery = Lottery::findOrFail($entry->lottery_id);
+                $user = $lottery->user;
 
-            // Update prize_sent to true for the winning entry
-            $lottery->twoDigits()->updateExistingPivot($entry->two_digit_id, ['prize_sent' => true]);
+                $prize = $entry->sub_amount * 85;
+                $user->balance += $prize; // Correct, user is an Eloquent model
+                $user->save();
+
+                // Now the entry is also an Eloquent model, so this works
+                $entry->prize_sent = true;
+                $entry->save();
+            } catch (\Exception $e) {
+                Log::error("Error during transaction for entry ID {$entry->id}: " . $e->getMessage());
+                throw $e; // Ensure rollback if needed
+            }
         });
     }
-}
 
-//     public function handle()
-// {
-//     // Check if today is a playing day
-//     $today = Carbon::today();
-//     $playDays = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'];
-//     if (!in_array(strtolower(date('l')), $playDays)) {
-//         return; // exit if it's not a playing day
-//     }
 
-//     // Find all winning entries using raw SQL
-//     $winningEntries = DB::table('lottery_two_digit_copy')
-//         ->join('lotteries', 'lottery_two_digit_copy.lottery_id', '=', 'lotteries.id')
-//         ->whereRaw('lottery_two_digit_copy.two_digit_id = ?', [$this->twodWiner->prize_no])
-//         ->whereRaw('lottery_two_digit_copy.prize_sent = 0')
-//         ->whereRaw('DATE(lottery_two_digit_copy.created_at) = ?', [$today])
-//         ->select('lottery_two_digit_copy.*') // Select all columns from pivot table
-//         ->get();
-
-//     foreach ($winningEntries as $entry) {
-//         DB::transaction(function () use ($entry) {
-//             // Retrieve the lottery for this entry
-//             $lottery = Lottery::findOrFail($entry->lottery_id);
-//             $methodToUpdatePivot = 'twoDigits';
-            
-//             // Update user's balance
-//             $user = $lottery->user;
-//             $user->balance += $entry->sub_amount * 85;  // Update based on your prize calculation
-//             $user->save();
-
-//             // Update prize_sent in pivot
-//             $lottery->$methodToUpdatePivot()->updateExistingPivot($entry->two_digit_id, ['prize_sent' => 1]);
-//         });
-//     }
-// }
-
+        Log::info("CheckForMorningWinners job completed.");
+    }
 }

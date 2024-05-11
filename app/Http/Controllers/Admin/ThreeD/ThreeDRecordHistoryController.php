@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Models\ThreeDigit\ThreeWinner;
 use App\Models\ThreeD\LottoThreeDigitPivot;
+use App\Models\ThreeDigit\LotteryThreeDigitPivot;
 
 class ThreeDRecordHistoryController extends Controller
 {
@@ -77,13 +78,13 @@ class ThreeDRecordHistoryController extends Controller
     public function OnceWeekThreedigitHistoryConclude()
 {
     // Get the open matches along with related user and lotto information
-    $results = LottoThreeDigitPivot::where('match_status', 'open')
+    $results = LotteryThreeDigitPivot::where('admin_log', 'open')
         ->join('lottos', 'lotto_three_digit_pivot.lotto_id', '=', 'lottos.id')
         ->join('users', 'lottos.user_id', '=', 'users.id')
         ->select(
             'users.name as user_name',
             'users.phone as user_phone',
-            'lotto_three_digit_pivot.match_status',
+            'lotto_three_digit_pivot.admin_log',
             'lotto_three_digit_pivot.bet_digit',
             'lotto_three_digit_pivot.res_date',
             'lotto_three_digit_pivot.sub_amount',
@@ -92,10 +93,10 @@ class ThreeDRecordHistoryController extends Controller
         ->get();
 
     // Calculate the total sub_amount for all open matches
-    $totalSubAmount = LottoThreeDigitPivot::where('match_status', 'open')
+    $totalSubAmount = LotteryThreeDigitPivot::where('admin_log', 'open')
         ->sum('sub_amount');
     $three_limits = ThreeDLimit::orderBy('id', 'desc')->first();
-
+    
     return view('admin.three_d.one_week_conclude', [
         'displayThreeDigits' => $results,
         'totalSubAmount' => $totalSubAmount,
